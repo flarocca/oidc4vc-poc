@@ -5,6 +5,7 @@ export interface AuthenticationFlow extends mongoose.Document {
   code: string;
   state: string;
   nonce: string;
+  status: string;
 }
 
 const AuthenticationFlowSchema = new mongoose.Schema<AuthenticationFlow>({
@@ -27,6 +28,11 @@ const AuthenticationFlowSchema = new mongoose.Schema<AuthenticationFlow>({
     type: String,
     required: [false, "Provide nonce."],
     maxlength: [40, "Nonce cannot be more than 40 characters"],
+  },
+  status: {
+    type: String,
+    required: [false, "provide status."],
+    maxlength: [60, "Status cannot be more than 60 characters"],
   },
 });
 

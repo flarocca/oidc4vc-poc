@@ -13,7 +13,7 @@ export default function QRCode({ url }) {
         errorCorrectionLevel: 'M',
         margin: 3,
         scale: 4,
-        width: 200,
+        width: 400,
         color: {
           dark: '#000',
           light: '#FFFFFF',

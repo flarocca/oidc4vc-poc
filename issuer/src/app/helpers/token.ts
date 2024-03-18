@@ -9,6 +9,11 @@ export async function getKeyStore() {
   } catch (error) {
     const keyStore = jose.JWK.createKeyStore();
 
+    await keyStore.generate("EC", "P-256", {
+      use: "sig",
+      alg: "ES256",
+    });
+
     await keyStore.generate("RSA", 2048, {
       use: "sig",
       alg: "RS256",

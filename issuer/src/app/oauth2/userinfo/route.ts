@@ -13,14 +13,19 @@ export async function GET(req: NextRequest) {
 
   try {
     const keyStore = await getKeyStore();
-    const [key] = (keyStore.toJSON() as any).keys;
+    const keys = (keyStore.toJSON() as any).keys;
+
+    const [key] = keys.filter(
+      (k: { use: string; kty: string }) => k.use === "sig" && k.kty === "RSA"
+    );
+
     const publicKey = jwktopem(key);
     const claims = jwt.verify(token, publicKey);
 
     return Response.json(claims);
   } catch (error) {
     return Response.json(
-      { error: "invalid_token" },
+      { code: "invalid_token", error },
       { status: 401, statusText: "unauthorized" }
     );
   }

@@ -8,7 +8,8 @@ import { useState } from 'react';
 
 export default function Authorize() {
   const searchParams = useSearchParams();
-  const [qrcode, setqrcode] = useState("");
+  const [qrcode_siop, setqrcode_siop] = useState("");
+  const [qrcode_vc, setqrcode_vc] = useState("");
 
   const redirect_uri = searchParams?.get('redirect_uri');
   const state = searchParams?.get('state');
@@ -60,7 +61,7 @@ export default function Authorize() {
 
             if (response.ok) {
               const body: {data: {code: string, state: string, siop_uri: string}} = await response.json();
-              setqrcode(body.data.siop_uri);
+              setqrcode_siop(body.data.siop_uri);
             } else {
               toast.error("Error processing Authorize request");
             }
@@ -70,12 +71,47 @@ export default function Authorize() {
             toast.error("Error processing Authorize request");
           }
         }}>Login with SIOP</button>
-        {qrcode ? 
+        {qrcode_siop ? 
           <div>
             <br />
-            <QRCode url={qrcode} />
+            <QRCode url={qrcode_siop} />
             <br />
-            <span>{qrcode}</span>
+            <span>{qrcode_siop}</span>
+          </div> 
+          : null}
+      </div>
+      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
+        <button onClick={async () => {
+          try {
+            const response = await fetch("/api/vc", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                state,
+                nonce
+              }),
+            });
+
+            if (response.ok) {
+              const body: {data: {code: string, state: string, credential_offer_uri: string}} = await response.json();
+              setqrcode_vc(body.data.credential_offer_uri);
+            } else {
+              toast.error("Error processing VC Issuance");
+            }
+
+          } catch (error) {
+            console.log(JSON.stringify(error));
+            toast.error("Error processing VC Issuance");
+          }
+        }}>Issue VC</button>
+        {qrcode_vc ? 
+          <div>
+            <br />
+            <QRCode url={qrcode_vc} />
+            <br />
+            <span>{qrcode_vc}</span>
           </div> 
           : null}
       </div>
