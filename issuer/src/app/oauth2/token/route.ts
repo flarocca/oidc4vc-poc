@@ -19,7 +19,6 @@ const create_token = async (payload: any) => {
 const authorization_code_handler = async (data: FormData) => {
   await dbConnect();
 
-  // const data = await req.formData();
   const code = data.get("code");
 
   const auth_flow = await AuthenticationFlow.findOneAndDelete({

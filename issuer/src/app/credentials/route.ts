@@ -1,12 +1,12 @@
-import { webcrypto } from "node:crypto";
-// @ts-expect-error ignoring
-if (!globalThis.crypto) globalThis.crypto = webcrypto;
+// import { webcrypto } from "node:crypto";
+// // @ts-expect-error ignoring
+// if (!globalThis.crypto) globalThis.crypto = webcrypto;
 
 import { NextRequest } from "next/server";
-// import jose from "node-jose";
-// import { JwtPayload, jwtDecode } from "jwt-decode";
+import jose from "node-jose";
+import { JwtPayload, jwtDecode } from "jwt-decode";
 import { VerifiableCredential } from "@web5/credentials";
-// import { getKeyStore } from "../helpers/token";
+import { getKeyStore } from "../helpers/token";
 
 class MembershipExample {
   firstName: String;
@@ -20,9 +20,9 @@ class MembershipExample {
   }
 }
 
-export async function POST() {
+export async function POST(req: NextRequest) {
   // const data = await req.formData();
-  // const body = await req.json();
+  const body = await req.json();
 
   // console.log(`Credentials DATA - ${JSON.stringify(data)}`);
   // console.log(`Credentials BODY - ${JSON.stringify(body)}`);
@@ -36,54 +36,67 @@ export async function POST() {
   // };
 
   // Subject
-  // const decodedHeader = jwtDecode(body.proof.jwt, { header: true });
-  // const decodedBody = jwtDecode<JwtPayload & { nonce: string }>(body.proof.jwt);
+  const decodedHeader = jwtDecode(body.proof.jwt, { header: true });
+  const decodedBody = jwtDecode<JwtPayload & { nonce: string }>(body.proof.jwt);
+  const subject = decodedHeader.kid || "";
 
   // console.log(`Credentials HEADER - ${JSON.stringify(decodedHeader)}`);
 
   // Issuer
-  // const keyStore = await getKeyStore();
-  // const [key] = keyStore.all({ use: "sig", kty: "EC" });
-  // const issuer = `did:jwk:${Buffer.from(JSON.stringify(key.toJSON())).toString(
-  //   "base64"
-  // )}`;
+  const keyStore = await getKeyStore();
+  const [key] = keyStore.all({ use: "sig", kty: "EC" });
+  const issuer = `did:jwk:${Buffer.from(JSON.stringify(key.toJSON())).toString(
+    "base64"
+  )}`;
 
   // Credentials
-  const credential = new MembershipExample(
-    "Facundo",
-    "La Rocca",
-    "demo@email.io"
-  );
+  // const credential = new MembershipExample(
+  //   "Facundo",
+  //   "La Rocca",
+  //   "demo@email.io"
+  // );
+  const issuanceDate = new Date();
+  const expirationDate = new Date();
+  expirationDate.setDate(issuanceDate.getDate() + 365);
 
-  // const subject = decodedHeader.kid || "";
+  // Credential
+  const vc = {
+    "@context": ["https://www.w3.org/2018/credentials/v1"],
+    type: ["VerifiableCredential", "MembershipExample"],
+    credentialSubject: {
+      firstName: "Facundo",
+      lastName: "La Rocca",
+      mail: "facundo@mightyblock.co",
+      id: subject,
+    },
+  };
 
-  const vc = await VerifiableCredential.create({
-    type: "MembershipExample",
-    issuer: "did:jwk:ey...",
-    subject: "did:jwk:ey...",
-    data: credential,
-  });
+  const credential = {
+    exp: Math.floor((expirationDate.getTime() as unknown as number) / 1000),
+    expirationDate: expirationDate.toISOString(),
+    nbf: Math.floor(issuanceDate.getTime() / 1000),
+    issuanceDate: issuanceDate.toISOString(),
+    issuer,
+    iss: issuer,
+    sub: subject,
+    vc,
+    ...vc,
+  };
 
   // console.log(`Credentials CREDENTIAL - ${JSON.stringify(credential)}`);
 
-  // const opt = { compact: true, fields: { typ: "JWT" } };
+  const opt = { compact: true, fields: { typ: "JWT" } };
 
-  // const signedJwt = await jose.JWS.createSign(opt, key)
-  //   .update(
-  //     JSON.stringify({
-  //       vc: "vc.vcDataModel",
-  //       iss: "vc.issuer",
-  //       sub: "vc.subject",
-  //     })
-  //   )
-  //   .final();
+  const signedJwt = await jose.JWS.createSign(opt, key)
+    .update(JSON.stringify(credential))
+    .final();
 
-  // console.log(`Credentials VC_JWT - ${signedJwt}`);
+  console.log(`Credentials VC_JWT - ${signedJwt}`);
 
   return Response.json({
     format: "jwt_vc",
-    credential: "signedJwt",
-    c_nonce: "decodedBody.nonce",
+    credential: signedJwt,
+    c_nonce: decodedBody.nonce,
     c_nonce_expires_in: 86400,
   });
 }
