@@ -1,13 +1,9 @@
-# OIDC for Verificable Credentials PoC
+# How to reproduce
 
-## TODO list
+1. `npm install`
+2. `npm run dev`
+3. Make the following request
 
-- [ ] OIDC Authorization Flow compliant
-  - [x] Well-Known endpoint
-  - [x] JWKs endpoint
-  - [x] Authorize endpoint
-  - [x] Token endpoint
-  - [x] UserInfo endpoint
-  - [ ] Test integration with Cognito
-- [ ] SIOP flow
-- [ ] OIDC4VC
+```
+curl --location --request GET 'http://localhost:3000/credentials'
+```
