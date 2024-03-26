@@ -7,7 +7,7 @@ type Params = {
 export async function POST(req: NextApiRequest, context: { params: Params }) {
   const { txid } = context.params;
 
-  console.log(`RESPONSE TX ID: ${txid}`);
+  console.log(`RESPONSE V1 TX ID: ${txid}`);
 
   return Response.json({ success: true });
 }

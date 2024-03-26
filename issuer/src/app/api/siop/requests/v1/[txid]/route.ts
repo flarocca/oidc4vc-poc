@@ -40,34 +40,36 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
 
     const dt = new Date();
     const payload = {
-      iat: Math.floor(dt.getTime() / 1000),
-      nbf: Math.floor(dt.getTime() / 1000),
-      exp: Math.floor(
-        (new Date(dt.getTime() + 20 * 60 * 1000) as unknown as number) / 1000
-      ),
-      jti: "f4c8373d-d5ae-4eef-bf43-8da13f6ff5dd",
-      response_type: "vp_token",
-      scope: "openid",
-      response_uri: `${
+      // iat: Math.floor(dt.getTime() / 1000),
+      // nbf: Math.floor(dt.getTime() / 1000),
+      // exp: Math.floor(
+      //   (new Date(dt.getTime() + 20 * 60 * 1000) as unknown as number) / 1000
+      // ),
+      // jti: "f4c8373d-d5ae-4eef-bf43-8da13f6ff5dd",
+      response_type: "id_token",
+      scope: "openid profile",
+      redirect_uri: `${
         process.env.EXTERNAL_SERVER_URI as string
       }/api/siop/responses/${txid}`,
-      response_mode: "post",
+      // response_mode: "post",
       nonce: auth_flow.nonce,
-      state: auth_flow.state,
+      // state: auth_flow.state,
       iss: did,
-      sub: did,
+      // sub: did,
       client_id: did,
+      // client_id: `${process.env.EXTERNAL_SERVER_URI as string}`,
       // client_metadata: {
-      //   id_token_signing_alg_values_supported: ["RS256", "ES256"],
-      //   request_object_signing_alg_values_supported: ["ES256"],
-      //   response_types_supported: ["id_token"],
-      //   scopes_supported: ["openid", "email", "profile"],
-      //   subject_types_supported: ["pairwise"],
-      //   vp_formats: {
-      //     jwt_vp: {
-      //       alg: ["ES256"],
-      //     },
-      //   },
+      //   // id_token_signing_alg_values_supported: ["RS256", "ES256"],
+      //   id_token_signing_alg_values_supported: ["ES256"],
+      //   // request_object_signing_alg_values_supported: ["ES256"],
+      //   // response_types_supported: ["id_token"],
+      //   // scopes_supported: ["openid", "email", "profile"],
+      //   // subject_types_supported: ["pairwise"],
+      //   // vp_formats: {
+      //   //   jwt_vp: {
+      //   //     alg: ["ES256"],
+      //   //   },
+      //   // },
       //   subject_syntax_types_supported: ["did:jwk"],
       // },
       // presentation_definition: {
@@ -98,28 +100,28 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
       //   ],
       // },
       // claims: {
-      userinfo: {
-        verifiable_presentations: [
-          {
-            presentation_definition: {
-              input_descriptors: [
-                {
-                  schema: [
-                    {
-                      uri: "https://did.itsourweb.org:3000/smartcredential/Ontario-Health-Insurance-Plan",
-                    },
-                  ],
-                },
-              ],
-            },
-          },
-        ],
-      },
-      id_token: {
-        auth_time: {
-          essential: false,
-        },
-      },
+      //   userinfo: {
+      //     verifiable_presentations: [
+      //       {
+      //         presentation_definition: {
+      //           input_descriptors: [
+      //             {
+      //               schema: [
+      //                 {
+      //                   uri: "https://did.itsourweb.org:3000/smartcredential/Ontario-Health-Insurance-Plan",
+      //                 },
+      //               ],
+      //             },
+      //           ],
+      //         },
+      //       },
+      //     ],
+      //   },
+      //   id_token: {
+      //     auth_time: {
+      //       essential: false,
+      //     },
+      //   },
       // },
     };
 

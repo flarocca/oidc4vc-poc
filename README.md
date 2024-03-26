@@ -10,4 +10,12 @@
   - [x] UserInfo endpoint
   - [ ] Test integration with Cognito
 - [ ] SIOP flow
-- [ ] OIDC4VC
+- [x] OIDC4VCI
+- [x] OIDC4VC
+- [x] OIDC4VP
+- [ ] Flows
+  - [ ] Regular Sign Up issuing a VC once email has been verified
+  - [ ] Sign up with VC without email verification
+  - [ ] Sign up with VC with email verification
+  - [ ] Sign up with KYC
+

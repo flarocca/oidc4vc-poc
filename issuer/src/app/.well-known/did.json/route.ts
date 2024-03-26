@@ -32,7 +32,3 @@ export async function GET(req: NextRequest) {
     capabilityDelegation: ["#0"],
   });
 }
-
-// openid://?request_uri=http%3A%2F%2F192.168.1.36%3A5003%2Fsiop%2Fdefinitions%2FDIIPv2%2Fauth-requests%2F0a8be0c5-5135-4f51-b43d-891c90485709
-
-// http://192.168.1.36:5003/webapp/definitions/DIIPv2/auth-requests
