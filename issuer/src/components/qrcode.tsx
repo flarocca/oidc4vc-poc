@@ -1,24 +1,24 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { useQRCode } from 'next-qrcode';
+import { useQRCode } from "next-qrcode";
 
-export default function QRCode({ url }) {
+export default function QRCode({ url, width = 400 }) {
   const { Image } = useQRCode();
 
   return (
     <Image
       text={url.trim()}
       options={{
-        type: 'image/jpeg',
+        type: "image/jpeg",
         quality: 1,
-        errorCorrectionLevel: 'M',
+        errorCorrectionLevel: "M",
         margin: 3,
         scale: 4,
-        width: 400,
+        width,
         color: {
-          dark: '#000',
-          light: '#FFFFFF',
+          dark: "#000",
+          light: "#FFFFFF",
         },
       }}
     />
   );
-};
+}

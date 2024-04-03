@@ -67,10 +67,7 @@ const authorization_code_handler = async (data: FormData) => {
 const pre_authorization_code_handler = async (data: FormData) => {
   await dbConnect();
 
-  // const data = await req.formData();
   const preAuthorizedCode = data.get("pre-authorized_code");
-
-  console.log(`preAuthorizedCode - ${preAuthorizedCode}`);
 
   const auth_flow = await AuthenticationFlow.findOneAndDelete({
     code: preAuthorizedCode,
