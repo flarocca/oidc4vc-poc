@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
   await dbConnect();
 
   try {
-    console.log(`/sign-in/regular - Initiated`);
+    console.log(`/api/sign-in/regular - Initiated`);
 
     const body: {
       code: string;
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     }).exec();
 
     console.log(
-      `/sign-in/regular - Authentication Code flow initiated. Code ${body.code}`
+      `/api/sign-in/regular - Authentication Code flow initiated. Code ${body.code}`
     );
 
     const auth_flow = await AuthenticationFlow.create({
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
 
     if (body.isEmailVerified) {
       console.log(
-        `/sign-in/regular - Creating credential offer for Email Verification`
+        `/api/sign-in/regular - Creating credential offer for Email Verification`
       );
 
       const code = await AuthenticationFlow.create({
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
       });
 
       console.log(
-        `/sign-in/regular - Pre-authorization_code for Email Verification created. Code ${code.code}`
+        `/api/sign-in/regular - Pre-authorization_code for Email Verification created. Code ${code.code}`
       );
 
       await CredentialOfferDocument.create({
@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
       });
 
       console.log(
-        `/sign-in/regular - Credential offer for Email Verification created. Code ${code.code}`
+        `/api/sign-in/regular - Credential offer for Email Verification created. Code ${code.code}`
       );
 
       vc_email_uri = create_credential_offer(
@@ -103,7 +103,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (body.kycComplete) {
-      console.log(`/sign-in/regular - Creating credential offer for KYC`);
+      console.log(`/api/sign-in/regular - Creating credential offer for KYC`);
 
       const code = await AuthenticationFlow.create({
         type: "pre-authorized_code",
@@ -114,7 +114,7 @@ export async function POST(req: NextRequest) {
       });
 
       console.log(
-        `/sign-in/regular - Pre-authorization_code for KYC created. Code ${code.code}`
+        `/api/sign-in/regular - Pre-authorization_code for KYC created. Code ${code.code}`
       );
 
       await CredentialOfferDocument.create({
@@ -129,14 +129,14 @@ export async function POST(req: NextRequest) {
       });
 
       console.log(
-        `/sign-in/regular - Credential offer for KYC created. Code ${code.code}`
+        `/api/sign-in/regular - Credential offer for KYC created. Code ${code.code}`
       );
 
       vc_kyc_uri = create_credential_offer(code.code, "KycCredential");
     }
 
     console.log(
-      `/sign-in/regular - Completed. OidcFlow: ${JSON.stringify(oidc_flow)}`
+      `/api/sign-in/regular - Completed. OidcFlow: ${JSON.stringify(oidc_flow)}`
     );
 
     return Response.json({
@@ -148,7 +148,9 @@ export async function POST(req: NextRequest) {
       vc_kyc_uri,
     });
   } catch (error) {
-    console.log(JSON.stringify(error));
+    console.error(
+      `/api/sign-in/regular - Failed. Error: ${JSON.stringify(error)}`
+    );
     return Response.json(
       { code: "internal_server_error", error: JSON.stringify(error) },
       { status: 500, statusText: "internal_server_error" }

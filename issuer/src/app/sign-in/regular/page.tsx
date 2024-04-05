@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
 import QRCode from "@/components/qrcode";
 import { useRouter, useSearchParams } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function Home() {
   const router = useRouter();
@@ -210,7 +210,6 @@ export default function Home() {
       </button>
 
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left"></div>
-      <Toaster />
     </main>
   );
 }

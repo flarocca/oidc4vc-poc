@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
 import QRCode from "@/components/qrcode";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -19,7 +18,6 @@ export default function Callback() {
           Relaying Party (Game) - Authentication Callback
         </p>
       </div>
-      <Toaster />
     </main>
   );
 }

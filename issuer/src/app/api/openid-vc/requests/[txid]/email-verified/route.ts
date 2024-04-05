@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import { NextApiRequest } from "next";
-import AuthenticationFlow from "@/models/authentication_flow";
+import EmailVerifiedCredentialDocument from "@/models/credential_offer";
 import jose from "node-jose";
 import { getKeyStore } from "@/app/helpers/token";
 import { JsonWebTokenError } from "jsonwebtoken";
@@ -14,12 +14,11 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
 
   const { txid } = context.params;
 
-  console.log(`OPENID-VC REQUEST TX ID: ${txid}`);
+  console.log(`OPENID-VC EMAIL-VERIFY REQUEST TX ID: ${txid}`);
 
   try {
-    const result = await AuthenticationFlow.updateOne(
+    const result = await EmailVerifiedCredentialDocument.updateOne(
       {
-        type: "openid-vc",
         code: txid,
       },
       {
@@ -27,8 +26,7 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
       }
     );
 
-    const auth_flow = await AuthenticationFlow.findOne({
-      type: "openid-vc",
+    const auth_flow = await EmailVerifiedCredentialDocument.findOne({
       code: txid,
     });
 
@@ -54,7 +52,7 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
       sub: did,
       redirect_uri: `${
         process.env.EXTERNAL_SERVER_URI as string
-      }/api/openid-vc/responses/v1/${txid}`,
+      }/api/openid-vc/responses/${txid}/email-verified`,
       nonce: auth_flow.nonce,
       state: auth_flow.state,
       registration: {

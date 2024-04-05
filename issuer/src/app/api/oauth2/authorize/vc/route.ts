@@ -6,6 +6,8 @@ import { NextRequest } from "next/server";
 export async function POST(req: NextRequest) {
   await dbConnect();
 
+  console.log(`/sign-in/vc - Initiated`);
+
   const body: { state: string; nonce: string } = await req.json();
 
   try {
