@@ -48,7 +48,6 @@ export async function POST(req: NextRequest, context: { params: Params }) {
     );
   }
 
-  // 1. Update txid
   const openid_vc_flow = await AuthenticationFlow.findOneAndUpdate(
     {
       type: "openid-vc",
@@ -59,19 +58,18 @@ export async function POST(req: NextRequest, context: { params: Params }) {
     }
   );
 
-  // 2. Parse response
   const payload: {
     vp: { verifiableCredential: string[] };
   } = jwtDecode(vpToken);
 
   const claims = extractClaims(payload.vp.verifiableCredential);
 
-  // 3. Create Auth Code Flow
   await AuthenticationFlow.create({
     type: "oidc",
     code: openid_vc_flow.code,
     state: openid_vc_flow.state,
     nonce: openid_vc_flow.nonce,
+    redirectUri: openid_vc_flow.redirectUri,
     status: "initiated",
     data: claims,
   });
@@ -85,8 +83,6 @@ export async function POST(req: NextRequest, context: { params: Params }) {
       status: "complete",
     }
   );
-
-  // 4. Modify UI to automatically redirect to RP's callback
 
   return new Response(null, {
     status: 204,

@@ -6,9 +6,10 @@ import { NextRequest } from "next/server";
 export async function POST(req: NextRequest) {
   await dbConnect();
 
-  console.log(`/sign-in/vc - Initiated`);
+  console.log(`/api/oauth2/authorize/vc - Initiated`);
 
-  const body: { state: string; nonce: string } = await req.json();
+  const body: { state: string; nonce: string; redirectUri: string } =
+    await req.json();
 
   try {
     const auth_flow = await AuthenticationFlow.create({
@@ -17,6 +18,7 @@ export async function POST(req: NextRequest) {
       state: body.state,
       nonce: body.nonce,
       status: "initiated",
+      redirectUri: body.redirectUri,
     });
 
     const request_uri_encoded = encodeURIComponent(
@@ -29,10 +31,10 @@ export async function POST(req: NextRequest) {
 
     return Response.json({
       success: true,
-      data: { ...auth_flow, request_uri },
+      data: { code: auth_flow.code, request_uri },
     });
   } catch (error) {
-    console.log(`Error: ${JSON.stringify(error)}`);
+    console.log(`/api/oauth2/authorize/vc - Error: ${JSON.stringify(error)}`);
     return Response.json(
       { success: false },
       { status: 400, statusText: "bad_request" }

@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     `/api/oauth2/authorize/oidc - Initiating OIDC Authorization Code Flow`
   );
 
-  const body: { state: string; nonce: string; redirect_uri: string } =
+  const body: { state: string; nonce: string; redirectUri: string } =
     await req.json();
 
   try {
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
       code: uuidv4(),
       state: body.state,
       nonce: body.nonce,
-      redirectUri: body.redirect_uri,
+      redirectUri: body.redirectUri,
     });
 
     console.log(

@@ -10,7 +10,7 @@ export default function Authorize() {
   const searchParams = useSearchParams();
   const [qrcode, setqrcode] = useState("");
 
-  const redirect_uri = searchParams?.get("redirect_uri") || "redirect_uri";
+  const redirectUri = searchParams?.get("redirect_uri") || "redirect_uri";
   const state = searchParams?.get("state") || "state";
   const nonce = searchParams?.get("nonce") || "nonce";
 
@@ -24,7 +24,7 @@ export default function Authorize() {
         body: JSON.stringify({
           state,
           nonce,
-          redirect_uri,
+          redirectUri,
         }),
       });
 
@@ -43,17 +43,6 @@ export default function Authorize() {
 
   const signInWithVc = async () => {
     try {
-      // const response = await fetch("/api/vc/credential-authn", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     state,
-      //     nonce,
-      //   }),
-      // });
-
       const response = await fetch("/api/oauth2/authorize/vc", {
         method: "POST",
         headers: {
@@ -62,18 +51,10 @@ export default function Authorize() {
         body: JSON.stringify({
           state,
           nonce,
-          redirect_uri,
+          redirectUri,
         }),
       });
 
-      // if (response.ok) {
-      //   const body: {
-      //     data: { code: string; state: string; request_uri: string };
-      //   } = await response.json();
-      //   setqrcode(body.data.request_uri);
-      // } else {
-      //   toast.error("Error processing Authorize request");
-      // }
       if (response.ok) {
         const body: { data: { code: string } } = await response.json();
 

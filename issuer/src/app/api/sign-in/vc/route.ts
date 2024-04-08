@@ -18,12 +18,18 @@ export async function POST(req: NextRequest) {
       requirePii: boolean;
     } = await req.json();
 
+    const openid_vc_flow = await AuthenticationFlow.findOne({
+      type: "openid-vc",
+      code: body.code,
+    });
+
     const auth_flow = await AuthenticationFlow.create({
       type: "openid-vc",
       code: uuidv4(),
       state: uuidv4(),
       nonce: uuidv4(),
       status: "initiated",
+      redirectUri: openid_vc_flow.redirectUri,
       data: {
         requireEmailVerified: body.requireEmailVerified,
         requireKyc: body.requireKyc,

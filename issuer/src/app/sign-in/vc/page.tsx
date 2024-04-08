@@ -78,6 +78,30 @@ export default function Home() {
     }
   };
 
+  const complete = async () => {
+    try {
+      const response = await fetch(`/api/oauth2/authorize/oidc/${authCode}`, {
+        method: "GET",
+      });
+
+      if (response.ok) {
+        const body: {
+          data: {
+            code: string;
+            redirectUri: string;
+          };
+        } = await response.json();
+
+        router.push(`${body.data.redirectUri}?code=${body.data.code}`);
+      } else {
+        toast.error("Error completing flow");
+      }
+    } catch (error) {
+      console.log(JSON.stringify(error));
+      toast.error("Error querying request status");
+    }
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="max-w-5xl w-full items-center justify-center font-mono text-sm lg:flex">
@@ -153,6 +177,18 @@ export default function Home() {
         </button>
         <span>Status: {status}</span>
       </div>
+      {status == "complete" ? (
+        <div>
+          <button
+            style={{ margin: "10px" }}
+            className="text-2xl border-b border-gray-300 text-center group rounded-lg border bg-gradient-to-b px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+            rel="noopener noreferrer"
+            onClick={complete}
+          >
+            Complete
+          </button>
+        </div>
+      ) : null}
 
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left"></div>
     </main>

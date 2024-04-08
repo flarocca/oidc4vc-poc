@@ -43,7 +43,7 @@ export default function Home() {
       if (response.ok) {
         const body: {
           code: string;
-          redirect_uri: string;
+          redirectUri: string;
           state: string;
           vc_email_uri: string;
           vc_kyc_uri: string;
@@ -58,7 +58,7 @@ export default function Home() {
         }
 
         setAuthCode(body.code);
-        setRedirectUri(body.redirect_uri);
+        setRedirectUri(body.redirectUri);
         setAuthState(body.state);
 
         toast.success(

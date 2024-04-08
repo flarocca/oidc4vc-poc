@@ -142,7 +142,7 @@ export async function POST(req: NextRequest) {
     return Response.json({
       success: true,
       code: body.code,
-      redirect_uri: oidc_flow.redirectUri,
+      redirectUri: oidc_flow.redirectUri,
       state: oidc_flow.state,
       vc_email_uri,
       vc_kyc_uri,
