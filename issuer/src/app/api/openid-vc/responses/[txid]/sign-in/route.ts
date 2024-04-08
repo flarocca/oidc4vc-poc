@@ -12,12 +12,17 @@ const extractClaims = (verifiableCredential: string[]): string[] => {
   let claims: any = {};
 
   verifiableCredential.forEach((vc) => {
-    const cred: {
-      credentialSubject: any;
-    } = jwtDecode(vc);
+    const cred = jwtDecode<{ sub: string; vc: any; credentialSubject: any }>(
+      vc
+    );
+    const credentialSubject = cred.vc
+      ? cred.vc.credentialSubject
+      : cred.credentialSubject;
 
-    Object.keys(cred.credentialSubject).forEach((key) => {
-      claims[key] = cred.credentialSubject[key];
+    claims.sub = cred.sub;
+
+    Object.keys(credentialSubject).forEach((key) => {
+      claims[key] = credentialSubject[key];
     });
   });
 

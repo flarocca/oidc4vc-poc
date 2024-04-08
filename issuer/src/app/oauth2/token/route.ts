@@ -23,6 +23,7 @@ const authorization_code_handler = async (data: FormData) => {
 
   const auth_flow = await AuthenticationFlow.findOneAndDelete({
     code: code,
+    type: "oidc",
   }).exec();
 
   if (!auth_flow) {
@@ -35,25 +36,15 @@ const authorization_code_handler = async (data: FormData) => {
   const dt = new Date();
   const payload = {
     sub: uuidv4(),
-    email: "facu.larocca@gmail.com",
-    given_name: "Facundo",
-    family_name: "La Rocca",
     iss: `${process.env.EXTERNAL_SERVER_URI as string}`,
     iat: Math.floor(dt.getTime() / 1000),
     exp: Math.floor(
       (new Date(dt.getTime() + 20 * 60 * 1000) as unknown as number) / 1000
     ),
     nonce: auth_flow.nonce,
+    ...auth_flow.data,
   };
 
-  // const keyStore = await getKeyStore();
-  // const [key] = keyStore.all({ use: "sig", kty: "RSA" });
-
-  // const opt = { compact: true, fields: { typ: "JWT" } };
-
-  // const token = await jose.JWS.createSign(opt, key)
-  //   .update(JSON.stringify(payload))
-  //   .final();
   const token = await create_token(payload);
 
   return Response.json({
