@@ -17,7 +17,7 @@ const create_token = async (payload: any) => {
 };
 
 const authorization_code_handler = async (data: FormData) => {
-  await dbConnect();
+  console.log(`POST /oauth2/token - Handling Authorization Code`);
 
   const code = data.get("code");
 
@@ -27,11 +27,14 @@ const authorization_code_handler = async (data: FormData) => {
   }).exec();
 
   if (!auth_flow) {
+    console.log(`POST /oauth2/token - Not Found. ${code}`);
+
     return Response.json(
       { error: "bad_request" },
       { status: 400, statusText: "bad_request" }
     );
   }
+  console.log(`POST /oauth2/token - Found. ${code}`);
 
   const dt = new Date();
   const payload = {
@@ -47,6 +50,8 @@ const authorization_code_handler = async (data: FormData) => {
 
   const token = await create_token(payload);
 
+  console.log(`POST /oauth2/token - Complete. ${code}`);
+
   return Response.json({
     access_token: token,
     id_token: token,
@@ -56,7 +61,7 @@ const authorization_code_handler = async (data: FormData) => {
 };
 
 const pre_authorization_code_handler = async (data: FormData) => {
-  await dbConnect();
+  console.log(`POST /oauth2/token - Handling Pre-Authorization Code`);
 
   const preAuthorizedCode = data.get("pre-authorized_code");
 
@@ -65,14 +70,15 @@ const pre_authorization_code_handler = async (data: FormData) => {
     type: "pre-authorized_code",
   }).exec();
 
-  console.log(`auth_flow - ${JSON.stringify(auth_flow)}`);
-
   if (!auth_flow) {
+    console.log(`POST /oauth2/token - Not Found. ${preAuthorizedCode}`);
     return Response.json(
       { error: "bad_request" },
       { status: 400, statusText: "bad_request" }
     );
   }
+
+  console.log(`POST /oauth2/token - Found. ${preAuthorizedCode}`);
 
   const dt = new Date();
   const payload = {
@@ -85,6 +91,8 @@ const pre_authorization_code_handler = async (data: FormData) => {
   };
 
   const token = await create_token(payload);
+
+  console.log(`POST /oauth2/token - Complete. ${preAuthorizedCode}`);
 
   return Response.json({
     access_token: token,
@@ -100,18 +108,32 @@ const pre_authorization_code_handler = async (data: FormData) => {
 export async function POST(req: NextRequest) {
   await dbConnect();
 
-  const data = await req.formData();
-  const grant_type = data.get("grant_type");
+  try {
+    console.log(`POST /oauth2/token - Initiated`);
 
-  switch (grant_type) {
-    case "authorization_code":
-      return await authorization_code_handler(data);
-    case "urn:ietf:params:oauth:grant-type:pre-authorized_code":
-      return await pre_authorization_code_handler(data);
-    default:
-      return Response.json(
-        { error: "invalid_grant", error_description: "unsupported grant_type" },
-        { status: 400, statusText: "bad_request" }
-      );
+    const data = await req.formData();
+    const grant_type = data.get("grant_type");
+
+    switch (grant_type) {
+      case "authorization_code":
+        return await authorization_code_handler(data);
+      case "urn:ietf:params:oauth:grant-type:pre-authorized_code":
+        return await pre_authorization_code_handler(data);
+      default:
+        console.log(`POST /oauth2/token - Error: Invalid grant`);
+        return Response.json(
+          {
+            error: "invalid_grant",
+            error_description: "unsupported grant_type",
+          },
+          { status: 400, statusText: "bad_request" }
+        );
+    }
+  } catch (error) {
+    console.error(`POST /oauth2/token - Error: ${JSON.stringify(error)}`);
+    return Response.json(
+      { code: "internal_server_error", error: JSON.stringify(error) },
+      { status: 500, statusText: "internal_server_error" }
+    );
   }
 }

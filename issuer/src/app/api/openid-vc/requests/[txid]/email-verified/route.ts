@@ -14,7 +14,7 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
 
   const { txid } = context.params;
 
-  console.log(`OPENID-VC EMAIL-VERIFY REQUEST TX ID: ${txid}`);
+  console.log(`GET /api/openid-vc/requests/${txid}/email-verified - Initiated`);
 
   try {
     const result = await EmailVerifiedCredentialDocument.updateOne(
@@ -29,6 +29,8 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
     const auth_flow = await EmailVerifiedCredentialDocument.findOne({
       code: txid,
     });
+
+    console.log(`GET /api/openid-vc/requests/${txid}/email-verified - Found`);
 
     const keyStore = await getKeyStore();
     const [key] = keyStore.all({ use: "sig", kty: "EC" });
@@ -120,13 +122,19 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
       .update(JSON.stringify(payload))
       .final();
 
-    // create vc presentation JWT
+    console.log(
+      `GET /api/openid-vc/requests/${txid}/email-verified - Complete`
+    );
 
     return new Response(token as unknown as string, {
       status: 200,
     });
   } catch (error) {
-    console.log(JSON.stringify(error));
+    console.log(
+      `GET /api/openid-vc/requests/${txid}/email-verified - Error: ${JSON.stringify(
+        error
+      )}`
+    );
     return Response.json(
       { success: false, error },
       { status: 400, statusText: "bad_request" }

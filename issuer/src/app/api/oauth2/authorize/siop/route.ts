@@ -8,6 +8,8 @@ export async function POST(req: NextRequest) {
 
   const body: { state: string; nonce: string } = await req.json();
 
+  console.log(`POST /api/oauth2/authorize/siop - Initiated`);
+
   try {
     const auth_flow = await AuthenticationFlow.create({
       type: "siop",
@@ -16,16 +18,15 @@ export async function POST(req: NextRequest) {
       nonce: body.nonce,
       status: "initiated",
     });
+
+    console.log(`POST /api/oauth2/authorize/siop - Created. ${auth_flow.code}`);
+
     const request_uri = encodeURIComponent(
       `${process.env.EXTERNAL_SERVER_URI as string}/api/siop/requests/v1/${
         auth_flow.code
       }`
     );
-    // const client_id = encodeURIComponent(
-    //   `${process.env.EXTERNAL_SERVER_URI as string}/api/siop/responses/v1/${
-    //     auth_flow.code
-    //   }`
-    // );
+
     const client_id = encodeURIComponent(
       `${process.env.EXTERNAL_SERVER_URI as string}`
     );
@@ -33,12 +34,16 @@ export async function POST(req: NextRequest) {
     const siop_uri = `openid://?request_uri=${request_uri}&client_id=${client_id}`;
     // const siop_uri = `openid://?request_uri=${request_uri}`;
 
+    console.log(`POST /api/oauth2/authorize/siop - Completed`);
+
     return Response.json({
       success: true,
       data: { ...auth_flow, siop_uri },
     });
   } catch (error) {
-    console.log(`Error: ${JSON.stringify(error)}`);
+    console.log(
+      `POST /api/oauth2/authorize/siop - Error: ${JSON.stringify(error)}`
+    );
     return Response.json(
       { success: false },
       { status: 400, statusText: "bad_request" }

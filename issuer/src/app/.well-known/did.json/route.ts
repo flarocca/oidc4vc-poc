@@ -1,6 +1,8 @@
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
+  console.log(`GET /.well-known/did.json`);
+
   return Response.json({
     "@context": [
       "https://www.w3.org/ns/did/v1",

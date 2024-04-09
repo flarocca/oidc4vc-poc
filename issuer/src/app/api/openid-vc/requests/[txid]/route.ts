@@ -130,7 +130,7 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
 
   const { txid } = context.params;
 
-  console.log(`/api/openid-vc/requests/${txid} - Code scanned`);
+  console.log(`GET /api/openid-vc/requests/${txid} - Scanned`);
 
   try {
     const auth_flow = await AuthenticationFlow.findOneAndUpdate(
@@ -143,9 +143,7 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
       }
     );
 
-    console.log(
-      `/api/openid-vc/requests/${txid} - Creating Verifiable presentation`
-    );
+    console.log(`GET /api/openid-vc/requests/${txid} - Found`);
 
     const keyStore = await getKeyStore();
     const [key] = keyStore.all({ use: "sig", kty: "EC" });
@@ -169,18 +167,14 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
       .update(JSON.stringify(payload))
       .final();
 
-    console.log(
-      `/api/openid-vc/requests/${txid} - Verifiable presentation created. JWT: ${token}`
-    );
+    console.log(`GET /api/openid-vc/requests/${txid} - Complete.`);
 
     return new Response(token as unknown as string, {
       status: 200,
     });
   } catch (error) {
     console.error(
-      `/api/openid-vc/requests/${txid} - Failed. Error: ${JSON.stringify(
-        error
-      )}`
+      `/api/openid-vc/requests/${txid} - Error: ${JSON.stringify(error)}`
     );
     return Response.json(
       { success: false, error },

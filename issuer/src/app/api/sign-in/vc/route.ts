@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   await dbConnect();
 
   try {
-    console.log(`/api/sign-in/vc - Initiated`);
+    console.log(`POST /api/sign-in/vc - Initiated`);
 
     const body: {
       code: string;
@@ -23,6 +23,8 @@ export async function POST(req: NextRequest) {
       code: body.code,
     });
 
+    console.log(`POST /api/sign-in/vc - Found. ${body.code}`);
+
     const auth_flow = await AuthenticationFlow.create({
       type: "openid-vc",
       code: uuidv4(),
@@ -37,9 +39,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    console.log(
-      `/api/sign-in/vc - VC Authentication flow initiated. Code ${body.code}`
-    );
+    console.log(`POST /api/sign-in/vc - Initiated`);
 
     const request_uri_encoded = encodeURIComponent(
       `${process.env.EXTERNAL_SERVER_URI as string}/api/openid-vc/requests/${
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
 
     const request_uri = `openid-vc://?request_uri=${request_uri_encoded}`;
 
-    console.log(`/api/sign-in/vc - VC Authentication flow Completed`);
+    console.log(`POST /api/sign-in/vc - Completed`);
 
     return Response.json({
       success: true,
@@ -58,11 +58,7 @@ export async function POST(req: NextRequest) {
       request_uri,
     });
   } catch (error) {
-    console.error(
-      `/api/sign-in/vc - VC Authentication flow Failed. Error: ${JSON.stringify(
-        error
-      )}`
-    );
+    console.error(`POST /api/sign-in/vc - Error: ${JSON.stringify(error)}`);
     return Response.json(
       { code: "internal_server_error", error: JSON.stringify(error) },
       { status: 500, statusText: "internal_server_error" }

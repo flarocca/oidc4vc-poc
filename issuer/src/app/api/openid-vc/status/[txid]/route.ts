@@ -11,7 +11,7 @@ export async function GET(req: NextRequest, context: { params: Params }) {
 
   const { txid } = context.params;
 
-  console.log(`/api/openid-vc/status/${txid} - Querying status`);
+  console.log(`GET /api/openid-vc/status/${txid} - Querying`);
 
   try {
     const auth_flow = await AuthenticationFlow.findOne({
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest, context: { params: Params }) {
 
     if (auth_flow) {
       console.log(
-        `/api/openid-vc/status/${txid} - Status requested. Status: ${auth_flow.status}`
+        `GET /api/openid-vc/status/${txid} - Found. ${auth_flow.status}`
       );
 
       return Response.json(
@@ -35,7 +35,7 @@ export async function GET(req: NextRequest, context: { params: Params }) {
       );
     }
 
-    console.error(`/api/openid-vc/status/${txid} - Not Found`);
+    console.error(`GET /api/openid-vc/status/${txid} - Not Found`);
     return Response.json(
       {
         success: false,
@@ -45,10 +45,12 @@ export async function GET(req: NextRequest, context: { params: Params }) {
       }
     );
   } catch (error) {
-    console.log(JSON.stringify(error));
+    console.error(
+      `POST /api/openid-vc/status/${txid} - Error: ${JSON.stringify(error)}`
+    );
     return Response.json(
       { success: false, error },
-      { status: 400, statusText: "bad_request" }
+      { status: 500, statusText: "internal_server_erorr" }
     );
   }
 }

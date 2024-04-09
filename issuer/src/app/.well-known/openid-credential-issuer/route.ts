@@ -1,6 +1,8 @@
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
+  console.log(`GET /.well-known/openid-credential-issuer`);
+
   return Response.json({
     credential_issuer: `${process.env.EXTERNAL_SERVER_URI as string}`,
     credential_endpoint: `${

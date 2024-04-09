@@ -6,9 +6,7 @@ import { NextRequest } from "next/server";
 export async function POST(req: NextRequest) {
   await dbConnect();
 
-  console.log(
-    `/api/oauth2/authorize/oidc - Initiating OIDC Authorization Code Flow`
-  );
+  console.log(`POST /api/oauth2/authorize/oidc - Initiating`);
 
   const body: { state: string; nonce: string; redirectUri: string } =
     await req.json();
@@ -22,16 +20,12 @@ export async function POST(req: NextRequest) {
       redirectUri: body.redirectUri,
     });
 
-    console.log(
-      `/api/oauth2/authorize/oidc - Authorization flow created. Code: ${auth_flow.code}`
-    );
+    console.log(`POST /api/oauth2/authorize/oidc - Created. ${auth_flow.code}`);
 
     return Response.json({ success: true, data: auth_flow });
   } catch (error) {
     console.error(
-      `/api/oauth2/authorize/oidc - Authorization flow failed. Error: ${JSON.stringify(
-        error
-      )}`
+      `POST /api/oauth2/authorize/oidc - Error: ${JSON.stringify(error)}`
     );
     return Response.json(
       { success: false, error },

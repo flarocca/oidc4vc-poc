@@ -6,7 +6,7 @@ import { NextRequest } from "next/server";
 export async function POST(req: NextRequest) {
   await dbConnect();
 
-  console.log(`/api/oauth2/authorize/vc - Initiated`);
+  console.log(`POST /api/oauth2/authorize/vc - Initiated`);
 
   const body: { state: string; nonce: string; redirectUri: string } =
     await req.json();
@@ -21,6 +21,8 @@ export async function POST(req: NextRequest) {
       redirectUri: body.redirectUri,
     });
 
+    console.log(`POST /api/oauth2/authorize/vc - Created. ${auth_flow.code}`);
+
     const request_uri_encoded = encodeURIComponent(
       `${process.env.EXTERNAL_SERVER_URI as string}/api/openid-vc/requests/${
         auth_flow.code
@@ -29,12 +31,16 @@ export async function POST(req: NextRequest) {
 
     const request_uri = `openid-vc://?request_uri=${request_uri_encoded}`;
 
+    console.log(`POST /api/oauth2/authorize/vc - Complete`);
+
     return Response.json({
       success: true,
       data: { code: auth_flow.code, request_uri },
     });
   } catch (error) {
-    console.log(`/api/oauth2/authorize/vc - Error: ${JSON.stringify(error)}`);
+    console.log(
+      `POST /api/oauth2/authorize/vc - Error: ${JSON.stringify(error)}`
+    );
     return Response.json(
       { success: false },
       { status: 400, statusText: "bad_request" }

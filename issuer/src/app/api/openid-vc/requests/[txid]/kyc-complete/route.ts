@@ -14,7 +14,7 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
 
   const { txid } = context.params;
 
-  console.log(`OPENID-VC REQUEST TX ID: ${txid}`);
+  console.log(`GET /api/openid-vc/requests/${txid}/kyc-complete - Complete`);
 
   try {
     const result = await AuthenticationFlow.updateOne(
@@ -31,6 +31,8 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
       type: "openid-vc",
       code: txid,
     });
+
+    console.log(`GET /api/openid-vc/requests/${txid}/kyc-complete - Found`);
 
     const keyStore = await getKeyStore();
     const [key] = keyStore.all({ use: "sig", kty: "EC" });
@@ -122,13 +124,15 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
       .update(JSON.stringify(payload))
       .final();
 
-    // create vc presentation JWT
+    console.log(`GET /api/openid-vc/requests/${txid}/kyc-complete - Complete`);
 
     return new Response(token as unknown as string, {
       status: 200,
     });
   } catch (error) {
-    console.log(JSON.stringify(error));
+    console.log(
+      `GET /api/openid-vc/requests/${txid}/kyc-complete - Error: JSON.stringify(error)`
+    );
     return Response.json(
       { success: false, error },
       { status: 400, statusText: "bad_request" }

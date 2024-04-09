@@ -11,9 +11,7 @@ export async function GET(req: NextRequest, context: { params: Params }) {
 
   const { code } = context.params;
 
-  console.log(
-    `/api/oauth2/authorize/oidc/${code} - Getting Authorization Code Flow`
-  );
+  console.log(`GET /api/oauth2/authorize/oidc/${code} - Getting`);
 
   try {
     const auth_flow = await AuthenticationFlow.findOne({
@@ -21,7 +19,7 @@ export async function GET(req: NextRequest, context: { params: Params }) {
       code,
     });
 
-    console.log(`/api/oauth2/authorize/oidc/${code} - Retrieved`);
+    console.log(`GET /api/oauth2/authorize/oidc/${code} - Found`);
 
     return Response.json({
       success: true,
@@ -29,9 +27,7 @@ export async function GET(req: NextRequest, context: { params: Params }) {
     });
   } catch (error) {
     console.error(
-      `/api/oauth2/authorize/oidc/${code} - Authorization flow failed. Error: ${JSON.stringify(
-        error
-      )}`
+      `GET /api/oauth2/authorize/oidc/${code} - Error: ${JSON.stringify(error)}`
     );
     return Response.json(
       { success: false, error },

@@ -1,6 +1,8 @@
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
+  console.log(`GET /.well-known/openid-configuration`);
+
   return Response.json({
     issuer: `${process.env.EXTERNAL_SERVER_URI as string}`,
     authorization_endpoint: `${
