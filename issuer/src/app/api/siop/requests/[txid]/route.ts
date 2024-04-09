@@ -14,7 +14,7 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
 
   const { txid } = context.params;
 
-  console.log(`REQUEST TX ID: ${txid}`);
+  console.log(`GET /api/siop/requests/${txid} - Initiated`);
 
   try {
     const result = await AuthenticationFlow.updateOne(
@@ -31,6 +31,8 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
       type: "siop",
       code: txid,
     });
+
+    console.log(`GET /api/siop/requests/${txid} - Found`);
 
     const keyStore = await getKeyStore();
     const [key] = keyStore.all({ use: "sig", kty: "EC" });
@@ -131,16 +133,20 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
       .update(JSON.stringify(payload))
       .final();
 
+    console.log(`GET /api/siop/requests/${txid} - Complete`);
+
     // create vc presentation JWT
 
     return new Response(token as unknown as string, {
       status: 200,
     });
   } catch (error) {
-    console.log(JSON.stringify(error));
+    console.error(
+      `GET /api/siop/requests/${txid} - Error: ${JSON.stringify(error)}`
+    );
     return Response.json(
       { success: false, error },
-      { status: 400, statusText: "bad_request" }
+      { status: 500, statusText: "internal_server_erorr" }
     );
   }
 }
