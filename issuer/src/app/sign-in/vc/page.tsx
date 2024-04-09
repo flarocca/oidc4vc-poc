@@ -3,7 +3,9 @@
 import { useState } from "react";
 import QRCode from "@/components/qrcode";
 import { useRouter, useSearchParams } from "next/navigation";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import { useTimer } from "react-timer-hook";
 
 export default function Home() {
   const router = useRouter();
@@ -16,6 +18,23 @@ export default function Home() {
   const [requirePii, setRequirePii] = useState(false);
 
   const code = searchParams?.get("code") || "code";
+
+  const {
+    totalSeconds,
+    seconds,
+    minutes,
+    hours,
+    days,
+    isRunning,
+    start,
+    pause,
+    resume,
+    restart,
+  } = useTimer({
+    expiryTimestamp: new Date(),
+    autoStart: false,
+    onExpire: async () => await refresh(),
+  });
 
   const generateQr = async () => {
     try {
@@ -36,14 +55,18 @@ export default function Home() {
         const body: {
           code: string;
           state: string;
-          request_uri: string;
+          requestUri: string;
         } = await response.json();
 
-        if (body.request_uri) {
-          setQrcode(body.request_uri);
+        if (body.requestUri) {
+          setQrcode(body.requestUri);
         }
 
         setAuthCode(body.code);
+
+        const time = new Date();
+        time.setSeconds(time.getSeconds() + 5);
+        restart(time);
 
         toast.success(
           "Sign Up completed successfully. Redirecting to client app."
@@ -58,6 +81,8 @@ export default function Home() {
   };
 
   const refresh = async () => {
+    if (status == "complete") return;
+
     try {
       const response = await fetch(`/api/openid-vc/status/${authCode}`, {
         method: "GET",
@@ -69,6 +94,12 @@ export default function Home() {
         } = await response.json();
 
         setStatus(body.status);
+
+        if (body.status != "complete") {
+          const time = new Date();
+          time.setSeconds(time.getSeconds() + 5);
+          restart(time);
+        }
       } else {
         toast.error("Error querying request status");
       }
@@ -88,11 +119,14 @@ export default function Home() {
         const body: {
           data: {
             code: string;
+            state: string;
             redirectUri: string;
           };
         } = await response.json();
 
-        router.push(`${body.data.redirectUri}?code=${body.data.code}`);
+        router.push(
+          `${body.data.redirectUri}?code=${body.data.code}&state=${body.data.state}`
+        );
       } else {
         toast.error("Error completing flow");
       }
@@ -103,7 +137,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between p-24 forte">
       <div className="max-w-5xl w-full items-center justify-center font-mono text-sm lg:flex">
         <p className="justify-center text-2xl border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           Authenticate using VC
@@ -158,9 +192,18 @@ export default function Home() {
             >
               <span>Scan this QR Code to Sign In</span>
               <br />
-              <QRCode url={qrcode} width={250} />
               <br />
-              <span>{qrcode}</span>
+              <QRCode url={qrcode} width={300} />
+              <br />
+              <span
+                style={{
+                  overflowY: "auto",
+                  display: "block",
+                  maxWidth: "300px",
+                }}
+              >
+                {qrcode}
+              </span>
             </div>
           ) : null}
         </div>
@@ -178,19 +221,33 @@ export default function Home() {
         <span>Status: {status}</span>
       </div>
       {status == "complete" ? (
-        <div>
+        <div className="flex-row max-w-5xl w-full items-center justify-center font-mono text-sm lg:flex">
+          <CountdownCircleTimer
+            isPlaying
+            duration={10}
+            colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+            colorsTime={[7, 5, 2, 0]}
+            onUpdate={async (remainingTime) => {
+              if (!remainingTime) await complete();
+            }}
+          >
+            {({ remainingTime }) =>
+              `You will be redirected back to the RP in ${remainingTime}`
+            }
+          </CountdownCircleTimer>
           <button
             style={{ margin: "10px" }}
             className="text-2xl border-b border-gray-300 text-center group rounded-lg border bg-gradient-to-b px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
             rel="noopener noreferrer"
             onClick={complete}
           >
-            Complete
+            Redirect manually
           </button>
         </div>
       ) : null}
 
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left"></div>
+      <Toaster />
     </main>
   );
 }

@@ -17,8 +17,10 @@
     "next-qrcode": "^2.5.1",
     "node-jose": "^2.2.0",
     "react": "^18",
+    "react-countdown-circle-timer": "^3.2.1",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
+    "react-timer-hook": "^3.0.7",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     console.log(`POST /api/oauth2/authorize/siop - Created. ${auth_flow.code}`);
 
     const request_uri = encodeURIComponent(
-      `${process.env.EXTERNAL_SERVER_URI as string}/api/siop/requests/v1/${
+      `${process.env.EXTERNAL_SERVER_URI as string}/api/siop/requests/${
         auth_flow.code
       }`
     );

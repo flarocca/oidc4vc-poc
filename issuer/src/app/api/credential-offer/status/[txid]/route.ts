@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
-import AuthenticationFlow from "@/models/authentication_flow";
+import CredentialOfferDocument from "@/models/credential_offer";
 import { NextRequest } from "next/server";
 
 type Params = {
@@ -11,17 +11,16 @@ export async function GET(req: NextRequest, context: { params: Params }) {
 
   const { txid } = context.params;
 
-  console.log(`GET /api/openid-vc/status/${txid} - Initiated`);
+  console.log(`GET /api/credential-offer/status/${txid} - Initiated`);
 
   try {
-    const auth_flow = await AuthenticationFlow.findOne({
-      type: "openid-vc",
+    const auth_flow = await CredentialOfferDocument.findOne({
       code: txid,
     });
 
     if (auth_flow) {
       console.log(
-        `GET /api/openid-vc/status/${txid} - Found. ${auth_flow.status}`
+        `GET /api/credential-offer/status/${txid} - Found. ${auth_flow.status}`
       );
 
       return Response.json(
@@ -35,7 +34,7 @@ export async function GET(req: NextRequest, context: { params: Params }) {
       );
     }
 
-    console.error(`GET /api/openid-vc/status/${txid} - Not Found`);
+    console.error(`GET /api/credential-offer/status/${txid} - Not Found`);
     return Response.json(
       {
         success: false,
@@ -46,7 +45,9 @@ export async function GET(req: NextRequest, context: { params: Params }) {
     );
   } catch (error) {
     console.error(
-      `GET /api/openid-vc/status/${txid} - Error: ${JSON.stringify(error)}`
+      `GET /api/credential-offer/status/${txid} - Error: ${JSON.stringify(
+        error
+      )}`
     );
     return Response.json(
       { success: false, error },

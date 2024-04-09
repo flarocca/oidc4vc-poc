@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       }
     ).exec();
 
-    console.log(`POST /credentials - Scanned}`);
+    console.log(`POST /credentials - Scanned`);
 
     const body = await req.json();
 

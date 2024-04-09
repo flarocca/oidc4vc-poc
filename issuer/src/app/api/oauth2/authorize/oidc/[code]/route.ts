@@ -23,7 +23,11 @@ export async function GET(req: NextRequest, context: { params: Params }) {
 
     return Response.json({
       success: true,
-      data: { code: auth_flow.code, redirectUri: auth_flow.redirectUri },
+      data: {
+        code: auth_flow.code,
+        redirectUri: auth_flow.redirectUri,
+        state: auth_flow.state,
+      },
     });
   } catch (error) {
     console.error(

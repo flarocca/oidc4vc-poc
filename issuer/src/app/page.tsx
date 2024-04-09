@@ -1,4 +1,3 @@
-import { Toaster } from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Home() {
@@ -21,7 +20,6 @@ export default function Home() {
       </div>
 
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left"></div>
-      <Toaster />
     </main>
   );
 }
