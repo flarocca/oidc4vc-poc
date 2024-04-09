@@ -18,20 +18,20 @@ export async function POST(req: NextRequest) {
       requirePii: boolean;
     } = await req.json();
 
-    const openid_vc_flow = await AuthenticationFlow.findOne({
+    const openidVcFlow = await AuthenticationFlow.findOne({
       type: "openid-vc",
       code: body.code,
     });
 
     console.log(`POST /api/sign-in/vc - Found. ${body.code}`);
 
-    const auth_flow = await AuthenticationFlow.create({
+    const authFlow = await AuthenticationFlow.create({
       type: "openid-vc",
       code: uuidv4(),
       state: uuidv4(),
       nonce: uuidv4(),
       status: "initiated",
-      redirectUri: openid_vc_flow.redirectUri,
+      redirectUri: openidVcFlow.redirectUri,
       data: {
         requireEmailVerified: body.requireEmailVerified,
         requireKyc: body.requireKyc,
@@ -39,23 +39,23 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    console.log(`POST /api/sign-in/vc - Initiated`);
+    console.log(`POST /api/sign-in/vc - Created. ${authFlow.code}`);
 
     const request_uri_encoded = encodeURIComponent(
       `${process.env.EXTERNAL_SERVER_URI as string}/api/openid-vc/requests/${
-        auth_flow.code
+        authFlow.code
       }`
     );
 
-    const request_uri = `openid-vc://?request_uri=${request_uri_encoded}`;
+    const requestUri = `openid-vc://?request_uri=${request_uri_encoded}`;
 
     console.log(`POST /api/sign-in/vc - Completed`);
 
     return Response.json({
       success: true,
-      code: auth_flow.code,
+      code: authFlow.code,
       state: body.state,
-      request_uri,
+      requestUri,
     });
   } catch (error) {
     console.error(`POST /api/sign-in/vc - Error: ${JSON.stringify(error)}`);

@@ -20,7 +20,16 @@ const create_credential_offer = (code: string, type: string) => {
     JSON.stringify(credential_offer)
   );
 
-  return `openid-credential-offer://?credential_offer=${credential_offer_encoded}`;
+  const credential_offer_uri_encoded = encodeURIComponent(
+    `${
+      process.env.EXTERNAL_SERVER_URI as string
+    }/api/credential-offer/requests/${code}`
+  );
+
+  return {
+    val: `openid-credential-offer://?credential_offer=${credential_offer_encoded}`,
+    ref: `openid-credential-offer://?credential_offer_uri=${credential_offer_uri_encoded}`,
+  };
 };
 
 export async function POST(req: NextRequest) {
@@ -61,8 +70,10 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    let vc_email_uri = undefined;
-    let vc_kyc_uri = undefined;
+    let vcRefEmailUri = undefined;
+    let vcValEmailUri = undefined;
+    let vcRefKycUri = undefined;
+    let vcValKycUri = undefined;
 
     if (body.isEmailVerified) {
       console.log(
@@ -94,10 +105,13 @@ export async function POST(req: NextRequest) {
         `POST /api/sign-in/regular - Credential offer for Email Verification created. ${code.code}`
       );
 
-      vc_email_uri = create_credential_offer(
+      const { ref, val } = create_credential_offer(
         code.code,
         "EmailVerifiedCredential"
       );
+
+      vcRefEmailUri = ref;
+      vcValEmailUri = val;
     }
 
     if (body.kycComplete) {
@@ -132,7 +146,10 @@ export async function POST(req: NextRequest) {
         `POST /api/sign-in/regular - Credential offer for KYC created. ${code.code}`
       );
 
-      vc_kyc_uri = create_credential_offer(code.code, "KycCredential");
+      const { ref, val } = create_credential_offer(code.code, "KycCredential");
+
+      vcRefKycUri = ref;
+      vcValKycUri = val;
     }
 
     console.log(`POST /api/sign-in/regular - Completed`);
@@ -142,8 +159,10 @@ export async function POST(req: NextRequest) {
       code: body.code,
       redirectUri: oidc_flow.redirectUri,
       state: oidc_flow.state,
-      vc_email_uri,
-      vc_kyc_uri,
+      vcRefEmailUri,
+      vcValEmailUri,
+      vcRefKycUri,
+      vcValKycUri,
     });
   } catch (error) {
     console.error(

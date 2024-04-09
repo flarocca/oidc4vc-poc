@@ -36,11 +36,11 @@ export default function Home() {
         const body: {
           code: string;
           state: string;
-          request_uri: string;
+          requestUri: string;
         } = await response.json();
 
-        if (body.request_uri) {
-          setQrcode(body.request_uri);
+        if (body.requestUri) {
+          setQrcode(body.requestUri);
         }
 
         setAuthCode(body.code);
@@ -158,9 +158,18 @@ export default function Home() {
             >
               <span>Scan this QR Code to Sign In</span>
               <br />
-              <QRCode url={qrcode} width={250} />
               <br />
-              <span>{qrcode}</span>
+              <QRCode url={qrcode} width={300} />
+              <br />
+              <span
+                style={{
+                  overflowY: "auto",
+                  display: "block",
+                  maxWidth: "300px",
+                }}
+              >
+                {qrcode}
+              </span>
             </div>
           ) : null}
         </div>

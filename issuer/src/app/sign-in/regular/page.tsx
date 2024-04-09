@@ -14,8 +14,10 @@ export default function Home() {
   const [lastname, setLastname] = useState("");
   const [kycComplete, setKycComplete] = useState(false);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
-  const [vcEmailQR, setVcEmailQR] = useState("");
-  const [vcKycQR, setVcKycQR] = useState("");
+  const [vcRefEmailQR, setVcRefEmailQR] = useState("");
+  const [vcValEmailQR, setVcValEmailQR] = useState("");
+  const [vcRefKycQR, setVcRefKycQR] = useState("");
+  const [vcValKycQR, setVcValKycQR] = useState("");
   const [authCode, setAuthCode] = useState("");
   const [redirectUri, setRedirectUri] = useState("");
   const [authState, setAuthState] = useState("");
@@ -45,16 +47,26 @@ export default function Home() {
           code: string;
           redirectUri: string;
           state: string;
-          vc_email_uri: string;
-          vc_kyc_uri: string;
+          vcRefEmailUri: string;
+          vcValEmailUri: string;
+          vcRefKycUri: string;
+          vcValKycUri: string;
         } = await response.json();
 
-        if (body.vc_email_uri) {
-          setVcEmailQR(body.vc_email_uri);
+        if (body.vcRefEmailUri) {
+          setVcRefEmailQR(body.vcRefEmailUri);
         }
 
-        if (body.vc_kyc_uri) {
-          setVcKycQR(body.vc_kyc_uri);
+        if (body.vcValEmailUri) {
+          setVcValEmailQR(body.vcValEmailUri);
+        }
+
+        if (body.vcRefKycUri) {
+          setVcRefKycQR(body.vcRefKycUri);
+        }
+
+        if (body.vcValKycUri) {
+          setVcValKycQR(body.vcValKycUri);
         }
 
         setAuthCode(body.code);
@@ -171,30 +183,90 @@ export default function Home() {
             Sign In with Forte
           </button>
         </div>
-        <div>
-          {vcEmailQR ? (
-            <div
-              className="justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30"
-              style={{ margin: "20px" }}
-            >
-              <span>Email Verified VC</span>
-              <br />
-              <QRCode url={vcEmailQR} width={250} />
-              <br />
-              <span>{vcEmailQR}</span>
+        <div className="flex-row z-10 max-w-5xl w-full items-center justify-center font-mono text-sm lg:flex">
+          {vcValEmailQR ? (
+            <div>
+              <div
+                className="justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30"
+                style={{ margin: "20px" }}
+              >
+                <span>Email Verified VC - VAL</span>
+                <br />
+                <br />
+                <QRCode url={vcValEmailQR} width={300} />
+                <br />
+                <span
+                  style={{
+                    display: "block",
+                    maxWidth: "300px",
+                    overflowY: "auto",
+                  }}
+                >
+                  {vcValEmailQR}
+                </span>
+              </div>
+              <div
+                className="justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30"
+                style={{ margin: "20px" }}
+              >
+                <span>Email Verified VC - REF</span>
+                <br />
+                <br />
+                <QRCode url={vcRefEmailQR} width={300} />
+                <br />
+                <span
+                  style={{
+                    display: "block",
+                    maxWidth: "300px",
+                    overflowY: "auto",
+                  }}
+                >
+                  {vcRefEmailQR}
+                </span>
+              </div>
             </div>
           ) : null}
 
-          {vcKycQR ? (
-            <div
-              className="justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30"
-              style={{ margin: "20px" }}
-            >
-              <span>KYC VC</span>
-              <br />
-              <QRCode url={vcKycQR} width={250} />
-              <br />
-              <span>{vcKycQR}</span>
+          {vcValKycQR ? (
+            <div>
+              <div
+                className="justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30"
+                style={{ margin: "20px" }}
+              >
+                <span>KYC VC - VAL</span>
+                <br />
+                <br />
+                <QRCode url={vcValKycQR} width={300} />
+                <br />
+                <span
+                  style={{
+                    display: "block",
+                    maxWidth: "300px",
+                    overflowY: "auto",
+                  }}
+                >
+                  {vcValKycQR}
+                </span>
+              </div>
+              <div
+                className="justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30"
+                style={{ margin: "20px" }}
+              >
+                <span>KYC VC - REF</span>
+                <br />
+                <br />
+                <QRCode url={vcRefKycQR} width={300} />
+                <br />
+                <span
+                  style={{
+                    display: "block",
+                    maxWidth: "300px",
+                    overflowY: "auto",
+                  }}
+                >
+                  {vcRefKycQR}
+                </span>
+              </div>
             </div>
           ) : null}
         </div>
