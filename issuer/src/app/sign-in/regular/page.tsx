@@ -3,7 +3,8 @@
 import { useState } from "react";
 import QRCode from "@/components/qrcode";
 import { useRouter, useSearchParams } from "next/navigation";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 export default function Home() {
   const router = useRouter();
@@ -85,12 +86,12 @@ export default function Home() {
     }
   };
 
-  const finish = async () => {
+  const redirectBackToRp = async () => {
     router.push(`${redirectUri}?code=${authCode}&state=${authState}`);
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between p-24 forte">
       <div className="max-w-5xl w-full items-center justify-center font-mono text-sm lg:flex">
         <p className="justify-center text-2xl border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           Authenticate using email & pass
@@ -272,16 +273,34 @@ export default function Home() {
         </div>
       </div>
 
-      <button
-        style={{ margin: "10px" }}
-        className="text-2xl border-b border-gray-300 text-center group rounded-lg border bg-gradient-to-b px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-        rel="noopener noreferrer"
-        onClick={finish}
-      >
-        Finish
-      </button>
+      {authCode && authState && redirectUri ? (
+        <div className="flex-row max-w-5xl w-full items-center justify-center font-mono text-sm lg:flex">
+          <CountdownCircleTimer
+            isPlaying
+            duration={10}
+            colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+            colorsTime={[7, 5, 2, 0]}
+            onUpdate={async (remainingTime) => {
+              if (!remainingTime) await redirectBackToRp();
+            }}
+          >
+            {({ remainingTime }) =>
+              `You will be redirected back to the RP in ${remainingTime}`
+            }
+          </CountdownCircleTimer>
+          <button
+            style={{ margin: "10px" }}
+            className="text-2xl border-b border-gray-300 text-center group rounded-lg border bg-gradient-to-b px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+            rel="noopener noreferrer"
+            onClick={redirectBackToRp}
+          >
+            Redirect manually
+          </button>
+        </div>
+      ) : null}
 
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left"></div>
+      <Toaster />
     </main>
   );
 }

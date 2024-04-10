@@ -1,14 +1,11 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import toast from "react-hot-toast";
-import QRCode from "@/components/qrcode";
-import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Authorize() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [qrcode, setqrcode] = useState("");
 
   const redirectUri = searchParams?.get("redirect_uri") || "redirect_uri";
   const state = searchParams?.get("state") || "state";
@@ -68,6 +65,34 @@ export default function Authorize() {
     }
   };
 
+  const signInWithSiop = async () => {
+    toast.error("Not implemented");
+    // try {
+    //   const response = await fetch("/api/oauth2/authorize/siop/v1", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       state,
+    //       nonce,
+    //     }),
+    //   });
+
+    //   if (response.ok) {
+    //     const body: {
+    //       data: { code: string; state: string; siop_uri: string };
+    //     } = await response.json();
+    //     setqrcode(body.data.siop_uri);
+    //   } else {
+    //     toast.error("Error processing Authorize request");
+    //   }
+    // } catch (error) {
+    //   console.log(JSON.stringify(error));
+    //   toast.error("Error processing Authorize request");
+    // }
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24 forte">
       <div className="flex-col z-10 max-w-5xl w-full items-center justify-center font-mono text-sm lg:flex">
@@ -75,39 +100,7 @@ export default function Authorize() {
           className="text-2xl border-b border-gray-300 text-center group rounded-lg border bg-gradient-to-b px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
           onClick={signInRegular}
         >
-          OIDC Regular Login
-        </button>
-        <br />
-        <button
-          className="text-2xl border-b border-gray-300 text-center group rounded-lg border bg-gradient-to-b px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          onClick={async () => {
-            try {
-              const response = await fetch("/api/oauth2/authorize/siop/v1", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  state,
-                  nonce,
-                }),
-              });
-
-              if (response.ok) {
-                const body: {
-                  data: { code: string; state: string; siop_uri: string };
-                } = await response.json();
-                setqrcode(body.data.siop_uri);
-              } else {
-                toast.error("Error processing Authorize request");
-              }
-            } catch (error) {
-              console.log(JSON.stringify(error));
-              toast.error("Error processing Authorize request");
-            }
-          }}
-        >
-          Login with SIOP
+          Login with Regular OIDC
         </button>
         <br />
         <button
@@ -119,49 +112,12 @@ export default function Authorize() {
         <br />
         <button
           className="text-2xl border-b border-gray-300 text-center group rounded-lg border bg-gradient-to-b px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          onClick={async () => {
-            try {
-              const response = await fetch("/api/vc/credential-offer", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  state,
-                  nonce,
-                }),
-              });
-
-              if (response.ok) {
-                const body: {
-                  data: {
-                    code: string;
-                    state: string;
-                    credential_offer_uri: string;
-                  };
-                } = await response.json();
-                setqrcode(body.data.credential_offer_uri);
-              } else {
-                toast.error("Error processing VC Issuance");
-              }
-            } catch (error) {
-              console.log(JSON.stringify(error));
-              toast.error("Error processing VC Issuance");
-            }
-          }}
+          onClick={signInWithSiop}
         >
-          Issue VC
+          Login with SIOP
         </button>
-
-        {qrcode ? (
-          <div>
-            <br />
-            <QRCode url={qrcode} />
-            <br />
-            <span>{qrcode}</span>
-          </div>
-        ) : null}
       </div>
+      <Toaster />
     </main>
   );
 }
