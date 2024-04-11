@@ -3,7 +3,7 @@ import { NextApiRequest } from "next";
 import AuthenticationFlow from "@/models/authentication_flow";
 import jose from "node-jose";
 import { getKeyStore } from "@/app/helpers/token";
-import { JsonWebTokenError } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 type Params = {
   txid: string;
@@ -42,89 +42,70 @@ export async function GET(req: NextApiRequest, context: { params: Params }) {
 
     const dt = new Date();
     const payload = {
-      // iat: Math.floor(dt.getTime() / 1000),
-      // nbf: Math.floor(dt.getTime() / 1000),
-      // exp: Math.floor(
-      //   (new Date(dt.getTime() + 20 * 60 * 1000) as unknown as number) / 1000
-      // ),
-      // jti: "f4c8373d-d5ae-4eef-bf43-8da13f6ff5dd",
-      response_type: "id_token",
-      scope: "openid profile",
-      redirect_uri: `${
+      iat: Math.floor(dt.getTime() / 1000),
+      exp: Math.floor(
+        (new Date(dt.getTime() + 20 * 60 * 1000) as unknown as number) / 1000
+      ),
+      response_type: "vp_token",
+      scope: "openid",
+      client_id: did,
+      response_uri: `${
         process.env.EXTERNAL_SERVER_URI as string
       }/api/siop/responses/${txid}`,
-      // response_mode: "post",
+      response_mode: "post",
       nonce: auth_flow.nonce,
-      // state: auth_flow.state,
-      iss: did,
-      // sub: did,
-      client_id: did,
-      // client_id: `${process.env.EXTERNAL_SERVER_URI as string}`,
-      // client_metadata: {
-      //   // id_token_signing_alg_values_supported: ["RS256", "ES256"],
-      //   id_token_signing_alg_values_supported: ["ES256"],
-      //   // request_object_signing_alg_values_supported: ["ES256"],
-      //   // response_types_supported: ["id_token"],
-      //   // scopes_supported: ["openid", "email", "profile"],
-      //   // subject_types_supported: ["pairwise"],
-      //   // vp_formats: {
-      //   //   jwt_vp: {
-      //   //     alg: ["ES256"],
-      //   //   },
-      //   // },
-      //   subject_syntax_types_supported: ["did:jwk"],
-      // },
-      // presentation_definition: {
-      //   id: "demo-poc",
-      //   purpose: "Just another demo",
-      //   input_descriptors: [
-      //     {
-      //       id: "123-abc",
-      //       name: "Descriptor 1",
-      //       purpose: "Will see",
-      //       constraints: {
-      //         fields: [
-      //           {
-      //             path: [
-      //               "$.credentialSubject.given_name",
-      //               "$.vc.credentialSubject.given_name",
-      //             ],
-      //           },
-      //           {
-      //             path: [
-      //               "$.credentialSubject.family_name",
-      //               "$.vc.credentialSubject.family_name",
-      //             ],
-      //           },
-      //         ],
-      //       },
-      //     },
-      //   ],
-      // },
+      state: auth_flow.state,
+      client_metadata: {
+        id_token_signing_alg_values_supported: ["EdDSA", "ES256", "ES256K"],
+        request_object_signing_alg_values_supported: [
+          "EdDSA",
+          "ES256",
+          "ES256K",
+        ],
+        response_types_supported: ["id_token"],
+        scopes_supported: ["openid did_authn"],
+        subject_types_supported: ["pairwise"],
+        subject_syntax_types_supported: ["did:key", "did:jwk"],
+        vp_formats: {
+          jwt_vc: {
+            alg: ["EdDSA", "ES256K"],
+          },
+          jwt_vp: {
+            alg: ["ES256K", "EdDSA"],
+          },
+        },
+      },
       // claims: {
-      //   userinfo: {
-      //     verifiable_presentations: [
-      //       {
-      //         presentation_definition: {
-      //           input_descriptors: [
-      //             {
-      //               schema: [
-      //                 {
-      //                   uri: "https://did.itsourweb.org:3000/smartcredential/Ontario-Health-Insurance-Plan",
-      //                 },
-      //               ],
-      //             },
-      //           ],
-      //         },
-      //       },
-      //     ],
-      //   },
-      //   id_token: {
-      //     auth_time: {
-      //       essential: false,
-      //     },
+      //   vp_token: {
+      presentation_definition: {
+        id: "authn-with-vc",
+        purpose: "Authentication using VCs",
+        input_descriptors: [
+          {
+            id: "basic-information",
+            name: "Basic Information",
+            purpose: "Authenticate you using basic information",
+            constraints: {
+              fields: [
+                {
+                  path: [
+                    "$.credentialSubject.email",
+                    "$.vc.credentialSubject.email",
+                    "$.credentialSubject.emailAddress",
+                    "$.vc.credentialSubject.emailAddress",
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+      },
       //   },
       // },
+      nbf: Math.floor(dt.getTime() / 1000),
+      jti: "f4c8373d-d5ae-4eef-bf43-8da13f6ff5dd",
+      iss: did,
+      sub: did,
     };
 
     const opt = { compact: true, protect: "*", fields: { typ: "JWT" } };

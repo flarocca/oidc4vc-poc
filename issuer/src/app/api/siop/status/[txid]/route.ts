@@ -20,14 +20,16 @@ export async function GET(req: NextRequest, context: { params: Params }) {
     });
 
     if (auth_flow) {
-      console.log(`GET /api/siop/status/${txid} - Found. ${auth_flow.status}`);
+      console.log(
+        `GET /api/siop/status/${txid} - Found. Status is ${auth_flow.status}`
+      );
       return Response.json({
         success: true,
         data: { status: auth_flow.status },
       });
     }
 
-    console.log(`GET /api/siop/status/${txid} - Not Found}`);
+    console.log(`GET /api/siop/status/${txid} - Not Found`);
     return Response.json(
       { success: false, error: { message: `Request ${txid} not found.` } },
       { status: 404, statusText: "not_found" }

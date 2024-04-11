@@ -21,29 +21,19 @@ export async function POST(req: NextRequest) {
       redirectUri: body.redirectUri,
     });
 
-    console.log(`POST /api/oauth2/authorize/vc - Created. ${auth_flow.code}`);
-
-    const request_uri_encoded = encodeURIComponent(
-      `${process.env.EXTERNAL_SERVER_URI as string}/api/openid-vc/requests/${
-        auth_flow.code
-      }`
-    );
-
-    const request_uri = `openid-vc://?request_uri=${request_uri_encoded}`;
-
-    console.log(`POST /api/oauth2/authorize/vc - Complete`);
+    console.log(`POST /api/oauth2/authorize/vc - Complete. ${auth_flow.code}`);
 
     return Response.json({
       success: true,
-      data: { code: auth_flow.code, request_uri },
+      data: { code: auth_flow.code },
     });
   } catch (error) {
     console.log(
       `POST /api/oauth2/authorize/vc - Error: ${JSON.stringify(error)}`
     );
     return Response.json(
-      { success: false },
-      { status: 400, statusText: "bad_request" }
+      { success: false, error },
+      { status: 500, statusText: "insernatl_server_error" }
     );
   }
 }

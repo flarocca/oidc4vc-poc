@@ -21,7 +21,7 @@ export async function GET(req: NextRequest, context: { params: Params }) {
 
     if (auth_flow) {
       console.log(
-        `GET /api/openid-vc/status/${txid} - Found. ${auth_flow.status}`
+        `GET /api/openid-vc/status/${txid} - Found. Status is ${auth_flow.status}`
       );
 
       return Response.json(
