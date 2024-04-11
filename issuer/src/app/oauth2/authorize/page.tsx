@@ -66,31 +66,30 @@ export default function Authorize() {
   };
 
   const signInWithSiop = async () => {
-    toast.error("Not implemented");
-    // try {
-    //   const response = await fetch("/api/oauth2/authorize/siop/v1", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       state,
-    //       nonce,
-    //     }),
-    //   });
+    try {
+      const response = await fetch("/api/oauth2/authorize/siop", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          state,
+          nonce,
+          redirectUri,
+        }),
+      });
 
-    //   if (response.ok) {
-    //     const body: {
-    //       data: { code: string; state: string; siop_uri: string };
-    //     } = await response.json();
-    //     setqrcode(body.data.siop_uri);
-    //   } else {
-    //     toast.error("Error processing Authorize request");
-    //   }
-    // } catch (error) {
-    //   console.log(JSON.stringify(error));
-    //   toast.error("Error processing Authorize request");
-    // }
+      if (response.ok) {
+        const body: { data: { code: string } } = await response.json();
+
+        router.push(`/sign-in/siop?code=${body.data.code}`);
+      } else {
+        toast.error("Error processing Authorize request");
+      }
+    } catch (error) {
+      console.log(JSON.stringify(error));
+      toast.error("Error processing Authorize request");
+    }
   };
 
   return (

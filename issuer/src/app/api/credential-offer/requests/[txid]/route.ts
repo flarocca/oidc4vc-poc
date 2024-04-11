@@ -1,12 +1,12 @@
 import dbConnect from "@/lib/dbConnect";
-import { NextApiRequest } from "next";
 import CredentialOfferDocument from "@/models/credential_offer";
+import { NextRequest } from "next/server";
 
 type Params = {
   txid: string;
 };
 
-export async function GET(req: NextApiRequest, context: { params: Params }) {
+export async function GET(req: NextRequest, context: { params: Params }) {
   await dbConnect();
 
   const { txid } = context.params;

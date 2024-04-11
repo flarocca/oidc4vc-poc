@@ -11,7 +11,7 @@ export async function GET(req: NextRequest, context: { params: Params }) {
 
   const { txid } = context.params;
 
-  console.log(`GET /api/credential-offer/status/${txid} - Initiated`);
+  console.log(`GET /api/credential-offer/status/${txid} - Querying`);
 
   try {
     const auth_flow = await CredentialOfferDocument.findOne({
@@ -20,7 +20,7 @@ export async function GET(req: NextRequest, context: { params: Params }) {
 
     if (auth_flow) {
       console.log(
-        `GET /api/credential-offer/status/${txid} - Found. ${auth_flow.status}`
+        `GET /api/credential-offer/status/${txid} - Found. Status is ${auth_flow.status}`
       );
 
       return Response.json(

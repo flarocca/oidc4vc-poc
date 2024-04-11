@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { useQRCode } from "next-qrcode";
 
-export default function QRCode({ url, width = 400 }) {
+export default function QRCode({ url = "", width = 400 }) {
   const { Image } = useQRCode();
 
   return (

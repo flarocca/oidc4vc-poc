@@ -1,15 +1,14 @@
 import dbConnect from "@/lib/dbConnect";
-import { NextApiRequest } from "next";
 import EmailVerifiedCredentialDocument from "@/models/credential_offer";
 import jose from "node-jose";
 import { getKeyStore } from "@/app/helpers/token";
-import { JsonWebTokenError } from "jsonwebtoken";
+import { NextRequest } from "next/server";
 
 type Params = {
   txid: string;
 };
 
-export async function GET(req: NextApiRequest, context: { params: Params }) {
+export async function GET(req: NextRequest, context: { params: Params }) {
   await dbConnect();
 
   const { txid } = context.params;
