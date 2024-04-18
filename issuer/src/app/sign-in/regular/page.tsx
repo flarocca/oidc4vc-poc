@@ -273,7 +273,11 @@ export default function Home() {
         </div>
       </div>
 
-      {authCode && authState && redirectUri ? (
+      {authCode &&
+      authState &&
+      redirectUri &&
+      !kycComplete &&
+      !isEmailVerified ? (
         <div className="flex-row max-w-5xl w-full items-center justify-center font-mono text-sm lg:flex">
           <CountdownCircleTimer
             isPlaying
