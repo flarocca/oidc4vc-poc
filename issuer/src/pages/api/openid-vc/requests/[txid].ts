@@ -21,7 +21,7 @@ const createSignedPresentationDefinition = async (
     did: issuer.uri,
     redirectUri: `${
       process.env.EXTERNAL_SERVER_URI as string
-    }/openid-vc/responses/${options.txid}/sign-in`,
+    }/openid-vc/responses/${options.txid}`,
     nonce: options.nonce,
     state: options.state,
     requirePii: options.requirePii,
@@ -35,7 +35,7 @@ const createSignedPresentationDefinition = async (
   });
 };
 
-export default async function innerHandler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

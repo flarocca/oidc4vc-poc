@@ -38,14 +38,14 @@ export default async function handler(
 
   const { txid } = req.query;
 
-  console.log(`POST /api/openid-vc/responses/${txid}/sign-in - Received`);
+  console.log(`POST /api/openid-vc/responses/${txid} - Received`);
 
   try {
     const data: any = req.body;
     const url = new URL(`${process.env.EXTERNAL_SERVER_URI}?${data}`);
     const vpToken = url.searchParams.get("vp_token");
 
-    console.log(`POST /api/openid-vc/responses/${txid}/sign-in - Payload read`);
+    console.log(`POST /api/openid-vc/responses/${txid} - Payload read`);
 
     if (!vpToken) {
       return Response.json(
@@ -64,7 +64,7 @@ export default async function handler(
       }
     ).exec();
 
-    console.log(`POST /api/openid-vc/responses/${txid}/sign-in - TRX Found`);
+    console.log(`POST /api/openid-vc/responses/${txid} - TRX Found`);
 
     const payload: {
       vp: { verifiableCredential: string[] };
@@ -72,9 +72,7 @@ export default async function handler(
 
     const claims = extractClaims(payload.vp.verifiableCredential);
 
-    console.log(
-      `POST /api/openid-vc/responses/${txid}/sign-in - Claims extracted`
-    );
+    console.log(`POST /api/openid-vc/responses/${txid} - Claims extracted`);
 
     await AuthenticationFlowDocument.create({
       type: "oidc",
@@ -96,16 +94,14 @@ export default async function handler(
       }
     ).exec();
 
-    console.log(`POST /api/openid-vc/responses/${txid}/sign-in - Complete`);
+    console.log(`POST /api/openid-vc/responses/${txid} - Complete`);
 
     return new Response(null, {
       status: 204,
     });
   } catch (error) {
     console.error(
-      `POST /api/openid-vc/responses/${txid}/sign-in - Error: ${JSON.stringify(
-        error
-      )}`
+      `POST /api/openid-vc/responses/${txid} - Error: ${JSON.stringify(error)}`
     );
 
     res.statusCode = 500;
