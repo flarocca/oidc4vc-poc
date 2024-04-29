@@ -11,7 +11,7 @@ export default function Home() {
 
       <div className="z-10 max-w-5xl w-full items-center justify-center font-mono text-sm lg:flex">
         <a
-          href={`http://localhost:3000/oauth2/authorize?client_id=vc_demo&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsign-in%2Fcallback&state=state-${uuidv4()}&nonce=nonce-${uuidv4()}&response_type=code&scope=openid+email+profile`}
+          href={`${process.env.EXTERNAL_SERVER_URI as string}/oauth2/authorize?client_id=vc_demo&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsign-in%2Fcallback&state=state-${uuidv4()}&nonce=nonce-${uuidv4()}&response_type=code&scope=openid+email+profile`}
           className="text-2xl border-b border-gray-300 text-center group rounded-lg border bg-gradient-to-b px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
           rel="noopener noreferrer"
         >
