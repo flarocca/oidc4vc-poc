@@ -14,6 +14,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     credential_endpoint: `${
       process.env.EXTERNAL_SERVER_URI as string
     }/oauth2/credentials`,
+    token_endpoint: `${process.env.EXTERNAL_SERVER_URI as string}/oauth2/token`,
     display: [
       {
         name: "Demo Issuer",

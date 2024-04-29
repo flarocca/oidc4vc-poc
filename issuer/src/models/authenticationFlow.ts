@@ -49,6 +49,6 @@ const AuthenticationFlowSchema = new mongoose.Schema<AuthenticationFlow>({
 
 export default mongoose.models.AuthenticationFlowDocument ||
   mongoose.model<AuthenticationFlow>(
-    "AuthenticationFlow",
+    "AuthenticationFlowDocument",
     AuthenticationFlowSchema
   );
