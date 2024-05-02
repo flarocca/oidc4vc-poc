@@ -152,8 +152,10 @@ export default async function handler(
 
   console.log(`POST /api/oauth2/token - Initiated`);
 
+  console.log(
+    `POST /api/oauth2/token - Body: ${JSON.stringify(req.body, null, 4)}`
+  );
   try {
-    console.log(`POST /api/oauth2/token - Body: ${req.body}`);
     const body: { grant_type: string; code: string } = req.body;
     const grantType = body.grant_type;
     const code = body.code;
