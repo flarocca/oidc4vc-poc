@@ -107,15 +107,13 @@ export default function Home() {
   
         if (response.ok) {
           const body: {
-            data: {
               code: string;
               state: string;
               redirectUri: string;
-            };
           } = await response.json();
   
           router.push(
-            `${body.data.redirectUri}?code=${body.data.code}&state=${body.data.state}`
+            `${body.redirectUri}?code=${body.code}&state=${body.state}`
           );
         } else {
           toast.error("Error completing flow");

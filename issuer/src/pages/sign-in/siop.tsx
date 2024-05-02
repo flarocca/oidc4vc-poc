@@ -74,12 +74,12 @@ export default function Home() {
   
         if (response.ok) {
           const body: {
-            data: { status: string };
+            status: string;
           } = await response.json();
   
-          setStatus(body.data.status);
+          setStatus(body.status);
   
-          if (body.data.status != "complete") {
+          if (body.status != "complete") {
             const time = new Date();
             time.setSeconds(time.getSeconds() + 5);
             restart(time);
@@ -101,15 +101,13 @@ export default function Home() {
   
         if (response.ok) {
           const body: {
-            data: {
-              code: string;
-              state: string;
-              redirectUri: string;
-            };
+            code: string;
+            state: string;
+            redirectUri: string;
           } = await response.json();
   
           router.push(
-            `${body.data.redirectUri}?code=${body.data.code}&state=${body.data.state}`
+            `${body.redirectUri}?code=${body.code}&state=${body.state}`
           );
         } else {
           toast.error("Error completing flow");
