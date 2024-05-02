@@ -156,9 +156,10 @@ export default async function handler(
     `POST /api/oauth2/token - Body: ${JSON.stringify(req.body, null, 4)}`
   );
   try {
-    const body: { grant_type: string; code: string } = req.body;
+    const body: { grant_type: string; "pre-authorized_code": string } =
+      req.body;
     const grantType = body.grant_type;
-    const code = body.code;
+    const code = body["pre-authorized_code"];
 
     const result = await handleToken(grantType, code);
 
