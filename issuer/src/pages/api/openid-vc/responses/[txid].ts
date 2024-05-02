@@ -42,7 +42,7 @@ export default async function handler(
 
   try {
     const data: any = req.body;
-    const url = new URL(`${process.env.EXTERNAL_SERVER_URI}?${data}`);
+    const url = new URL(`${process.env.ISSUER}?${data}`);
     const vpToken = url.searchParams.get("vp_token");
 
     console.log(`POST /api/openid-vc/responses/${txid} - Payload read`);

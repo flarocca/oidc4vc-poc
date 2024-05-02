@@ -10,11 +10,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log(`GET /.well-known/openid-credential-issuer`);
 
   res.status(200).json({
-    credential_issuer: `${process.env.EXTERNAL_SERVER_URI as string}`,
-    credential_endpoint: `${
-      process.env.EXTERNAL_SERVER_URI as string
-    }/oauth2/credentials`,
-    token_endpoint: `${process.env.EXTERNAL_SERVER_URI as string}/oauth2/token`,
+    credential_issuer: `${process.env.ISSUER as string}`,
+    credential_endpoint: `${process.env.ISSUER as string}/oauth2/credentials`,
+    token_endpoint: `${process.env.ISSUER as string}/oauth2/token`,
     display: [
       {
         name: "Demo Issuer",

@@ -57,7 +57,7 @@ export default async function handler(
         },
       },
       credentials: [offer.type],
-      credential_issuer: process.env.EXTERNAL_SERVER_URI as string,
+      credential_issuer: process.env.ISSUER as string,
     };
 
     console.log(`GET /api/credential-offer/requests/${txid} - Complete`);

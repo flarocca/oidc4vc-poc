@@ -31,9 +31,7 @@ export default async function handler(
       expirationDate: new Date(dt.getTime() + 20 * 60 * 1000).toISOString(),
       data: {
         id: issuer.uri,
-        origin: `${
-          process.env.EXTERNAL_SERVER_URI?.replace("/api", "") as string
-        }`,
+        origin: `${process.env.ISSUER?.replace("/api", "") as string}`,
       },
     });
 

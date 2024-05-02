@@ -49,9 +49,7 @@ export default async function handler(
     console.log(`POST /api/sign-in/siop - Created. ${authFlow.code}`);
 
     const request_uri_encoded = encodeURIComponent(
-      `${process.env.EXTERNAL_SERVER_URI as string}/api/siop/requests/${
-        authFlow.code
-      }`
+      `${process.env.ISSUER as string}/siop/requests/${authFlow.code}`
     );
 
     const requestUri = `openid://?request_uri=${request_uri_encoded}`;

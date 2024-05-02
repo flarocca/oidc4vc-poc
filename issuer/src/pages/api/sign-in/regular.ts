@@ -13,7 +13,7 @@ const create_credential_offer = (code: string, type: string) => {
       },
     },
     credentials: [type],
-    credential_issuer: process.env.EXTERNAL_SERVER_URI as string,
+    credential_issuer: process.env.ISSUER as string,
   };
 
   const credential_offer_encoded = encodeURIComponent(
@@ -21,9 +21,7 @@ const create_credential_offer = (code: string, type: string) => {
   );
 
   const credential_offer_uri_encoded = encodeURIComponent(
-    `${
-      process.env.EXTERNAL_SERVER_URI as string
-    }/credential-offer/requests/${code}`
+    `${process.env.ISSUER as string}/credential-offer/requests/${code}`
   );
 
   return {

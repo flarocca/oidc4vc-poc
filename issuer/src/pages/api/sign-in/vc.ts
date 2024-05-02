@@ -51,9 +51,7 @@ export default async function handler(
     console.log(`POST /api/sign-in/vc - Created. ${authFlow.code}`);
 
     const request_uri_encoded = encodeURIComponent(
-      `${process.env.EXTERNAL_SERVER_URI as string}/openid-vc/requests/${
-        authFlow.code
-      }`
+      `${process.env.ISSUER as string}/openid-vc/requests/${authFlow.code}`
     );
 
     const requestUri = `openid-vc://?request_uri=${request_uri_encoded}`;

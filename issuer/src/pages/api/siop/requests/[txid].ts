@@ -200,9 +200,7 @@ export default async function handler(
       response_type: "vp_token",
       scope: "openid",
       client_id: issuer.uri,
-      response_uri: `${
-        process.env.EXTERNAL_SERVER_URI as string
-      }/api/siop/responses/${txid}`,
+      response_uri: `${process.env.ISSUER as string}/siop/responses/${txid}`,
       response_mode: "post",
       nonce: authFlow.nonce,
       state: authFlow.state,

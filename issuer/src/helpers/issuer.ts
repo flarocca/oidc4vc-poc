@@ -13,12 +13,10 @@ export async function getIssuer() {
     didJwk.document.service = [
       {
         id: `${didJwk.uri}#${
-          process.env.EXTERNAL_SERVER_URI?.replace("/api", "") as string
+          process.env.ISSUER?.replace("/api", "") as string
         }`,
         type: "LinkedDomains",
-        serviceEndpoint: `${
-          process.env.EXTERNAL_SERVER_URI?.replace("/api", "") as string
-        }`,
+        serviceEndpoint: `${process.env.ISSUER?.replace("/api", "") as string}`,
       },
     ];
 

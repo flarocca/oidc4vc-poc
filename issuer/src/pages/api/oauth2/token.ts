@@ -43,7 +43,7 @@ const handleAuthorizationCode = async (code: string) => {
   const dt = new Date();
   const payload = {
     sub: uuidv4(),
-    iss: `${process.env.EXTERNAL_SERVER_URI as string}`,
+    iss: `${process.env.ISSUER as string}`,
     iat: Math.floor(dt.getTime() / 1000),
     exp: Math.floor(
       (new Date(dt.getTime() + 20 * 60 * 1000) as unknown as number) / 1000
@@ -96,7 +96,7 @@ const handlePreAuthorizationCode = async (preAuthorizedCode: string) => {
     exp: Math.floor(
       (new Date(dt.getTime() + 20 * 60 * 1000) as unknown as number) / 1000
     ),
-    iss: `${process.env.EXTERNAL_SERVER_URI as string}`,
+    iss: `${process.env.ISSUER as string}`,
     preAuthorizedCode,
   };
 
