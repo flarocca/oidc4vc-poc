@@ -4,7 +4,7 @@ import AuthenticationFlow from "@/models/authentication_flow";
 import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
-  await dbConnect();
+  // await dbConnect();
 
   console.log(`POST /api/oauth2/authorize/oidc - Initiating`);
 
