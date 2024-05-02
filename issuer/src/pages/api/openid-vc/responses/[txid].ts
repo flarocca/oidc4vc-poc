@@ -42,10 +42,21 @@ export default async function handler(
 
   try {
     const data: any = req.body;
+
+    console.log(
+      `POST /api/openid-vc/responses/${txid} - Data: ${JSON.stringify(
+        data,
+        null,
+        4
+      )}`
+    );
+
     const url = new URL(`${process.env.ISSUER}?${data}`);
     const vpToken = url.searchParams.get("vp_token");
 
-    console.log(`POST /api/openid-vc/responses/${txid} - Payload read`);
+    console.log(
+      `POST /api/openid-vc/responses/${txid} - Payload read: ${vpToken}`
+    );
 
     if (!vpToken) {
       return Response.json(
