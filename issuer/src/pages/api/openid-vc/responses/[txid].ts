@@ -59,10 +59,16 @@ export default async function handler(
     );
 
     if (!data.vp_token) {
-      return Response.json(
-        { success: false, error: "invalid_vp_token" },
-        { status: 400, statusText: "bad_request" }
-      );
+      // return Response.json(
+      //   { success: false, error: "invalid_vp_token" },
+      //   { status: 400, statusText: "bad_request" }
+      // );
+      res.statusCode = 400;
+      res.statusMessage = "bad_request";
+
+      res.status(400).json({ success: false, error: "invalid_vp_token" });
+
+      return;
     }
 
     const openid_vc_flow = await AuthenticationFlowDocument.findOneAndUpdate(
@@ -107,9 +113,10 @@ export default async function handler(
 
     console.log(`POST /api/openid-vc/responses/${txid} - Complete`);
 
-    return new Response(null, {
-      status: 204,
-    });
+    // return new Response(null, {
+    //   status: 204,
+    // });
+    res.status(204).end();
   } catch (error) {
     console.error(
       `POST /api/openid-vc/responses/${txid} - Error: ${JSON.stringify(error)}`
