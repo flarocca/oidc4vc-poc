@@ -1,10 +1,10 @@
-import { NextApiRequest } from "next";
+import { NextRequest } from "next/server";
 
 type Params = {
   txid: string;
 };
 
-export async function POST(req: NextApiRequest, context: { params: Params }) {
+export async function POST(req: NextRequest, context: { params: Params }) {
   const { txid } = context.params;
 
   console.error(`GET /api/siop/responses/${txid} - Initiated`);

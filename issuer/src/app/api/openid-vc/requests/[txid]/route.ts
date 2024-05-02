@@ -1,15 +1,15 @@
 import dbConnect from "@/lib/dbConnect";
-import { NextApiRequest } from "next";
 import AuthenticationFlow from "@/models/authentication_flow";
 import jose from "node-jose";
 import { getKeyStore } from "@/app/helpers/token";
 import createVpPayload from "@/app/helpers/createVpPayload";
+import { NextRequest } from "next/server";
 
 type Params = {
   txid: string;
 };
 
-export async function GET(req: NextApiRequest, context: { params: Params }) {
+export async function GET(req: NextRequest, context: { params: Params }) {
   await dbConnect();
 
   const { txid } = context.params;
