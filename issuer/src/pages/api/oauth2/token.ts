@@ -4,7 +4,6 @@ import AuthenticationFlowDocument from "@/models/authenticationFlow";
 import jose from "node-jose";
 import { v4 as uuidv4 } from "uuid";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getIssuer } from "@/helpers/issuer";
 
 const createToken = async (payload: any) => {
   const keyStore = await getKeyStore();
@@ -118,12 +117,16 @@ const handlePreAuthorizationCode = async (preAuthorizedCode: string) => {
   };
 };
 
-const handleToken = async (grantType: string = "", code: string) => {
-  switch (grantType) {
+const handleToken = async (body: {
+  grant_type: string;
+  code: string;
+  "pre-authorized_code": string;
+}) => {
+  switch (body.grant_type) {
     case "authorization_code":
-      return await handleAuthorizationCode(code);
+      return await handleAuthorizationCode(body.code);
     case "urn:ietf:params:oauth:grant-type:pre-authorized_code":
-      return await handlePreAuthorizationCode(code);
+      return await handlePreAuthorizationCode(body["pre-authorized_code"]);
     default:
       console.log(`POST /api/oauth2/token - Error: Invalid grant`);
 
@@ -150,18 +153,12 @@ export default async function handler(
 
   await dbConnect();
 
-  console.log(`POST /api/oauth2/token - Initiated`);
-
   console.log(
-    `POST /api/oauth2/token - Body: ${JSON.stringify(req.body, null, 4)}`
+    `POST /api/oauth2/token - Initiated: ${JSON.stringify(req.body, null, 4)}`
   );
-  try {
-    const body: { grant_type: string; "pre-authorized_code": string } =
-      req.body;
-    const grantType = body.grant_type;
-    const code = body["pre-authorized_code"];
 
-    const result = await handleToken(grantType, code);
+  try {
+    const result = await handleToken(req.body);
 
     res.statusCode = result.status;
     res.statusMessage = result.statusText || "";
