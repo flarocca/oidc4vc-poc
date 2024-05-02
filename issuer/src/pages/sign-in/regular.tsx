@@ -274,23 +274,25 @@ export default function Home() {
   
         {authCode &&
         authState &&
-        redirectUri &&
-        !kycComplete &&
-        !isEmailVerified ? (
+        redirectUri ? (
           <div className="flex-row max-w-5xl w-full items-center justify-center font-mono text-sm lg:flex">
-            <CountdownCircleTimer
-              isPlaying
-              duration={10}
-              colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-              colorsTime={[7, 5, 2, 0]}
-              onUpdate={async (remainingTime: any) => {
-                if (!remainingTime) await redirectBackToRp();
-              }}
-            >
-              {({ remainingTime = "" }) =>
-                `You will be redirected back to the RP in ${remainingTime}`
-              }
-            </CountdownCircleTimer>
+            {
+              !kycComplete &&
+              !isEmailVerified ? (
+                <CountdownCircleTimer
+                  isPlaying
+                  duration={10}
+                  colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+                  colorsTime={[7, 5, 2, 0]}
+                  onUpdate={async (remainingTime: any) => {
+                    if (!remainingTime) await redirectBackToRp();
+                  }}
+                >
+                  {({ remainingTime = "" }) =>
+                    `You will be redirected back to the RP in ${remainingTime}`
+                  }
+                </CountdownCircleTimer>) : null
+            }
             <button
               style={{ margin: "10px" }}
               className="text-2xl border-b border-gray-300 text-center group rounded-lg border bg-gradient-to-b px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
