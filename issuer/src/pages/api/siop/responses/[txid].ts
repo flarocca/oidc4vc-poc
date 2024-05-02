@@ -12,7 +12,9 @@ export default async function handler(
 
   const { txid } = req.query;
 
-  console.error(`GET /api/siop/responses/${txid} - Initiated`);
+  console.error(
+    `GET /api/siop/responses/${txid} - Initiated: ${JSON.stringify(req.body)}`
+  );
 
   try {
     console.error(`GET /api/siop/responses/${txid} - Found`);
