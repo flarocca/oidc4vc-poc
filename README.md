@@ -61,7 +61,7 @@ These set of endpoints are the ones used to exchange Credentials, Verifiable Pre
   - [x] DID Configuration endpoint
   - [x] OIDC Credential Issuer endpoint
   - [ ] Test integration with Cognito
-- [ ] SIOP flow
+- [x] SIOP flow
 - [x] OIDC4VCI
 - [x] OIDC4VC
 - [x] OIDC4VP
