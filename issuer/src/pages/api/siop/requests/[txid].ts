@@ -201,34 +201,36 @@ export default async function handler(
       scope: "openid",
       client_id: issuer.uri,
       response_uri: `${process.env.ISSUER as string}/siop/responses/${txid}`,
-      response_mode: "post",
+      response_mode: "direct_post",
       nonce: authFlow.nonce,
       state: authFlow.state,
       client_metadata: {
-        id_token_signing_alg_values_supported: ["EdDSA", "ES256", "ES256K"],
-        request_object_signing_alg_values_supported: [
-          "EdDSA",
-          "ES256",
-          "ES256K",
-        ],
-        response_types_supported: ["id_token"],
+        id_token_signing_alg_values_supported: ["ES256"],
+        request_object_signing_alg_values_supported: ["ES256"],
+        response_types_supported: ["id_token", "vp_token"],
         scopes_supported: ["openid did_authn"],
         subject_types_supported: ["pairwise"],
         subject_syntax_types_supported: ["did:key", "did:jwk"],
         vp_formats: {
           jwt_vc: {
-            alg: ["EdDSA", "ES256K"],
+            alg: ["ES256"],
           },
           jwt_vp: {
-            alg: ["ES256K", "EdDSA"],
+            alg: ["ES256"],
           },
         },
       },
-      // claims: {
-      //   vp_token: {
       presentation_definition: {
         id: "authn-with-vc",
         purpose: "Authentication using VCs",
+        format: {
+          jwt_vc: {
+            alg: ["ES256"],
+          },
+          jwt_vp: {
+            alg: ["ES256"],
+          },
+        },
         input_descriptors: [
           {
             id: "basic-information",
@@ -249,8 +251,6 @@ export default async function handler(
           },
         ],
       },
-      //   },
-      // },
       nbf: Math.floor(dt.getTime() / 1000),
       jti: "f4c8373d-d5ae-4eef-bf43-8da13f6ff5dd",
       iss: issuer.uri,

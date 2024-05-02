@@ -8,7 +8,11 @@ export async function getIssuer() {
 
     return await DidJwk.import({ portableDid });
   } catch (error) {
-    const didJwk = await DidJwk.create();
+    const didJwk = await DidJwk.create({
+      options: {
+        algorithm: "secp256r1",
+      },
+    });
 
     didJwk.document.service = [
       {

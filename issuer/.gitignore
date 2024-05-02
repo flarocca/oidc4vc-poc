@@ -35,7 +35,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-issuer.json
-signingKeys.json
-
 certificates
