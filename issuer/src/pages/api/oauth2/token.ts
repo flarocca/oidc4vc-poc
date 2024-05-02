@@ -118,24 +118,12 @@ const handlePreAuthorizationCode = async (preAuthorizedCode: string) => {
   };
 };
 
-const handleDidIssuer = async () => {
-  const issuer = await getIssuer();
-
-  return {
-    status: 200,
-    statusText: "",
-    result: issuer,
-  };
-};
-
 const handleToken = async (grantType: string = "", code: string) => {
   switch (grantType) {
     case "authorization_code":
       return await handleAuthorizationCode(code);
     case "urn:ietf:params:oauth:grant-type:pre-authorized_code":
       return await handlePreAuthorizationCode(code);
-    case "sarasa":
-      return await handleDidIssuer();
     default:
       console.log(`POST /api/oauth2/token - Error: Invalid grant`);
 
@@ -165,6 +153,7 @@ export default async function handler(
   console.log(`POST /api/oauth2/token - Initiated`);
 
   try {
+    console.log(`POST /api/oauth2/token - Body: ${req.body}`);
     const body: { grant_type: string; code: string } = req.body;
     const grantType = body.grant_type;
     const code = body.code;
