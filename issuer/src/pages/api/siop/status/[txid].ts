@@ -19,17 +19,17 @@ export default async function handler(
   console.log(`GET /api/siop/status/${txid} - Querying`);
 
   try {
-    const auth_flow = await AuthenticationFlowDocument.findOne({
+    const authFlow = await AuthenticationFlowDocument.findOne({
       type: "siop",
       code: txid,
     }).exec();
 
-    if (auth_flow) {
+    if (authFlow) {
       console.log(
-        `GET /api/siop/status/${txid} - Found. Status is ${auth_flow.status}`
+        `GET /api/siop/status/${txid} - Found. Status is ${authFlow.status}`
       );
 
-      res.status(200).json({ status: auth_flow.status });
+      res.status(200).json({ status: authFlow.status });
       return;
     }
 

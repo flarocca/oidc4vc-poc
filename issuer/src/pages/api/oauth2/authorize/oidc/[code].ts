@@ -19,7 +19,7 @@ export default async function handler(
   console.log(`GET /api/oauth2/authorize/oidc/${code} - Initiating`);
 
   try {
-    const auth_flow = await AuthenticationFlowDocument.findOne({
+    const authFlow = await AuthenticationFlowDocument.findOne({
       type: "oidc",
       code,
     }).exec();
@@ -27,9 +27,9 @@ export default async function handler(
     console.log(`GET /api/oauth2/authorize/oidc/${code} - Found`);
 
     res.status(200).json({
-      code: auth_flow.code,
-      redirectUri: auth_flow.redirectUri,
-      state: auth_flow.state,
+      code: authFlow.code,
+      redirectUri: authFlow.redirectUri,
+      state: authFlow.state,
     });
   } catch (error) {
     console.error(

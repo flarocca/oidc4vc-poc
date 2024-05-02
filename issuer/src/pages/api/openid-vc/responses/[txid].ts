@@ -1,28 +1,29 @@
+import { extractClaimsFromVpToken } from "@/helpers/verifiableCredentials";
 import dbConnect from "@/lib/dbConnect";
 import AuthenticationFlowDocument from "@/models/authenticationFlow";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const extractClaims = (verifiableCredential: string[]): string[] => {
-  let claims: any = {};
+// const extractClaims = (verifiableCredential: string[]): string[] => {
+//   let claims: any = {};
 
-  verifiableCredential.forEach((vc) => {
-    const cred = jwtDecode<{ sub: string; vc: any; credentialSubject: any }>(
-      vc
-    );
-    const credentialSubject = cred.vc
-      ? cred.vc.credentialSubject
-      : cred.credentialSubject;
+//   verifiableCredential.forEach((vc) => {
+//     const cred = jwtDecode<{ sub: string; vc: any; credentialSubject: any }>(
+//       vc
+//     );
+//     const credentialSubject = cred.vc
+//       ? cred.vc.credentialSubject
+//       : cred.credentialSubject;
 
-    claims.sub = cred.sub;
+//     claims.sub = cred.sub;
 
-    Object.keys(credentialSubject).forEach((key) => {
-      claims[key] = credentialSubject[key];
-    });
-  });
+//     Object.keys(credentialSubject).forEach((key) => {
+//       claims[key] = credentialSubject[key];
+//     });
+//   });
 
-  return claims;
-};
+//   return claims;
+// };
 
 export default async function handler(
   req: NextApiRequest,
@@ -51,18 +52,7 @@ export default async function handler(
       )}`
     );
 
-    // const url = new URL(`${process.env.ISSUER}?${data}`);
-    // const vpToken = url.searchParams.get("vp_token");
-
-    console.log(
-      `POST /api/openid-vc/responses/${txid} - Payload read: ${data.vp_token}`
-    );
-
     if (!data.vp_token) {
-      // return Response.json(
-      //   { success: false, error: "invalid_vp_token" },
-      //   { status: 400, statusText: "bad_request" }
-      // );
       res.statusCode = 400;
       res.statusMessage = "bad_request";
 
@@ -71,7 +61,7 @@ export default async function handler(
       return;
     }
 
-    const openid_vc_flow = await AuthenticationFlowDocument.findOneAndUpdate(
+    const openidVcFlow = await AuthenticationFlowDocument.findOneAndUpdate(
       {
         type: "openid-vc",
         code: txid,
@@ -83,20 +73,21 @@ export default async function handler(
 
     console.log(`POST /api/openid-vc/responses/${txid} - TRX Found`);
 
-    const payload: {
-      vp: { verifiableCredential: string[] };
-    } = jwtDecode(data.vp_token);
+    // const payload: {
+    //   vp: { verifiableCredential: string[] };
+    // } = jwtDecode(data.vp_token);
 
-    const claims = extractClaims(payload.vp.verifiableCredential);
+    // const claims = extractClaims(payload.vp.verifiableCredential);
+    const claims = extractClaimsFromVpToken(data.vp_token);
 
     console.log(`POST /api/openid-vc/responses/${txid} - Claims extracted`);
 
     await AuthenticationFlowDocument.create({
       type: "oidc",
-      code: openid_vc_flow.code,
-      state: openid_vc_flow.state,
-      nonce: openid_vc_flow.nonce,
-      redirectUri: openid_vc_flow.redirectUri,
+      code: openidVcFlow.code,
+      state: openidVcFlow.state,
+      nonce: openidVcFlow.nonce,
+      redirectUri: openidVcFlow.redirectUri,
       status: "initiated",
       data: claims,
     });
@@ -113,9 +104,6 @@ export default async function handler(
 
     console.log(`POST /api/openid-vc/responses/${txid} - Complete`);
 
-    // return new Response(null, {
-    //   status: 204,
-    // });
     res.status(204).end();
   } catch (error) {
     console.error(
