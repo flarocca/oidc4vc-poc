@@ -41,7 +41,7 @@ export default async function handler(
   console.log(`POST /api/openid-vc/responses/${txid} - Received`);
 
   try {
-    const data: any = req.body;
+    const data: { vp_token: string } = req.body;
 
     console.log(
       `POST /api/openid-vc/responses/${txid} - Data: ${JSON.stringify(
@@ -51,14 +51,14 @@ export default async function handler(
       )}`
     );
 
-    const url = new URL(`${process.env.ISSUER}?${data}`);
-    const vpToken = url.searchParams.get("vp_token");
+    // const url = new URL(`${process.env.ISSUER}?${data}`);
+    // const vpToken = url.searchParams.get("vp_token");
 
     console.log(
-      `POST /api/openid-vc/responses/${txid} - Payload read: ${vpToken}`
+      `POST /api/openid-vc/responses/${txid} - Payload read: ${data.vp_token}`
     );
 
-    if (!vpToken) {
+    if (!data.vp_token) {
       return Response.json(
         { success: false, error: "invalid_vp_token" },
         { status: 400, statusText: "bad_request" }
@@ -79,7 +79,7 @@ export default async function handler(
 
     const payload: {
       vp: { verifiableCredential: string[] };
-    } = jwtDecode(vpToken);
+    } = jwtDecode(data.vp_token);
 
     const claims = extractClaims(payload.vp.verifiableCredential);
 
