@@ -37,7 +37,7 @@ const issueCredential = async (
   return await credential.sign({ did: issuer });
 };
 
-const valudateAuthentication = (
+const validateAuthentication = (
   req: NextApiRequest,
   res: NextApiResponse
 ): { isAuthenticated: boolean; token: string | undefined } => {
@@ -71,7 +71,7 @@ export default async function handler(
   try {
     console.log(`POST /api/oauth2/credentials - Initiated`);
 
-    const { isAuthenticated, token } = valudateAuthentication(req, res);
+    const { isAuthenticated, token } = validateAuthentication(req, res);
     if (!isAuthenticated || !token) {
       return;
     }

@@ -2,25 +2,6 @@ import dbConnect from "@/lib/dbConnect";
 import CredentialOfferDocument from "@/models/credentialOffer";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-/*
-Example:
-
-Deep link: openid-credential-offer://?credential_offer=%7B%22grants%22%3A%7B%22urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Apre-authorized_code%22%3A%7B%22pre-authorized_code%22%3A%22xhW1mBuqDAVwgeSZhEF5nn%22%2C%22user_pin_required%22%3Afalse%7D%7D%2C%22credentials%22%3A%5B%22fmdm2023%22%5D%2C%22credential_issuer%22%3A%22https%3A%2F%2Fssi.future-mobility-alliance.org%2Fissuer%22%7D
-Payload 
-{
-  "grants": {
-    "urn:ietf:params:oauth:grant-type:pre-authorized_code": {
-      "pre-authorized_code": "xhW1mBuqDAVwgeSZhEF5nn",
-      "user_pin_required": false
-    }
-  },
-  "credentials": [
-    "fmdm2023"
-  ],
-  "credential_issuer": "https://ssi.future-mobility-alliance.org/issuer"
-}
-*/
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
