@@ -1,58 +1,56 @@
 {
-    "uri": "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9",
-    "document": {
-        "@context": [
-            "https://www.w3.org/ns/did/v1"
-        ],
-        "id": "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9",
-        "verificationMethod": [
-            {
-                "id": "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9#0",
-                "type": "JsonWebKey",
-                "controller": "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9",
-                "publicKeyJwk": {
-                    "kty": "EC",
-                    "crv": "P-256",
-                    "x": "zu8kKj4eAF8JWx2Tts3XStYvEnQjqKed1-3bGHakt3A",
-                    "y": "TX6tSFx0taaxxjon51d0Qah-vP-ZtH8WkTvpH_oxNgg",
-                    "kid": "NKv4XADdMLbw3oBJcD7J_hLtw6uckAN-9s9kP6dYaWQ",
-                    "alg": "ES256"
-                }
-            }
-        ],
-        "authentication": [
-            "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9#0"
-        ],
-        "assertionMethod": [
-            "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9#0"
-        ],
-        "capabilityInvocation": [
-            "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9#0"
-        ],
-        "capabilityDelegation": [
-            "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9#0"
-        ],
-        "keyAgreement": [
-            "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9#0"
-        ],
-        "service": [
-            {
-                "id": "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9#http://localhost:3000",
-                "type": "LinkedDomains",
-                "serviceEndpoint": "http://localhost:3000"
-            }
-        ]
-    },
-    "metadata": {},
-    "privateKeys": [
-        {
-            "kty": "EC",
-            "crv": "P-256",
-            "d": "L60qMBv3oV5hlXQgHnUe17Ui6CCEj6bBo_pvzqGw0ao",
-            "x": "zu8kKj4eAF8JWx2Tts3XStYvEnQjqKed1-3bGHakt3A",
-            "y": "TX6tSFx0taaxxjon51d0Qah-vP-ZtH8WkTvpH_oxNgg",
-            "kid": "NKv4XADdMLbw3oBJcD7J_hLtw6uckAN-9s9kP6dYaWQ",
-            "alg": "ES256"
+  "uri": "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9",
+  "document": {
+    "@context": ["https://www.w3.org/ns/did/v1"],
+    "id": "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9",
+    "verificationMethod": [
+      {
+        "id": "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9#0",
+        "type": "JsonWebKey",
+        "controller": "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9",
+        "publicKeyJwk": {
+          "kty": "EC",
+          "crv": "P-256",
+          "x": "zu8kKj4eAF8JWx2Tts3XStYvEnQjqKed1-3bGHakt3A",
+          "y": "TX6tSFx0taaxxjon51d0Qah-vP-ZtH8WkTvpH_oxNgg",
+          "kid": "NKv4XADdMLbw3oBJcD7J_hLtw6uckAN-9s9kP6dYaWQ",
+          "alg": "ES256"
         }
+      }
+    ],
+    "authentication": [
+      "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9#0"
+    ],
+    "assertionMethod": [
+      "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9#0"
+    ],
+    "capabilityInvocation": [
+      "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9#0"
+    ],
+    "capabilityDelegation": [
+      "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9#0"
+    ],
+    "keyAgreement": [
+      "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9#0"
+    ],
+    "service": [
+      {
+        "id": "did:jwk:eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Inp1OGtLajRlQUY4Sld4MlR0czNYU3RZdkVuUWpxS2VkMS0zYkdIYWt0M0EiLCJ5IjoiVFg2dFNGeDB0YWF4eGpvbjUxZDBRYWgtdlAtWnRIOFdrVHZwSF9veE5nZyIsImtpZCI6Ik5LdjRYQURkTUxidzNvQkpjRDdKX2hMdHc2dWNrQU4tOXM5a1A2ZFlhV1EiLCJhbGciOiJFUzI1NiJ9#http://localhost:3000",
+        "type": "LinkedDomains",
+        "serviceEndpoint": "https://oidc-poc.sandbox.accounts.forte.io/"
+      }
     ]
+  },
+  "metadata": {},
+  "privateKeys": [
+    {
+      "kty": "EC",
+      "crv": "P-256",
+      "d": "L60qMBv3oV5hlXQgHnUe17Ui6CCEj6bBo_pvzqGw0ao",
+      "x": "zu8kKj4eAF8JWx2Tts3XStYvEnQjqKed1-3bGHakt3A",
+      "y": "TX6tSFx0taaxxjon51d0Qah-vP-ZtH8WkTvpH_oxNgg",
+      "kid": "NKv4XADdMLbw3oBJcD7J_hLtw6uckAN-9s9kP6dYaWQ",
+      "alg": "ES256"
+    }
+  ]
 }
