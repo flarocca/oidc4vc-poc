@@ -1,39 +1,7 @@
-import createVpPayload from "@/helpers/createVpPayload";
-import { getIssuer } from "@/helpers/issuer";
+import { createSignedPresentationDefinition } from "@/helpers/verifiableCredentials";
 import dbConnect from "@/lib/dbConnect";
 import AuthenticationFlowDocument from "@/models/authenticationFlow";
-import { Jwt } from "@web5/credentials";
-import { BearerDid } from "@web5/dids";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-const createSignedPresentationDefinition = async (
-  issuer: BearerDid,
-  options: {
-    txid: string;
-    state: string;
-    nonce: string;
-    requirePii: boolean;
-    requireEmailVerified: boolean;
-    requireKyc: boolean;
-  }
-): Promise<string> => {
-  const payload = createVpPayload({
-    did: issuer.uri,
-    redirectUri: `${process.env.ISSUER as string}/openid-vc/responses/${
-      options.txid
-    }`,
-    nonce: options.nonce,
-    state: options.state,
-    requirePii: options.requirePii,
-    requireEmailVerified: options.requireEmailVerified,
-    requireKyc: options.requireKyc,
-  });
-
-  return await Jwt.sign({
-    signerDid: issuer,
-    payload,
-  });
-};
 
 export default async function handler(
   req: NextApiRequest,
@@ -64,11 +32,11 @@ export default async function handler(
 
     console.log(`GET /api/openid-vc/requests/${txid} - Found`);
 
-    const issuer = await getIssuer();
-
     const signedPresentationDefinition =
-      await createSignedPresentationDefinition(issuer, {
-        txid: txid as string,
+      await createSignedPresentationDefinition({
+        redirectUri: `${
+          process.env.ISSUER as string
+        }/openid-vc/responses/${txid}`,
         nonce: authFlow.nonce,
         state: authFlow.state,
         requirePii: authFlow.data.requirePii,
