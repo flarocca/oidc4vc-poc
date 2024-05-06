@@ -92,44 +92,43 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       {
         display: [
           {
-            name: "KYC Credential",
+            name: "KYC",
             description: "KYC credential",
             text_color: "#FFFFFF",
             background_image: {
-              url: "https://img.freepik.com/foto-gratis/papel-acuarela-amarillo_95678-446.jpg",
+              url: "https://imgs.search.brave.com/RfuJcR7HOrsekHvVvQ2RYuFCphV6kQ4IlKrjU-oovFs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXIuZG9nL2xh/cmdlLzIwNTYxNzc0/LmpwZw",
               alt_text: "Empty",
             },
             logo: {
-              url: "https://images.ctfassets.net/f7s89bi4a9se/6TrUPFQh6LRj1aQq1005PH/1ddba26033479c5e0c3f6488f2704d8e/3.png",
+              url: "https://imgs.search.brave.com/WgM8-ygvuh_2SPomUskcvsrAijTsPd8AHnK-WpIlUcU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9sb2dv/cy1kb3dubG9hZC5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MTYvMDUvQXJnZW50/aW5hX25hdGlvbmFs/X2Zvb3RiYWxsX3Rl/YW1fbG9nb19jcmVz/dC00Mzl4NzAwLnBu/Zw",
               alt_text: "Empty",
             },
           },
           {
             locale: "en-US",
-            name: "KYC Credential",
-            description: "KYC credential for demo purposes.",
+            name: "KYC",
+            description: "KYC credential",
             text_color: "#FFFFFF",
             background_image: {
-              url: "https://img.freepik.com/foto-gratis/papel-acuarela-amarillo_95678-446.jpg",
+              url: "https://imgs.search.brave.com/RfuJcR7HOrsekHvVvQ2RYuFCphV6kQ4IlKrjU-oovFs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXIuZG9nL2xh/cmdlLzIwNTYxNzc0/LmpwZw",
               alt_text: "Empty",
             },
             logo: {
-              url: "https://images.ctfassets.net/f7s89bi4a9se/6TrUPFQh6LRj1aQq1005PH/1ddba26033479c5e0c3f6488f2704d8e/3.png",
+              url: "https://imgs.search.brave.com/WgM8-ygvuh_2SPomUskcvsrAijTsPd8AHnK-WpIlUcU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9sb2dv/cy1kb3dubG9hZC5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MTYvMDUvQXJnZW50/aW5hX25hdGlvbmFs/X2Zvb3RiYWxsX3Rl/YW1fbG9nb19jcmVz/dC00Mzl4NzAwLnBu/Zw",
               alt_text: "Empty",
             },
           },
           {
             locale: "es-ES",
-            name: "Credencial de prueba de KYC",
-            description:
-              "Credencial de ejemplo de KYC solo apta para demostraciones.",
+            name: "KYC",
+            description: "Credencial de KYC",
             text_color: "#FFFFFF",
             background_image: {
-              url: "https://img.freepik.com/foto-gratis/papel-acuarela-amarillo_95678-446.jpg",
+              url: "https://imgs.search.brave.com/RfuJcR7HOrsekHvVvQ2RYuFCphV6kQ4IlKrjU-oovFs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXIuZG9nL2xh/cmdlLzIwNTYxNzc0/LmpwZw",
               alt_text: "Empty",
             },
             logo: {
-              url: "https://images.ctfassets.net/f7s89bi4a9se/6TrUPFQh6LRj1aQq1005PH/1ddba26033479c5e0c3f6488f2704d8e/3.png",
+              url: "https://imgs.search.brave.com/WgM8-ygvuh_2SPomUskcvsrAijTsPd8AHnK-WpIlUcU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9sb2dv/cy1kb3dubG9hZC5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MTYvMDUvQXJnZW50/aW5hX25hdGlvbmFs/X2Zvb3RiYWxsX3Rl/YW1fbG9nb19jcmVz/dC00Mzl4NzAwLnBu/Zw",
               alt_text: "Empty",
             },
           },
