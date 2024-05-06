@@ -41,7 +41,7 @@ export default async function handler(
       exp: Math.floor(
         (new Date(dt.getTime() + 20 * 60 * 1000) as unknown as number) / 1000
       ),
-      response_type: "vp_token",
+      response_type: "id_token",
       scope: "openid",
       client_id: issuer.uri,
       response_uri: `${process.env.ISSUER as string}/siop/responses/${txid}`,
