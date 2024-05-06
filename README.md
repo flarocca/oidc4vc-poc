@@ -16,7 +16,6 @@ All endpoints under `/.well-known` are expected to exist at the domain root and 
 Endpoints under `/oauth2` must be present but it is not mandatory to have them strictly under those paths, however it is recommended. Those endpoints are listed at `/.well-known/openid-configuration`.
 
 - `GET  /.well-known/openid-configuration` ([official documentation](https://openid.net/specs/openid-connect-discovery-1_0.html))
-<!-- - `GET  /.well-known/did.json` -->
 - `GET  /.well-known/did-configuration` ([official documentation](https://identity.foundation/.well-known/resources/did-configuration))
 - `GET  /.well-known/openid-credential-issuer` ([official documentation](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#name-credential-issuer-metadata-).)
 - `GET  /oauth2/jwks`
@@ -39,8 +38,10 @@ These set of endpoints are the ones used to exchange Credentials, Verifiable Pre
 
 ### Requests, Responses & Status
 
-**Request** endpoints are used by User Agents (e.g. ID Wallet apps) to request __by reference__ payloads from the Issuer. 
+**Request** endpoints are used by User Agents (e.g. ID Wallet apps) to request __by reference__ payloads from the Issuer. These endpoints must return the corresponding payload as a signed JWT
+
 **Response** endpoints are used by User Agents to send payloads to the issuer.
+
 **Status** endpoints are used by Issuer's FE to detect when the current in-progrees flow has completed. This could also be implemented using Web Sockets.
 
 ## Instructions
@@ -48,26 +49,6 @@ These set of endpoints are the ones used to exchange Credentials, Verifiable Pre
 1. Install NodeJS (See instructions [here](https://nodejs.org/en/download))
 2. Install MongoDB (See instructions [here](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/))
 3. Install dependencies by running `npm install`
-4. Run the server by executing `npm run dev`
-
-## TODO list
-
-- [ ] OIDC Authorization Flow compliant
-  - [x] Well-Known endpoint
-  - [x] JWKs endpoint
-  - [x] Authorize endpoint
-  - [x] Token endpoint
-  - [x] UserInfo endpoint
-  - [x] DID Configuration endpoint
-  - [x] OIDC Credential Issuer endpoint
-  - [ ] Test integration with Cognito
-- [x] SIOP flow
-- [x] OIDC4VCI
-- [x] OIDC4VC
-- [x] OIDC4VP
-- [ ] Flows
-  - [x] Regular Sign Up issuing a VC once email has been verified
-  - [x] Sign up with VC without email verification
-  - [ ] Sign up with VC with email verification
-  - [x] Sign up with KYC
-
+4. Make a copy of the environment file `.env.example` and rename it to `.env.local`, then replace the values with the actual MongoDB instance and the corresponding local server URIs (for default local development environments, the actual file can just be renamed)
+5. Run the server by executing `npm run dev`
+6. From your browser, navigate to `http://localhost:3000`
