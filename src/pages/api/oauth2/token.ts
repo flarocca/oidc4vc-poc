@@ -165,7 +165,11 @@ export default async function handler(
 
   await dbConnect();
 
-  console.log(`[OIDC Operational] POST /api/oauth2/token - Initiated`);
+  console.log(
+    `[OIDC Operational] POST /api/oauth2/token - Initiated: ${JSON.stringify(
+      req.body
+    )}`
+  );
 
   try {
     const result = await handleToken(req.body);
