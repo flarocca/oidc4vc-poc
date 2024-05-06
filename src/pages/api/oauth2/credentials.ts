@@ -42,10 +42,14 @@ const validateAuthentication = (
 ): { isAuthenticated: boolean; token: string | undefined } => {
   const token = req.headers["authorization"]?.split(" ")[1];
 
-  console.log(`POST /api/oauth2/credentials - Validating authorization header`);
+  console.log(
+    `[OIDC Operational] POST /api/oauth2/credentials - Validating authorization header`
+  );
 
   if (!token) {
-    console.error(`POST /api/credentials - Authorization header not found`);
+    console.error(
+      `[OIDC Operational] POST /api/credentials - Authorization header not found`
+    );
 
     res.statusCode = 401;
     res.statusMessage = "unauthorized";
@@ -69,7 +73,7 @@ export default async function handler(
 
   try {
     console.log(
-      `POST /api/oauth2/credentials - Initiated: ${JSON.stringify(
+      `[OIDC Operational] POST /api/oauth2/credentials - Initiated: ${JSON.stringify(
         req.body,
         null,
         4
@@ -86,7 +90,7 @@ export default async function handler(
     } = jwtDecode(token);
 
     console.log(
-      `POST /api/oauth2/credentials - Pre-authorization_code Initiated. ${payload.preAuthorizedCode}`
+      `[OIDC Operational] POST /api/oauth2/credentials - Pre-authorization_code Initiated. ${payload.preAuthorizedCode}`
     );
 
     const credentialOffer = await CredentialOfferDocument.findOneAndUpdate(
@@ -98,12 +102,12 @@ export default async function handler(
       }
     ).exec();
 
-    console.log(`POST /api/oauth2/credentials - Scanned`);
+    console.log(`[OIDC Operational] POST /api/oauth2/credentials - Scanned`);
 
     const { subject, nonce } = extractSubjectAndNonce(req.body.proof.jwt);
     const signedJwt = await issueCredential(credentialOffer, subject);
 
-    console.log(`POST /api/oauth2/credentials - VC signed`);
+    console.log(`[OIDC Operational] POST /api/oauth2/credentials - VC signed`);
 
     res.status(200).json({
       format: "jwt_vc",
@@ -113,7 +117,9 @@ export default async function handler(
     });
   } catch (error) {
     console.error(
-      `POST /api/oauth2/credentials - Error: ${JSON.stringify(error)}`
+      `[OIDC Operational] POST /api/oauth2/credentials - Error: ${JSON.stringify(
+        error
+      )}`
     );
 
     res.statusCode = 500;

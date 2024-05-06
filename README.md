@@ -17,7 +17,7 @@ Endpoints under `/oauth2` must be present but it is not mandatory to have them s
 
 - `GET  /.well-known/openid-configuration` ([official documentation](https://openid.net/specs/openid-connect-discovery-1_0.html))
 - `GET  /.well-known/did-configuration` ([official documentation](https://identity.foundation/.well-known/resources/did-configuration))
-- `GET  /.well-known/openid-credential-issuer` ([official documentation](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#name-credential-issuer-metadata-).)
+- `GET  /.well-known/openid-credential-issuer` ([official documentation](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#name-credential-issuer-metadata-))
 - `GET  /oauth2/jwks`
 - `POST /oauth2/token`
 - `GET  /oauth2/authorize`

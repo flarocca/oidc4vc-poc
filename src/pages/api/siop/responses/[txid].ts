@@ -14,13 +14,15 @@ export default async function handler(
 
   const { txid } = req.query;
 
-  console.error(`GET /api/siop/responses/${txid} - Initiated`);
+  console.error(
+    `[OIDC Operational] POST /api/siop/responses/${txid} - Initiated`
+  );
 
   try {
     const data: { vp_token: string } = req.body;
 
     console.log(
-      `POST /api/openid-vc/responses/${txid} - Data: ${JSON.stringify(
+      `[OIDC Operational] POST /api/openid-vc/responses/${txid} - Data: ${JSON.stringify(
         data,
         null,
         4
@@ -46,7 +48,9 @@ export default async function handler(
       }
     ).exec();
 
-    console.log(`POST /api/siop/responses/${txid} - TRX Found`);
+    console.log(
+      `[OIDC Operational] POST /api/siop/responses/${txid} - TRX Found`
+    );
 
     const claims = extractClaimsFromVpToken(data.vp_token);
 
@@ -70,12 +74,18 @@ export default async function handler(
       }
     ).exec();
 
-    console.error(`GET /api/siop/responses/${txid} - Complete`);
+    console.error(
+      `[OIDC Operational] POST /api/siop/responses/${txid} - Complete`
+    );
 
     res.status(204).end();
   } catch (error) {
     console.error(
-      `POST /api/siop/responses/${txid} - Error: ${JSON.stringify(error)}`
+      `[OIDC Operational] POST /api/siop/responses/${txid} - Error: ${JSON.stringify(
+        error,
+        null,
+        4
+      )}`
     );
 
     res.statusCode = 500;

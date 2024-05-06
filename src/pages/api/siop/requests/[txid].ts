@@ -3,6 +3,7 @@ import dbConnect from "@/lib/dbConnect";
 import AuthenticationFlowDocument from "@/models/authenticationFlow";
 import { Jwt } from "@web5/credentials";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { v4 as uuidv4 } from "uuid";
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,7 +19,7 @@ export default async function handler(
 
   const { txid } = req.query;
 
-  console.log(`GET /api/siop/requests/${txid} - Initiated`);
+  console.log(`[OIDC Operational] GET /api/siop/requests/${txid} - Initiated`);
 
   try {
     const authFlow = await AuthenticationFlowDocument.findOneAndUpdate(
@@ -31,7 +32,7 @@ export default async function handler(
       }
     ).exec();
 
-    console.log(`GET /api/siop/requests/${txid} - Found`);
+    console.log(`[OIDC Operational] GET /api/siop/requests/${txid} - Found`);
 
     const issuer = await getIssuer();
 
@@ -96,7 +97,7 @@ export default async function handler(
         ],
       },
       nbf: Math.floor(dt.getTime() / 1000),
-      jti: "f4c8373d-d5ae-4eef-bf43-8da13f6ff5dd",
+      jti: uuidv4(),
       iss: issuer.uri,
       sub: issuer.uri,
     };
@@ -106,12 +107,14 @@ export default async function handler(
       payload,
     });
 
-    console.log(`GET /api/siop/requests/${txid} - Complete`);
+    console.log(`[OIDC Operational] GET /api/siop/requests/${txid} - Complete`);
 
     res.status(200).end(signegJwt);
   } catch (error) {
     console.error(
-      `GET /api/siop/requests/${txid} - Error: ${JSON.stringify(error)}`
+      `[OIDC Operational] GET /api/siop/requests/${txid} - Error: ${JSON.stringify(
+        error
+      )}`
     );
 
     res.statusCode = 500;

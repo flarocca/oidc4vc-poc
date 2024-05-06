@@ -16,7 +16,9 @@ export default async function handler(
 
   const { txid } = req.query;
 
-  console.log(`GET /api/credential-offer/requests/${txid} - Initiated`);
+  console.log(
+    `[OIDC Operational] GET /api/credential-offer/requests/${txid} - Initiated`
+  );
 
   try {
     const offer = await CredentialOfferDocument.findOneAndUpdate(
@@ -28,7 +30,9 @@ export default async function handler(
       }
     ).exec();
 
-    console.log(`GET /api/credential-offer/requests/${txid} - Found`);
+    console.log(
+      `[OIDC Operational] GET /api/credential-offer/requests/${txid} - Found`
+    );
 
     const payload = {
       grants: {
@@ -41,12 +45,14 @@ export default async function handler(
       credential_issuer: process.env.ISSUER as string,
     };
 
-    console.log(`GET /api/credential-offer/requests/${txid} - Complete`);
+    console.log(
+      `[OIDC Operational] GET /api/credential-offer/requests/${txid} - Complete`
+    );
 
     res.status(200).json(payload);
   } catch (error) {
     console.log(
-      `GET /api/credential-offer/requests/${txid} - Error: ${JSON.stringify(
+      `[OIDC Operational] GET /api/credential-offer/requests/${txid} - Error: ${JSON.stringify(
         error
       )}`
     );

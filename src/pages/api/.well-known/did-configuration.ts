@@ -12,16 +12,17 @@ export default async function handler(
     return;
   }
 
-  console.log(`GET /.well-known/did-configuration - Initiated`);
+  console.log(
+    `[OIDC Metadata]  GET /.well-known/did-configuration - Initiated`
+  );
+
   try {
     const dt = new Date();
-
-    console.log(`GET /.well-known/did-configuration - Reading DID`);
 
     const issuer = await getIssuer();
 
     console.log(
-      `GET /.well-known/did-configuration - Creating DID Configuration`
+      `[OIDC Metadata]  GET /.well-known/did-configuration - Creating DID Configuration`
     );
 
     const vc = await VerifiableCredential.create({
@@ -36,7 +37,7 @@ export default async function handler(
     });
 
     console.log(
-      `GET /.well-known/did-configuration - Signing DID COnfiguration`
+      `[OIDC Metadata]  GET /.well-known/did-configuration - Signing DID Configuration`
     );
 
     const token = await vc.sign({ did: issuer });
@@ -47,12 +48,16 @@ export default async function handler(
       linked_dids: [token],
     };
 
-    console.log(`GET /.well-known/did-configuration - Complete`);
+    console.log(
+      `[OIDC Metadata]  GET /.well-known/did-configuration - Complete`
+    );
 
     res.status(200).json(json);
   } catch (error) {
     console.error(
-      `GET /.well-known/did-configuration - Error: ${JSON.stringify(error)}`
+      `[OIDC Metadata]  GET /.well-known/did-configuration - Error: ${JSON.stringify(
+        error
+      )}`
     );
 
     res.statusCode = 500;

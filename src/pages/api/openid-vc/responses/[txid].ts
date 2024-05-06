@@ -1,29 +1,7 @@
 import { extractClaimsFromVpToken } from "@/helpers/verifiableCredentials";
 import dbConnect from "@/lib/dbConnect";
 import AuthenticationFlowDocument from "@/models/authenticationFlow";
-// import { jwtDecode } from "jwt-decode";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-// const extractClaims = (verifiableCredential: string[]): string[] => {
-//   let claims: any = {};
-
-//   verifiableCredential.forEach((vc) => {
-//     const cred = jwtDecode<{ sub: string; vc: any; credentialSubject: any }>(
-//       vc
-//     );
-//     const credentialSubject = cred.vc
-//       ? cred.vc.credentialSubject
-//       : cred.credentialSubject;
-
-//     claims.sub = cred.sub;
-
-//     Object.keys(credentialSubject).forEach((key) => {
-//       claims[key] = credentialSubject[key];
-//     });
-//   });
-
-//   return claims;
-// };
 
 export default async function handler(
   req: NextApiRequest,
@@ -39,13 +17,15 @@ export default async function handler(
 
   const { txid } = req.query;
 
-  console.log(`POST /api/openid-vc/responses/${txid} - Received`);
+  console.log(
+    `[OIDC Operational] POST /api/openid-vc/responses/${txid} - Received`
+  );
 
   try {
     const data: { vp_token: string } = req.body;
 
     console.log(
-      `POST /api/openid-vc/responses/${txid} - Data: ${JSON.stringify(
+      `[OIDC Operational] POST /api/openid-vc/responses/${txid} - Data: ${JSON.stringify(
         data,
         null,
         4
@@ -71,16 +51,15 @@ export default async function handler(
       }
     ).exec();
 
-    console.log(`POST /api/openid-vc/responses/${txid} - TRX Found`);
+    console.log(
+      `[OIDC Operational] POST /api/openid-vc/responses/${txid} - TRX Found`
+    );
 
-    // const payload: {
-    //   vp: { verifiableCredential: string[] };
-    // } = jwtDecode(data.vp_token);
-
-    // const claims = extractClaims(payload.vp.verifiableCredential);
     const claims = extractClaimsFromVpToken(data.vp_token);
 
-    console.log(`POST /api/openid-vc/responses/${txid} - Claims extracted`);
+    console.log(
+      `[OIDC Operational] POST /api/openid-vc/responses/${txid} - Claims extracted`
+    );
 
     await AuthenticationFlowDocument.create({
       type: "oidc",
@@ -102,12 +81,18 @@ export default async function handler(
       }
     ).exec();
 
-    console.log(`POST /api/openid-vc/responses/${txid} - Complete`);
+    console.log(
+      `[OIDC Operational] POST /api/openid-vc/responses/${txid} - Complete`
+    );
 
     res.status(204).end();
   } catch (error) {
     console.error(
-      `POST /api/openid-vc/responses/${txid} - Error: ${JSON.stringify(error)}`
+      `[OIDC Operational] POST /api/openid-vc/responses/${txid} - Error: ${JSON.stringify(
+        error,
+        null,
+        4
+      )}`
     );
 
     res.statusCode = 500;

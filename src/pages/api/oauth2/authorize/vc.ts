@@ -21,10 +21,6 @@ export default async function handler(
     const body: { state: string; nonce: string; redirectUri: string } =
       await req.body;
 
-    console.log(
-      `POST /api/oauth2/authorize/vc - Body: ${JSON.stringify(body, null, 4)}`
-    );
-
     const auth_flow = await AuthenticationFlowDocument.create({
       type: "openid-vc",
       code: uuidv4(),

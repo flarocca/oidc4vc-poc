@@ -97,13 +97,9 @@ const createPresentationDefinition = (options: {
     input_descriptors: inputDescriptors,
   };
 
-  const definitionValidation = PresentationExchange.validateDefinition({
+  PresentationExchange.validateDefinition({
     presentationDefinition,
   });
-
-  console.log(
-    `Definition Validation - ${JSON.stringify(definitionValidation, null, 4)}`
-  );
 
   return presentationDefinition;
 };

@@ -17,7 +17,9 @@ export default async function handler(
 
   const { txid } = req.query;
 
-  console.log(`GET /api/openid-vc/requests/${txid} - Scanned`);
+  console.log(
+    `[OIDC Operational] GET /api/openid-vc/requests/${txid} - Scanned`
+  );
 
   try {
     const authFlow = await AuthenticationFlowDocument.findOneAndUpdate(
@@ -30,7 +32,9 @@ export default async function handler(
       }
     ).exec();
 
-    console.log(`GET /api/openid-vc/requests/${txid} - Found`);
+    console.log(
+      `[OIDC Operational] GET /api/openid-vc/requests/${txid} - Found`
+    );
 
     const signedPresentationDefinition =
       await createSignedPresentationDefinition({
@@ -44,12 +48,16 @@ export default async function handler(
         requireKyc: authFlow.data.requireKyc,
       });
 
-    console.log(`GET /api/openid-vc/requests/${txid} - Complete.`);
+    console.log(
+      `[OIDC Operational] GET /api/openid-vc/requests/${txid} - Complete.`
+    );
 
     res.status(200).end(signedPresentationDefinition);
   } catch (error) {
     console.error(
-      `GET /api/openid-vc/requests/${txid} - Error: ${JSON.stringify(error)}`
+      `[OIDC Operational] GET /api/openid-vc/requests/${txid} - Error: ${JSON.stringify(
+        error
+      )}`
     );
 
     res.statusCode = 500;
