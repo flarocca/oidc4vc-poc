@@ -15,15 +15,11 @@ export default async function handler(
 
   await dbConnect();
 
-  console.log(`POST /api/oauth2/authorize/oidc - Initiating`);
+  console.log(`POST /api/oauth2/authorize/oidc - Initiated`);
 
   try {
     const body: { state: string; nonce: string; redirectUri: string } =
       await req.body;
-
-    console.log(
-      `POST /api/oauth2/authorize/oidc - Body: ${JSON.stringify(body, null, 4)}`
-    );
 
     const auth_flow = await AuthenticationFlowDocument.create({
       type: "oidc",
@@ -33,7 +29,7 @@ export default async function handler(
       redirectUri: body.redirectUri,
     });
 
-    console.log(`POST /api/oauth2/authorize/oidc - Created. ${auth_flow.code}`);
+    console.log(`POST /api/oauth2/authorize/oidc - Created: ${auth_flow.code}`);
 
     res.status(200).json(auth_flow);
   } catch (error) {

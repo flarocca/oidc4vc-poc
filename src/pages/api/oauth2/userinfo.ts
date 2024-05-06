@@ -13,12 +13,14 @@ export default async function handler(
     return;
   }
 
-  console.error(`GET /oauth2/userinfo - Initiated`);
+  console.error(`[OIDC Operational] GET /oauth2/userinfo - Initiated`);
 
   const token = req.headers["authorization"]?.split(" ")[1];
 
   if (!token) {
-    console.error(`GET /oauth2/userinfo - Error: Unauthorized`);
+    console.error(
+      `[OIDC Operational] GET /oauth2/userinfo - Error: Unauthorized`
+    );
 
     res.statusCode = 401;
     res.statusMessage = "unauthorized";
@@ -28,7 +30,7 @@ export default async function handler(
   }
 
   try {
-    console.error(`GET /oauth2/userinfo - Validating JWT`);
+    console.error(`[OIDC Operational] GET /oauth2/userinfo - Validating JWT`);
 
     const keyStore = await getKeyStore();
     const keys = (keyStore.toJSON() as any).keys;
@@ -40,11 +42,15 @@ export default async function handler(
     const publicKey = jwktopem(key);
     const claims = jwt.verify(token, publicKey);
 
-    console.error(`GET /oauth2/userinfo - Token validated.`);
+    console.error(`[OIDC Operational] GET /oauth2/userinfo - Token validated.`);
 
     res.status(200).json(claims);
   } catch (error) {
-    console.error(`GET /oauth2/userinfo - Error: ${JSON.stringify(error)}`);
+    console.error(
+      `[OIDC Operational] GET /oauth2/userinfo - Error: ${JSON.stringify(
+        error
+      )}`
+    );
 
     res.statusCode = 500;
     res.statusMessage = "internal_server_error";

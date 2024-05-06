@@ -21,10 +21,6 @@ export default async function handler(
     const body: { state: string; nonce: string; redirectUri: string } =
       await req.body;
 
-    console.log(
-      `POST /api/oauth2/authorize/siop - Body: ${JSON.stringify(body, null, 4)}`
-    );
-
     const auth_flow = await AuthenticationFlowDocument.create({
       type: "siop",
       code: uuidv4(),
@@ -34,9 +30,7 @@ export default async function handler(
       redirectUri: body.redirectUri,
     });
 
-    console.log(
-      `POST /api/oauth2/authorize/siop - Complete. ${auth_flow.code}`
-    );
+    console.log(`POST /api/oauth2/authorize/siop - Created: ${auth_flow.code}`);
 
     res.status(200).json({
       code: auth_flow.code,

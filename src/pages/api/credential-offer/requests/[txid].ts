@@ -16,7 +16,9 @@ export default async function handler(
 
   const { txid } = req.query;
 
-  console.log(`GET /api/credential-offer/requests/${txid} - Initiated`);
+  console.log(
+    `[OIDC Operational] GET /api/credential-offer/requests/${txid} - Initiated`
+  );
 
   try {
     const offer = await CredentialOfferDocument.findOneAndUpdate(
@@ -27,8 +29,6 @@ export default async function handler(
         status: "scanned",
       }
     ).exec();
-
-    console.log(`GET /api/credential-offer/requests/${txid} - Found`);
 
     const payload = {
       grants: {
@@ -41,12 +41,18 @@ export default async function handler(
       credential_issuer: process.env.ISSUER as string,
     };
 
-    console.log(`GET /api/credential-offer/requests/${txid} - Complete`);
+    console.log(
+      `[OIDC Operational] GET /api/credential-offer/requests/${txid} - Complete ${JSON.stringify(
+        payload,
+        null,
+        4
+      )}`
+    );
 
     res.status(200).json(payload);
   } catch (error) {
     console.log(
-      `GET /api/credential-offer/requests/${txid} - Error: ${JSON.stringify(
+      `[OIDC Operational] GET /api/credential-offer/requests/${txid} - Error: ${JSON.stringify(
         error
       )}`
     );
@@ -56,3 +62,19 @@ export default async function handler(
     res.status(500).json({ error });
   }
 }
+
+/*
+Response
+  {
+    "grants": {
+        "urn:ietf:params:oauth:grant-type:pre-authorized_code": {
+            "pre-authorized_code": "8b6ee545-c78f-4d1c-b1f9-775d91a3bcbd",
+            "user_pin_required": false
+        }
+    },
+    "credentials": [
+        "EmailVerifiedCredential"
+    ],
+    "credential_issuer": "https://oidc-poc.sandbox.accounts.forte.io/api"
+}
+*/

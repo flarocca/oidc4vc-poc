@@ -11,16 +11,18 @@ export default async function handler(
     return;
   }
 
-  console.error(`GET /oauth2/jwks - Initiated`);
+  console.error(`[OIDC Metadata] GET /oauth2/jwks - Initiated`);
 
   try {
     const keyStore = (await getKeyStore()) as any;
 
-    console.error(`GET /oauth2/jwks - Complete`);
+    console.error(`[OIDC Metadata] GET /oauth2/jwks - Complete`);
 
     res.status(200).json(keyStore.toJSON());
   } catch (error) {
-    console.error(`GET /oauth2/jwks - Error: ${JSON.stringify(error)}`);
+    console.error(
+      `[OIDC Metadata] GET /oauth2/jwks - Error: ${JSON.stringify(error)}`
+    );
 
     res.statusCode = 500;
     res.statusMessage = "internal_server_error";
