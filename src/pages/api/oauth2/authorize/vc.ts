@@ -30,7 +30,7 @@ export default async function handler(
       redirectUri: body.redirectUri,
     });
 
-    console.log(`POST /api/oauth2/authorize/vc - Complete. ${auth_flow.code}`);
+    console.log(`POST /api/oauth2/authorize/vc - Created: ${auth_flow.code}`);
 
     res.status(200).json({
       code: auth_flow.code,
