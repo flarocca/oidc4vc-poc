@@ -9,10 +9,9 @@ import { getIssuer } from "@/helpers/issuer";
 const extractSubjectAndNonce = (
   jwt: string
 ): { subject: string; nonce: string } => {
-  const decodedHeader = jwtDecode(jwt, { header: true });
   const decodedBody = jwtDecode<JwtPayload & { nonce: string }>(jwt);
 
-  return { subject: decodedHeader.kid || "", nonce: decodedBody.nonce };
+  return { subject: decodedBody.iss || "", nonce: decodedBody.nonce };
 };
 
 const issueCredential = async (
@@ -69,7 +68,13 @@ export default async function handler(
   }
 
   try {
-    console.log(`POST /api/oauth2/credentials - Initiated`);
+    console.log(
+      `POST /api/oauth2/credentials - Initiated: ${JSON.stringify(
+        req.body,
+        null,
+        4
+      )}`
+    );
 
     const { isAuthenticated, token } = validateAuthentication(req, res);
     if (!isAuthenticated || !token) {

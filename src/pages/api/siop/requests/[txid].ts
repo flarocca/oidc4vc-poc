@@ -54,7 +54,7 @@ export default async function handler(
         response_types_supported: ["id_token", "vp_token"],
         scopes_supported: ["openid did_authn"],
         subject_types_supported: ["pairwise"],
-        subject_syntax_types_supported: ["did:key", "did:jwk"],
+        subject_syntax_types_supported: ["did:jwk"],
         vp_formats: {
           jwt_vc: {
             alg: ["ES256"],
