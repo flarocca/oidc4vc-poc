@@ -10,10 +10,10 @@ import { v4 as uuidv4 } from "uuid";
 const extractSubjectAndNonce = (
   jwt: string
 ): { subject: string; nonce: string } => {
-  const decodedHeader = jwtDecode(jwt, { header: true });
+  // const decodedHeader = jwtDecode(jwt, { header: true });
   const decodedBody = jwtDecode<JwtPayload & { nonce: string }>(jwt);
 
-  return { subject: decodedHeader.kid || "", nonce: decodedBody.nonce };
+  return { subject: decodedBody.iss || "", nonce: decodedBody.nonce };
 };
 
 const issueCredential = async (
