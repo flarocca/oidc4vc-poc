@@ -18,7 +18,7 @@ export default async function handler(
   const { txid } = req.query;
 
   console.log(
-    `[OIDC Operational] GET /api/openid-vc/requests/${txid} - Scanned`
+    `[OIDC Operational] GET /api/openid-vc/requests/${txid} - Initiated`
   );
 
   try {
@@ -31,10 +31,6 @@ export default async function handler(
         status: "scanned",
       }
     ).exec();
-
-    console.log(
-      `[OIDC Operational] GET /api/openid-vc/requests/${txid} - Found`
-    );
 
     const signedPresentationDefinition =
       await createSignedPresentationDefinition({

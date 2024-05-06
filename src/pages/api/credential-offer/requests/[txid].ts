@@ -30,10 +30,6 @@ export default async function handler(
       }
     ).exec();
 
-    console.log(
-      `[OIDC Operational] GET /api/credential-offer/requests/${txid} - Found`
-    );
-
     const payload = {
       grants: {
         "urn:ietf:params:oauth:grant-type:pre-authorized_code": {

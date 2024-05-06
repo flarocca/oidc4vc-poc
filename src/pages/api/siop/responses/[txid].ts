@@ -22,7 +22,7 @@ export default async function handler(
     const data: { vp_token: string } = req.body;
 
     console.log(
-      `[OIDC Operational] POST /api/openid-vc/responses/${txid} - Data: ${JSON.stringify(
+      `[OIDC Operational] POST /api/siopresponses/${txid} - Data: ${JSON.stringify(
         data,
         null,
         4

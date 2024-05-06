@@ -21,10 +21,6 @@ export default async function handler(
 
     const issuer = await getIssuer();
 
-    console.log(
-      `[OIDC Metadata]  GET /.well-known/did-configuration - Creating DID Configuration`
-    );
-
     const vc = await VerifiableCredential.create({
       type: "DomainLinkageCredential",
       issuer: issuer.uri,
@@ -35,10 +31,6 @@ export default async function handler(
         origin: `${process.env.ISSUER?.replace("/api", "") as string}`,
       },
     });
-
-    console.log(
-      `[OIDC Metadata]  GET /.well-known/did-configuration - Signing DID Configuration`
-    );
 
     const token = await vc.sign({ did: issuer });
 

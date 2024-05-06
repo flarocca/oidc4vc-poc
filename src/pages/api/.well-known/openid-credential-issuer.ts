@@ -23,148 +23,44 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       {
         display: [
           {
-            name: "Membership Example",
-            description: "Membership Example credential",
-            text_color: "#FFFFFF",
-            background_image: {
-              url: "https://i.ibb.co/kmfrH4F/tulips.png",
-              alt_text: "Black and white photo of tulips with one red tulip",
-            },
-            logo: {
-              url: "https://i.ibb.co/NWQQ9kt/sphereon-logo.png",
-              alt_text: "Red square depicting Sphereon logo.",
-            },
-          },
-          {
-            locale: "en-US",
-            name: "Membership Example",
-            description:
-              "Sphereon Membership Example credential for demo purposes.",
-            text_color: "#FFFFFF",
-            background_image: {
-              url: "https://i.ibb.co/kmfrH4F/tulips.png",
-              alt_text: "Black and white photo of tulips with one red tulip",
-            },
-            logo: {
-              url: "https://i.ibb.co/NWQQ9kt/sphereon-logo.png",
-              alt_text: "Red square depicting Sphereon logo.",
-            },
-          },
-          {
-            locale: "es-ES",
-            name: "Credencial de ejemplo de Miembro del club",
-            description:
-              "Credencial de ejemplo de Miembro del club solo apta para demostraciones.",
-            text_color: "#FFFFFF",
-            background_image: {
-              url: "https://i.ibb.co/kmfrH4F/tulips.png",
-              alt_text: "Black and white photo of tulips with one red tulip",
-            },
-            logo: {
-              url: "https://i.ibb.co/NWQQ9kt/sphereon-logo.png",
-              alt_text: "Red square depicting Sphereon logo.",
-            },
-          },
-        ],
-        order: ["firstName", "lastName", "email"],
-        credentialSubject: {
-          firstName: {
-            value_type: "string",
-            display: [
-              {
-                name: "First Name",
-              },
-              {
-                name: "First Name",
-                locale: "en-US",
-              },
-              {
-                name: "Nombre",
-                locale: "es-ES",
-              },
-            ],
-          },
-          lastName: {
-            value_type: "string",
-            display: [
-              {
-                name: "Last Name",
-              },
-              {
-                name: "Last Name",
-                locale: "en-US",
-              },
-              {
-                name: "Apellido",
-                locale: "es-ES",
-              },
-            ],
-          },
-          email: {
-            value_type: "string",
-            display: [
-              {
-                name: "Email",
-              },
-              {
-                name: "Email",
-                locale: "en-US",
-              },
-              {
-                name: "Email",
-                locale: "es-ES",
-              },
-            ],
-          },
-        },
-        id: "MembershipExample",
-        types: ["VerifiableCredential", "MembershipExample"],
-        format: "jwt_vc_json",
-        cryptographic_binding_methods_supported: ["did:web", "did:jwk"],
-        cryptographic_suites_supported: ["ES256", "ES256K", "EdDSA"],
-      },
-      {
-        display: [
-          {
             name: "Email Verified",
             description: "Email verified credential",
             text_color: "#000000",
             background_image: {
-              url: "https://img.freepik.com/free-vector/watercolour-green-background_78370-1882.jpg",
-              alt_text: "Black and white photo of tulips with one red tulip",
+              url: "https://imgs.search.brave.com/zm0BcDb23ENoNk1EIUAWQGOobQrtfZpDiWaePPZlw_M/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXM2LmFscGhhY29k/ZXJzLmNvbS85NzEv/OTcxOTM3LmpwZw",
+              alt_text: "Empty",
             },
             logo: {
-              url: "https://images.ctfassets.net/f7s89bi4a9se/6TrUPFQh6LRj1aQq1005PH/1ddba26033479c5e0c3f6488f2704d8e/3.png",
-              alt_text: "Red square depicting Sphereon logo.",
+              url: "https://imgs.search.brave.com/V_EQgIx90RTQ5Mj7nCekh9xToXxyghH1IzOWX_1XOhM/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9zZWVr/bG9nby5jb20vaW1h/Z2VzL0UvZXNjdWRv/LXJpdmVyLXBsYXRl/LTIwMjItbG9nby03/NUM5NDA3MkY1LXNl/ZWtsb2dvLmNvbS5w/bmc",
+              alt_text: "Empty",
             },
           },
           {
             locale: "en-US",
             name: "Email Verified",
-            description: "Email verified credential for demo purposes.",
+            description: "Email verified credential",
             text_color: "#000000",
             background_image: {
-              url: "https://img.freepik.com/free-vector/watercolour-green-background_78370-1882.jpg",
-              alt_text: "Black and white photo of tulips with one red tulip",
+              url: "https://imgs.search.brave.com/zm0BcDb23ENoNk1EIUAWQGOobQrtfZpDiWaePPZlw_M/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXM2LmFscGhhY29k/ZXJzLmNvbS85NzEv/OTcxOTM3LmpwZw",
+              alt_text: "Empty",
             },
             logo: {
-              url: "https://images.ctfassets.net/f7s89bi4a9se/6TrUPFQh6LRj1aQq1005PH/1ddba26033479c5e0c3f6488f2704d8e/3.png",
-              alt_text: "Red square depicting Sphereon logo.",
+              url: "https://imgs.search.brave.com/V_EQgIx90RTQ5Mj7nCekh9xToXxyghH1IzOWX_1XOhM/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9zZWVr/bG9nby5jb20vaW1h/Z2VzL0UvZXNjdWRv/LXJpdmVyLXBsYXRl/LTIwMjItbG9nby03/NUM5NDA3MkY1LXNl/ZWtsb2dvLmNvbS5w/bmc",
+              alt_text: "Empty",
             },
           },
           {
             locale: "es-ES",
             name: "Email Verificado",
-            description:
-              "Credencial de prueba de email verificado solo apta para demostraciones.",
+            description: "Credencial de email verificado",
             text_color: "#000000",
             background_image: {
-              url: "https://img.freepik.com/free-vector/watercolour-green-background_78370-1882.jpg",
-              alt_text: "Black and white photo of tulips with one red tulip",
+              url: "https://imgs.search.brave.com/zm0BcDb23ENoNk1EIUAWQGOobQrtfZpDiWaePPZlw_M/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXM2LmFscGhhY29k/ZXJzLmNvbS85NzEv/OTcxOTM3LmpwZw",
+              alt_text: "Empty",
             },
             logo: {
-              url: "https://images.ctfassets.net/f7s89bi4a9se/6TrUPFQh6LRj1aQq1005PH/1ddba26033479c5e0c3f6488f2704d8e/3.png",
-              alt_text: "Red square depicting Sphereon logo.",
+              url: "https://imgs.search.brave.com/V_EQgIx90RTQ5Mj7nCekh9xToXxyghH1IzOWX_1XOhM/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9zZWVr/bG9nby5jb20vaW1h/Z2VzL0UvZXNjdWRv/LXJpdmVyLXBsYXRl/LTIwMjItbG9nby03/NUM5NDA3MkY1LXNl/ZWtsb2dvLmNvbS5w/bmc",
+              alt_text: "Empty",
             },
           },
         ],
@@ -190,8 +86,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         id: "EmailVerifiedCredential",
         types: ["VerifiableCredential", "EmailVerifiedCredential"],
         format: "jwt_vc_json",
-        cryptographic_binding_methods_supported: ["did:web", "did:jwk"],
-        cryptographic_suites_supported: ["ES256", "ES256K", "EdDSA"],
+        cryptographic_binding_methods_supported: ["did:jwk"],
+        cryptographic_suites_supported: ["ES256"],
       },
       {
         display: [
@@ -201,11 +97,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             text_color: "#FFFFFF",
             background_image: {
               url: "https://img.freepik.com/foto-gratis/papel-acuarela-amarillo_95678-446.jpg",
-              alt_text: "Black and white photo of tulips with one red tulip",
+              alt_text: "Empty",
             },
             logo: {
               url: "https://images.ctfassets.net/f7s89bi4a9se/6TrUPFQh6LRj1aQq1005PH/1ddba26033479c5e0c3f6488f2704d8e/3.png",
-              alt_text: "Red square depicting Sphereon logo.",
+              alt_text: "Empty",
             },
           },
           {
@@ -215,11 +111,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             text_color: "#FFFFFF",
             background_image: {
               url: "https://img.freepik.com/foto-gratis/papel-acuarela-amarillo_95678-446.jpg",
-              alt_text: "Black and white photo of tulips with one red tulip",
+              alt_text: "Empty",
             },
             logo: {
               url: "https://images.ctfassets.net/f7s89bi4a9se/6TrUPFQh6LRj1aQq1005PH/1ddba26033479c5e0c3f6488f2704d8e/3.png",
-              alt_text: "Red square depicting Sphereon logo.",
+              alt_text: "Empty",
             },
           },
           {
@@ -230,11 +126,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             text_color: "#FFFFFF",
             background_image: {
               url: "https://img.freepik.com/foto-gratis/papel-acuarela-amarillo_95678-446.jpg",
-              alt_text: "Black and white photo of tulips with one red tulip",
+              alt_text: "Empty",
             },
             logo: {
               url: "https://images.ctfassets.net/f7s89bi4a9se/6TrUPFQh6LRj1aQq1005PH/1ddba26033479c5e0c3f6488f2704d8e/3.png",
-              alt_text: "Red square depicting Sphereon logo.",
+              alt_text: "Empty",
             },
           },
         ],
@@ -292,18 +188,13 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         id: "KycCredential",
         types: ["VerifiableCredential", "KycCredential"],
         format: "jwt_vc_json",
-        cryptographic_binding_methods_supported: ["did:web", "did:jwk"],
-        cryptographic_suites_supported: ["ES256", "ES256K", "EdDSA"],
+        cryptographic_binding_methods_supported: ["did:jwk"],
+        cryptographic_suites_supported: ["ES256"],
       },
     ],
     credential_supplier_config: {
       templates_base_dir: "templates",
       template_mappings: [
-        {
-          credential_types: ["MembershipExample"],
-          template_path: "MembershipExample.hbs",
-          format: "jwt_vc_json",
-        },
         {
           credential_types: ["EmailVerifiedCredential"],
           template_path: "EmailVerifiedCredential.hbs",
