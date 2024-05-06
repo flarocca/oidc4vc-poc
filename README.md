@@ -22,6 +22,7 @@ Endpoints under `/oauth2` must be present but it is not mandatory to have them s
 - `POST /oauth2/token`
 - `GET  /oauth2/authorize`
 - `GET  /oauth2/userinfo`
+- `POST /oauth2/credentials`
 
 ## Out of protocol endpoints
 

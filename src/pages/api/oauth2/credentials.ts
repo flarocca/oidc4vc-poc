@@ -107,7 +107,18 @@ export default async function handler(
     const { subject, nonce } = extractSubjectAndNonce(req.body.proof.jwt);
     const signedJwt = await issueCredential(credentialOffer, subject);
 
-    console.log(`[OIDC Operational] POST /api/oauth2/credentials - VC signed`);
+    console.log(
+      `[OIDC Operational] POST /api/oauth2/credentials - VC signed ${JSON.stringify(
+        {
+          format: "jwt_vc",
+          credential: signedJwt,
+          c_nonce: nonce,
+          c_nonce_expires_in: 86400,
+        },
+        null,
+        4
+      )}`
+    );
 
     res.status(200).json({
       format: "jwt_vc",
@@ -128,3 +139,21 @@ export default async function handler(
     res.status(500).json({ error });
   }
 }
+
+/*
+Request
+  Header [Authorization: Bearer {access_token}]
+  Body {
+      "types": [
+          "VerifiableCredential",
+          "EmailVerifiedCredential"
+      ],
+      "format": "jwt_vc_json",
+      "proof": {
+          "proof_type": "jwt",
+          "jwt": "eyJ0eXAiOiJvcGVuaWQ0dmNpLXByb29mK2p3dCIsImFsZyI6IkVTMjU2Iiwia2lkIjoiZGlkOmp3azpleUpoYkdjaU9pSkZVekkxTmlJc0luVnpaU0k2SW5OcFp5SXNJbXQwZVNJNklrVkRJaXdpWTNKMklqb2lVQzB5TlRZaUxDSjRJam9pTjFaZlpuZFBNR2RoU1ZSWWEwWjZaR2hOYm1OMmJGcFNSekUzV0VKTGMwWXdjakJHY2tnNE1EUldheUlzSW5raU9pSTBUMGwxTFZoeGRFTm5NREp6V1VoRVptNXFlRWhKTVhKMmFVMW1lVTFpVUd0UFZ6RTRhVTVGUjNWTkluMCMwIn0.eyJpYXQiOjE3MTUwMDczODYsImV4cCI6MTcxNTAwODA0NiwiYXVkIjoiaHR0cHM6Ly9vaWRjLXBvYy5zYW5kYm94LmFjY291bnRzLmZvcnRlLmlvLy9hcGkiLCJub25jZSI6IjQ0N2ZmNmRhLTkxN2MtNDBjMi1hNjhhLWU0YzE3YWZmZDJhNiIsImlzcyI6ImRpZDpqd2s6ZXlKaGJHY2lPaUpGVXpJMU5pSXNJblZ6WlNJNkluTnBaeUlzSW10MGVTSTZJa1ZESWl3aVkzSjJJam9pVUMweU5UWWlMQ0o0SWpvaU4xWmZabmRQTUdkaFNWUllhMFo2WkdoTmJtTjJiRnBTUnpFM1dFSkxjMFl3Y2pCR2NrZzRNRFJXYXlJc0lua2lPaUkwVDBsMUxWaHhkRU5uTURKeldVaEVabTVxZUVoSk1YSjJhVTFtZVUxaVVHdFBWekU0YVU1RlIzVk5JbjAiLCJqdGkiOiI4ZjFlYzMyMy1kOGM0LTRkMzUtOTdiNy0wZjE3ZWEwYmQ3M2EifQ.MkRicxbFtbabJCS08NXdlE9tuwyQnqKXqXbujEcjjkjSB5zxjq5lKHwgpN5QZlDGETRBTSdUrhKj1hKI8t1QgA"
+      }
+  }
+
+Response
+*/

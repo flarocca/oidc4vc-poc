@@ -46,7 +46,11 @@ export default async function handler(
     };
 
     console.log(
-      `[OIDC Operational] GET /api/credential-offer/requests/${txid} - Complete`
+      `[OIDC Operational] GET /api/credential-offer/requests/${txid} - Complete ${JSON.stringify(
+        payload,
+        null,
+        4
+      )}`
     );
 
     res.status(200).json(payload);

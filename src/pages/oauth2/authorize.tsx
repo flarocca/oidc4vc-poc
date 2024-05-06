@@ -93,7 +93,7 @@ export default function Authorize() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 forte">
+    <main className="flex min-h-screen flex-col items-center justify-between p-24 issuer">
       <div className="flex-col z-10 max-w-5xl w-full items-center justify-center font-mono text-sm lg:flex">
         <button
           className="text-2xl border-b border-gray-300 text-center group rounded-lg border bg-gradient-to-b px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"

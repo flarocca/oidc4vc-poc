@@ -6,7 +6,7 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-  --background-forte-rgb: 64, 31, 113;
+  --background-issuer-rgb: 64, 31, 113;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -33,12 +33,12 @@ body {
   }
 }
 
-.forte {
+.issuer {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
       transparent,
-      rgb(var(--background-forte-rgb))
+      rgb(var(--background-issuer-rgb))
     )
-    rgb(var(--background-forte-rgb));
+    rgb(var(--background-issuer-rgb));
 }
