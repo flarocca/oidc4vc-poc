@@ -3,8 +3,9 @@ import { jwtDecode, JwtPayload } from "jwt-decode";
 import CredentialOfferDocument, {
   CredentialOffer,
 } from "@/models/credentialOffer";
-import { VerifiableCredential } from "@web5/credentials";
+import { Jwt, VerifiableCredential } from "@web5/credentials";
 import { getIssuer } from "@/helpers/issuer";
+import { v4 as uuidv4 } from "uuid";
 
 const extractSubjectAndNonce = (
   jwt: string
@@ -35,6 +36,59 @@ const issueCredential = async (
   });
 
   return await credential.sign({ did: issuer });
+};
+
+const issueCredentialLegacy = async (
+  credentialOffer: CredentialOffer,
+  subject: string
+) => {
+  const issuer = await getIssuer();
+
+  const vc = {
+    "@context": ["https://www.w3.org/2018/credentials/v1"],
+    type: ["VerifiableCredential", credentialOffer.type],
+    credentialSubject: {
+      id: subject,
+      ...credentialOffer.data,
+    },
+  };
+
+  const issuanceDate = new Date();
+  const expirationDate = new Date();
+  expirationDate.setDate(issuanceDate.getDate() + 365);
+
+  const credential = {
+    exp: Math.floor((expirationDate.getTime() as unknown as number) / 1000),
+    expirationDate: expirationDate.toISOString(),
+    nbf: Math.floor(issuanceDate.getTime() / 1000),
+    iat: Math.floor(issuanceDate.getTime() / 1000),
+    issuanceDate: issuanceDate.toISOString(),
+    jti: uuidv4(),
+    issuer: issuer.uri,
+    iss: issuer.uri,
+    sub: subject,
+    vc,
+    ...vc,
+  };
+
+  return await Jwt.sign({
+    signerDid: issuer,
+    payload: credential,
+  });
+
+  // return await Jwt.sign({
+  //   signerDid: issuer,
+  //   payload: {
+  //     vc: credential.vc,
+  //     nbf: credential.nbf,
+  //     jti: credential.jti,
+  //     iss: issuer.uri,
+  //     sub: credential.sub,
+  //     iat: credential.iat,
+  //     exp: credential.exp,
+  //     ...vc,
+  //   },
+  // });
 };
 
 const validateAuthentication = (
@@ -96,7 +150,8 @@ export default async function handler(
     console.log(`POST /api/oauth2/credentials - Scanned`);
 
     const { subject, nonce } = extractSubjectAndNonce(req.body.proof.jwt);
-    const signedJwt = await issueCredential(credentialOffer, subject);
+    // const signedJwt = await issueCredential(credentialOffer, subject);
+    const signedJwt = await issueCredentialLegacy(credentialOffer, subject);
 
     console.log(`POST /api/oauth2/credentials - VC signed`);
 
