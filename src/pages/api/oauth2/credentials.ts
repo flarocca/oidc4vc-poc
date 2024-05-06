@@ -123,7 +123,13 @@ export default async function handler(
   }
 
   try {
-    console.log(`POST /api/oauth2/credentials - Initiated`);
+    console.log(
+      `POST /api/oauth2/credentials - Initiated: ${JSON.stringify(
+        req.body,
+        null,
+        4
+      )}`
+    );
 
     const { isAuthenticated, token } = validateAuthentication(req, res);
     if (!isAuthenticated || !token) {
