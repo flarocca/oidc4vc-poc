@@ -66,3 +66,19 @@ export default async function handler(
     res.status(500).json({ error });
   }
 }
+
+/*
+Response
+  {
+    "grants": {
+        "urn:ietf:params:oauth:grant-type:pre-authorized_code": {
+            "pre-authorized_code": "8b6ee545-c78f-4d1c-b1f9-775d91a3bcbd",
+            "user_pin_required": false
+        }
+    },
+    "credentials": [
+        "EmailVerifiedCredential"
+    ],
+    "credential_issuer": "https://oidc-poc.sandbox.accounts.forte.io/api"
+}
+*/

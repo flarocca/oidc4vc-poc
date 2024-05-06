@@ -107,7 +107,9 @@ export default async function handler(
       payload,
     });
 
-    console.log(`[OIDC Operational] GET /api/siop/requests/${txid} - Complete`);
+    console.log(
+      `[OIDC Operational] GET /api/siop/requests/${txid} - Complete: ${signegJwt}`
+    );
 
     res.status(200).end(signegJwt);
   } catch (error) {

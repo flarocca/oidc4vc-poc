@@ -49,7 +49,7 @@ export default async function handler(
       });
 
     console.log(
-      `[OIDC Operational] GET /api/openid-vc/requests/${txid} - Complete.`
+      `[OIDC Operational] GET /api/openid-vc/requests/${txid} - Complete ${signedPresentationDefinition}.`
     );
 
     res.status(200).end(signedPresentationDefinition);
