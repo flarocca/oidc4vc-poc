@@ -10,7 +10,6 @@ import { v4 as uuidv4 } from "uuid";
 const extractSubjectAndNonce = (
   jwt: string
 ): { subject: string; nonce: string } => {
-  // const decodedHeader = jwtDecode(jwt, { header: true });
   const decodedBody = jwtDecode<JwtPayload & { nonce: string }>(jwt);
 
   return { subject: decodedBody.iss || "", nonce: decodedBody.nonce };
@@ -75,20 +74,6 @@ const issueCredentialLegacy = async (
     signerDid: issuer,
     payload: credential,
   });
-
-  // return await Jwt.sign({
-  //   signerDid: issuer,
-  //   payload: {
-  //     vc: credential.vc,
-  //     nbf: credential.nbf,
-  //     jti: credential.jti,
-  //     iss: issuer.uri,
-  //     sub: credential.sub,
-  //     iat: credential.iat,
-  //     exp: credential.exp,
-  //     ...vc,
-  //   },
-  // });
 };
 
 const validateAuthentication = (
@@ -156,8 +141,8 @@ export default async function handler(
     console.log(`POST /api/oauth2/credentials - Scanned`);
 
     const { subject, nonce } = extractSubjectAndNonce(req.body.proof.jwt);
-    // const signedJwt = await issueCredential(credentialOffer, subject);
-    const signedJwt = await issueCredentialLegacy(credentialOffer, subject);
+    const signedJwt = await issueCredential(credentialOffer, subject);
+    // const signedJwt = await issueCredentialLegacy(credentialOffer, subject);
 
     console.log(`POST /api/oauth2/credentials - VC signed`);
 
