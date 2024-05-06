@@ -27,11 +27,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             description: "Email verified credential",
             text_color: "#000000",
             background_image: {
-              url: "https://imgs.search.brave.com/zm0BcDb23ENoNk1EIUAWQGOobQrtfZpDiWaePPZlw_M/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXM2LmFscGhhY29k/ZXJzLmNvbS85NzEv/OTcxOTM3LmpwZw",
+              // url: "https://imgs.search.brave.com/zm0BcDb23ENoNk1EIUAWQGOobQrtfZpDiWaePPZlw_M/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXM2LmFscGhhY29k/ZXJzLmNvbS85NzEv/OTcxOTM3LmpwZw",
+              url: `${
+                process.env.EXTERNAL_SERVER_URI as string
+              }/templates/emailVerified/background.jpg`,
               alt_text: "Empty",
             },
             logo: {
-              url: "https://imgs.search.brave.com/V_EQgIx90RTQ5Mj7nCekh9xToXxyghH1IzOWX_1XOhM/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9zZWVr/bG9nby5jb20vaW1h/Z2VzL0UvZXNjdWRv/LXJpdmVyLXBsYXRl/LTIwMjItbG9nby03/NUM5NDA3MkY1LXNl/ZWtsb2dvLmNvbS5w/bmc",
+              // url: "https://imgs.search.brave.com/V_EQgIx90RTQ5Mj7nCekh9xToXxyghH1IzOWX_1XOhM/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9zZWVr/bG9nby5jb20vaW1h/Z2VzL0UvZXNjdWRv/LXJpdmVyLXBsYXRl/LTIwMjItbG9nby03/NUM5NDA3MkY1LXNl/ZWtsb2dvLmNvbS5w/bmc",
+              url: `${
+                process.env.EXTERNAL_SERVER_URI as string
+              }/templates/emailVerified/logo.png`,
               alt_text: "Empty",
             },
           },
@@ -41,11 +47,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             description: "Email verified credential",
             text_color: "#000000",
             background_image: {
-              url: "https://imgs.search.brave.com/zm0BcDb23ENoNk1EIUAWQGOobQrtfZpDiWaePPZlw_M/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXM2LmFscGhhY29k/ZXJzLmNvbS85NzEv/OTcxOTM3LmpwZw",
+              // url: "https://imgs.search.brave.com/zm0BcDb23ENoNk1EIUAWQGOobQrtfZpDiWaePPZlw_M/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXM2LmFscGhhY29k/ZXJzLmNvbS85NzEv/OTcxOTM3LmpwZw",
+              url: `${
+                process.env.EXTERNAL_SERVER_URI as string
+              }/templates/emailVerified/background.jpg`,
               alt_text: "Empty",
             },
             logo: {
-              url: "https://imgs.search.brave.com/V_EQgIx90RTQ5Mj7nCekh9xToXxyghH1IzOWX_1XOhM/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9zZWVr/bG9nby5jb20vaW1h/Z2VzL0UvZXNjdWRv/LXJpdmVyLXBsYXRl/LTIwMjItbG9nby03/NUM5NDA3MkY1LXNl/ZWtsb2dvLmNvbS5w/bmc",
+              // url: "https://imgs.search.brave.com/V_EQgIx90RTQ5Mj7nCekh9xToXxyghH1IzOWX_1XOhM/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9zZWVr/bG9nby5jb20vaW1h/Z2VzL0UvZXNjdWRv/LXJpdmVyLXBsYXRl/LTIwMjItbG9nby03/NUM5NDA3MkY1LXNl/ZWtsb2dvLmNvbS5w/bmc",
+              url: `${
+                process.env.EXTERNAL_SERVER_URI as string
+              }/templates/emailVerified/logo.png`,
               alt_text: "Empty",
             },
           },
@@ -55,11 +67,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             description: "Credencial de email verificado",
             text_color: "#000000",
             background_image: {
-              url: "https://imgs.search.brave.com/zm0BcDb23ENoNk1EIUAWQGOobQrtfZpDiWaePPZlw_M/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXM2LmFscGhhY29k/ZXJzLmNvbS85NzEv/OTcxOTM3LmpwZw",
+              // url: "https://imgs.search.brave.com/zm0BcDb23ENoNk1EIUAWQGOobQrtfZpDiWaePPZlw_M/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXM2LmFscGhhY29k/ZXJzLmNvbS85NzEv/OTcxOTM3LmpwZw",
+              url: `${
+                process.env.EXTERNAL_SERVER_URI as string
+              }/templates/emailVerified/background.jpg`,
               alt_text: "Empty",
             },
             logo: {
-              url: "https://imgs.search.brave.com/V_EQgIx90RTQ5Mj7nCekh9xToXxyghH1IzOWX_1XOhM/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9zZWVr/bG9nby5jb20vaW1h/Z2VzL0UvZXNjdWRv/LXJpdmVyLXBsYXRl/LTIwMjItbG9nby03/NUM5NDA3MkY1LXNl/ZWtsb2dvLmNvbS5w/bmc",
+              // url: "https://imgs.search.brave.com/V_EQgIx90RTQ5Mj7nCekh9xToXxyghH1IzOWX_1XOhM/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9zZWVr/bG9nby5jb20vaW1h/Z2VzL0UvZXNjdWRv/LXJpdmVyLXBsYXRl/LTIwMjItbG9nby03/NUM5NDA3MkY1LXNl/ZWtsb2dvLmNvbS5w/bmc",
+              url: `${
+                process.env.EXTERNAL_SERVER_URI as string
+              }/templates/emailVerified/logo.png`,
               alt_text: "Empty",
             },
           },
@@ -96,11 +114,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             description: "KYC credential",
             text_color: "#FFFFFF",
             background_image: {
-              url: "https://imgs.search.brave.com/RfuJcR7HOrsekHvVvQ2RYuFCphV6kQ4IlKrjU-oovFs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXIuZG9nL2xh/cmdlLzIwNTYxNzc0/LmpwZw",
+              // url: "https://imgs.search.brave.com/RfuJcR7HOrsekHvVvQ2RYuFCphV6kQ4IlKrjU-oovFs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXIuZG9nL2xh/cmdlLzIwNTYxNzc0/LmpwZw",
+              url: `${
+                process.env.EXTERNAL_SERVER_URI as string
+              }/templates/kyc/background.jpg`,
               alt_text: "Empty",
             },
             logo: {
-              url: "https://imgs.search.brave.com/WgM8-ygvuh_2SPomUskcvsrAijTsPd8AHnK-WpIlUcU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9sb2dv/cy1kb3dubG9hZC5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MTYvMDUvQXJnZW50/aW5hX25hdGlvbmFs/X2Zvb3RiYWxsX3Rl/YW1fbG9nb19jcmVz/dC00Mzl4NzAwLnBu/Zw",
+              // url: "https://imgs.search.brave.com/WgM8-ygvuh_2SPomUskcvsrAijTsPd8AHnK-WpIlUcU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9sb2dv/cy1kb3dubG9hZC5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MTYvMDUvQXJnZW50/aW5hX25hdGlvbmFs/X2Zvb3RiYWxsX3Rl/YW1fbG9nb19jcmVz/dC00Mzl4NzAwLnBu/Zw",
+              url: `${
+                process.env.EXTERNAL_SERVER_URI as string
+              }/templates/kyc/logo.png`,
               alt_text: "Empty",
             },
           },
@@ -110,11 +134,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             description: "KYC credential",
             text_color: "#FFFFFF",
             background_image: {
-              url: "https://imgs.search.brave.com/RfuJcR7HOrsekHvVvQ2RYuFCphV6kQ4IlKrjU-oovFs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXIuZG9nL2xh/cmdlLzIwNTYxNzc0/LmpwZw",
+              // url: "https://imgs.search.brave.com/RfuJcR7HOrsekHvVvQ2RYuFCphV6kQ4IlKrjU-oovFs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXIuZG9nL2xh/cmdlLzIwNTYxNzc0/LmpwZw",
+              url: `${
+                process.env.EXTERNAL_SERVER_URI as string
+              }/templates/kyc/background.jpg`,
               alt_text: "Empty",
             },
             logo: {
-              url: "https://imgs.search.brave.com/WgM8-ygvuh_2SPomUskcvsrAijTsPd8AHnK-WpIlUcU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9sb2dv/cy1kb3dubG9hZC5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MTYvMDUvQXJnZW50/aW5hX25hdGlvbmFs/X2Zvb3RiYWxsX3Rl/YW1fbG9nb19jcmVz/dC00Mzl4NzAwLnBu/Zw",
+              // url: "https://imgs.search.brave.com/WgM8-ygvuh_2SPomUskcvsrAijTsPd8AHnK-WpIlUcU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9sb2dv/cy1kb3dubG9hZC5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MTYvMDUvQXJnZW50/aW5hX25hdGlvbmFs/X2Zvb3RiYWxsX3Rl/YW1fbG9nb19jcmVz/dC00Mzl4NzAwLnBu/Zw",
+              url: `${
+                process.env.EXTERNAL_SERVER_URI as string
+              }/templates/kyc/logo.png`,
               alt_text: "Empty",
             },
           },
@@ -124,11 +154,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             description: "Credencial de KYC",
             text_color: "#FFFFFF",
             background_image: {
-              url: "https://imgs.search.brave.com/RfuJcR7HOrsekHvVvQ2RYuFCphV6kQ4IlKrjU-oovFs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXIuZG9nL2xh/cmdlLzIwNTYxNzc0/LmpwZw",
+              // url: "https://imgs.search.brave.com/RfuJcR7HOrsekHvVvQ2RYuFCphV6kQ4IlKrjU-oovFs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXIuZG9nL2xh/cmdlLzIwNTYxNzc0/LmpwZw",
+              url: `${
+                process.env.EXTERNAL_SERVER_URI as string
+              }/templates/kyc/background.jpg`,
               alt_text: "Empty",
             },
             logo: {
-              url: "https://imgs.search.brave.com/WgM8-ygvuh_2SPomUskcvsrAijTsPd8AHnK-WpIlUcU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9sb2dv/cy1kb3dubG9hZC5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MTYvMDUvQXJnZW50/aW5hX25hdGlvbmFs/X2Zvb3RiYWxsX3Rl/YW1fbG9nb19jcmVz/dC00Mzl4NzAwLnBu/Zw",
+              // url: "https://imgs.search.brave.com/WgM8-ygvuh_2SPomUskcvsrAijTsPd8AHnK-WpIlUcU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9sb2dv/cy1kb3dubG9hZC5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MTYvMDUvQXJnZW50/aW5hX25hdGlvbmFs/X2Zvb3RiYWxsX3Rl/YW1fbG9nb19jcmVz/dC00Mzl4NzAwLnBu/Zw",
+              url: `${
+                process.env.EXTERNAL_SERVER_URI as string
+              }/templates/kyc/logo.png`,
               alt_text: "Empty",
             },
           },
@@ -196,12 +232,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       template_mappings: [
         {
           credential_types: ["EmailVerifiedCredential"],
-          template_path: "EmailVerifiedCredential.hbs",
+          template_path: "emailVerified/EmailVerifiedCredential.hbs",
           format: "jwt_vc_json",
         },
         {
           credential_types: ["KycCredential"],
-          template_path: "KycCredential.hbs",
+          template_path: "kyc/KycCredential.hbs",
           format: "jwt_vc_json",
         },
       ],
