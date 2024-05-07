@@ -17,7 +17,7 @@ const createToken = async (payload: any) => {
 };
 
 const handleAuthorizationCode = async (code: string) => {
-  console.log(
+  console.info(
     `[OIDC Operational] POST /api/oauth2/token - Handling Authorization Code`
   );
 
@@ -27,7 +27,7 @@ const handleAuthorizationCode = async (code: string) => {
   }).exec();
 
   if (!auth_flow) {
-    console.log(
+    console.info(
       `[OIDC Operational] POST /api/oauth2/token - Not Found. ${code}`
     );
 
@@ -41,7 +41,7 @@ const handleAuthorizationCode = async (code: string) => {
     };
   }
 
-  console.log(`[OIDC Operational] POST /oauth2/token - Found. ${code}`);
+  console.info(`[OIDC Operational] POST /oauth2/token - Found. ${code}`);
 
   const dt = new Date();
   const payload = {
@@ -57,7 +57,7 @@ const handleAuthorizationCode = async (code: string) => {
 
   const token = await createToken(payload);
 
-  console.log(`[OIDC Operational] POST /api/oauth2/token - Complete. ${code}`);
+  console.info(`[OIDC Operational] POST /api/oauth2/token - Complete. ${code}`);
 
   return {
     status: 200,
@@ -71,7 +71,7 @@ const handleAuthorizationCode = async (code: string) => {
 };
 
 const handlePreAuthorizationCode = async (preAuthorizedCode: string) => {
-  console.log(
+  console.info(
     `[OIDC Operational] POST /api/oauth2/token - Handling Pre-Authorization Code`
   );
 
@@ -81,7 +81,7 @@ const handlePreAuthorizationCode = async (preAuthorizedCode: string) => {
   }).exec();
 
   if (!auth_flow) {
-    console.log(
+    console.info(
       `[OIDC Operational] POST /api/oauth2/token - Not Found. ${preAuthorizedCode}`
     );
 
@@ -95,7 +95,7 @@ const handlePreAuthorizationCode = async (preAuthorizedCode: string) => {
     };
   }
 
-  console.log(
+  console.info(
     `[OIDC Operational] POST /api/oauth2/token - Found. ${preAuthorizedCode}`
   );
 
@@ -111,7 +111,7 @@ const handlePreAuthorizationCode = async (preAuthorizedCode: string) => {
 
   const token = await createToken(payload);
 
-  console.log(
+  console.info(
     `[OIDC Operational] POST /api/oauth2/token - Complete. ${preAuthorizedCode}`
   );
 
@@ -140,7 +140,7 @@ const handleToken = async (body: {
     case "urn:ietf:params:oauth:grant-type:pre-authorized_code":
       return await handlePreAuthorizationCode(body["pre-authorized_code"]);
     default:
-      console.log(`POST /api/oauth2/token - Error: Invalid grant`);
+      console.info(`POST /api/oauth2/token - Error: Invalid grant`);
 
       return {
         status: 400,
@@ -165,11 +165,7 @@ export default async function handler(
 
   await dbConnect();
 
-  console.log(
-    `[OIDC Operational] POST /api/oauth2/token - Initiated: ${JSON.stringify(
-      req.body
-    )}`
-  );
+  console.info(`[OIDC Operational] POST /api/oauth2/token - Initiated`);
 
   try {
     const result = await handleToken(req.body);

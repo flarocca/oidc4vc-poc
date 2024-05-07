@@ -17,14 +17,14 @@ export default async function handler(
 
   const { txid } = req.query;
 
-  console.log(
+  console.info(
     `[OIDC Operational] POST /api/openid-vc/responses/${txid} - Received`
   );
 
   try {
     const data: { vp_token: string } = req.body;
 
-    console.log(
+    console.info(
       `[OIDC Operational] POST /api/openid-vc/responses/${txid} - Data: ${JSON.stringify(
         data,
         null,
@@ -51,13 +51,13 @@ export default async function handler(
       }
     ).exec();
 
-    console.log(
+    console.info(
       `[OIDC Operational] POST /api/openid-vc/responses/${txid} - TRX Found`
     );
 
     const claims = extractClaimsFromVpToken(data.vp_token);
 
-    console.log(
+    console.info(
       `[OIDC Operational] POST /api/openid-vc/responses/${txid} - Claims extracted`
     );
 
@@ -81,7 +81,7 @@ export default async function handler(
       }
     ).exec();
 
-    console.log(
+    console.info(
       `[OIDC Operational] POST /api/openid-vc/responses/${txid} - Complete`
     );
 

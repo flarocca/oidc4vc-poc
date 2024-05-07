@@ -12,7 +12,7 @@ export default async function handler(
     return;
   }
 
-  console.log(
+  console.info(
     `[OIDC Metadata]  GET /.well-known/did-configuration - Initiated`
   );
 
@@ -40,7 +40,7 @@ export default async function handler(
       linked_dids: [token],
     };
 
-    console.log(
+    console.info(
       `[OIDC Metadata]  GET /.well-known/did-configuration - Complete`
     );
 

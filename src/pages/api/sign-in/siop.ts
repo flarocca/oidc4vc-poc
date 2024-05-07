@@ -21,7 +21,7 @@ export default async function handler(
 
   await dbConnect();
 
-  console.log(`POST /api/sign-in/siop - Initiated`);
+  console.info(`POST /api/sign-in/siop - Initiated`);
 
   try {
     const body: {
@@ -35,7 +35,7 @@ export default async function handler(
       code: body.code,
     }).exec();
 
-    console.log(`POST /api/sign-in/siop - Found. ${body.code}`);
+    console.info(`POST /api/sign-in/siop - Found. ${body.code}`);
 
     const authFlow = await AuthenticationFlowDocument.create({
       type: "siop",
@@ -46,7 +46,7 @@ export default async function handler(
       redirectUri: openidVcFlow.redirectUri,
     });
 
-    console.log(`POST /api/sign-in/siop - Created. ${authFlow.code}`);
+    console.info(`POST /api/sign-in/siop - Created. ${authFlow.code}`);
 
     const request_uri_encoded = encodeURIComponent(
       `${process.env.ISSUER as string}/siop/requests/${authFlow.code}`
@@ -54,7 +54,7 @@ export default async function handler(
 
     const requestUri = `openid://?request_uri=${request_uri_encoded}`;
 
-    console.log(`POST /api/sign-in/siop - Completed`);
+    console.info(`POST /api/sign-in/siop - Completed`);
 
     res.status(200).json({
       code: authFlow.code,

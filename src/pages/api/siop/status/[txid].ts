@@ -16,7 +16,7 @@ export default async function handler(
 
   const { txid } = req.query;
 
-  console.log(`GET /api/siop/status/${txid} - Querying`);
+  console.info(`GET /api/siop/status/${txid} - Querying`);
 
   try {
     const authFlow = await AuthenticationFlowDocument.findOne({
@@ -25,7 +25,7 @@ export default async function handler(
     }).exec();
 
     if (authFlow) {
-      console.log(
+      console.info(
         `GET /api/siop/status/${txid} - Found. Status is ${authFlow.status}`
       );
 
@@ -33,7 +33,7 @@ export default async function handler(
       return;
     }
 
-    console.log(`GET /api/siop/status/${txid} - Not Found`);
+    console.info(`GET /api/siop/status/${txid} - Not Found`);
 
     res.statusCode = 404;
     res.statusMessage = "not_found";

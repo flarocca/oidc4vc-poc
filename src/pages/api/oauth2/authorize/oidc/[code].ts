@@ -16,7 +16,7 @@ export default async function handler(
 
   const { code } = req.query;
 
-  console.log(`GET /api/oauth2/authorize/oidc/${code} - Initiating`);
+  console.info(`GET /api/oauth2/authorize/oidc/${code} - Initiating`);
 
   try {
     const authFlow = await AuthenticationFlowDocument.findOne({
@@ -24,7 +24,7 @@ export default async function handler(
       code,
     }).exec();
 
-    console.log(`GET /api/oauth2/authorize/oidc/${code} - Found`);
+    console.info(`GET /api/oauth2/authorize/oidc/${code} - Found`);
 
     res.status(200).json({
       code: authFlow.code,

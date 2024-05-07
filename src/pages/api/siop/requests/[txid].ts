@@ -17,7 +17,7 @@ export default async function handler(
 
   const { txid } = req.query;
 
-  console.log(`[OIDC Operational] GET /api/siop/requests/${txid} - Initiated`);
+  console.info(`[OIDC Operational] GET /api/siop/requests/${txid} - Initiated`);
 
   try {
     const authFlow = await AuthenticationFlowDocument.findOneAndUpdate(
@@ -40,7 +40,7 @@ export default async function handler(
         requireKyc: false,
       });
 
-    console.log(
+    console.info(
       `[OIDC Operational] GET /api/siop/requests/${txid} - Complete: ${signedPresentationDefinition}`
     );
 

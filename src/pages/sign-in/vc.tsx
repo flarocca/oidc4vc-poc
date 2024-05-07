@@ -65,7 +65,7 @@ export default function Home() {
           toast.error("Error processing Authorize request");
         }
       } catch (error) {
-        console.log(JSON.stringify(error));
+        console.info(JSON.stringify(error));
         toast.error("Error processing Authorize request");
       }
     };
@@ -94,7 +94,7 @@ export default function Home() {
           toast.error("Error querying request status");
         }
       } catch (error) {
-        console.log(JSON.stringify(error));
+        console.info(JSON.stringify(error));
         toast.error("Error querying request status");
       }
     };
@@ -119,7 +119,7 @@ export default function Home() {
           toast.error("Error completing flow");
         }
       } catch (error) {
-        console.log(JSON.stringify(error));
+        console.info(JSON.stringify(error));
         toast.error("Error querying request status");
       }
     };

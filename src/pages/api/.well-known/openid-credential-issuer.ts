@@ -7,7 +7,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     return;
   }
 
-  console.log(`[OIDC Metadata]  GET /.well-known/openid-credential-issuer`);
+  console.info(`[OIDC Metadata]  GET /.well-known/openid-credential-issuer`);
 
   res.status(200).json({
     credential_issuer: `${process.env.ISSUER as string}`,

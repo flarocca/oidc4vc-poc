@@ -33,7 +33,7 @@ export default function Authorize() {
         toast.error("Error processing Authorize request");
       }
     } catch (error) {
-      console.log(JSON.stringify(error));
+      console.info(JSON.stringify(error));
       toast.error("Error processing Authorize request");
     }
   };
@@ -60,7 +60,7 @@ export default function Authorize() {
         toast.error("Error processing Authorize request");
       }
     } catch (error) {
-      console.log(JSON.stringify(error));
+      console.info(JSON.stringify(error));
       toast.error("Error processing Authorize request");
     }
   };
@@ -87,7 +87,7 @@ export default function Authorize() {
         toast.error("Error processing Authorize request");
       }
     } catch (error) {
-      console.log(JSON.stringify(error));
+      console.info(JSON.stringify(error));
       toast.error("Error processing Authorize request");
     }
   };

@@ -15,7 +15,7 @@ export default async function handler(
 
   await dbConnect();
 
-  console.log(`POST /api/sign-in/vc - Initiated`);
+  console.info(`POST /api/sign-in/vc - Initiated`);
 
   try {
     const body: {
@@ -32,7 +32,7 @@ export default async function handler(
       code: body.code,
     }).exec();
 
-    console.log(`POST /api/sign-in/vc - Found. ${body.code}`);
+    console.info(`POST /api/sign-in/vc - Found. ${body.code}`);
 
     const authFlow = await AuthenticationFlowDocument.create({
       type: "openid-vc",
@@ -48,7 +48,7 @@ export default async function handler(
       },
     });
 
-    console.log(`POST /api/sign-in/vc - Created. ${authFlow.code}`);
+    console.info(`POST /api/sign-in/vc - Created. ${authFlow.code}`);
 
     const request_uri_encoded = encodeURIComponent(
       `${process.env.ISSUER as string}/openid-vc/requests/${authFlow.code}`
@@ -56,7 +56,7 @@ export default async function handler(
 
     const requestUri = `openid-vc://?request_uri=${request_uri_encoded}`;
 
-    console.log(`POST /api/sign-in/vc - Completed`);
+    console.info(`POST /api/sign-in/vc - Completed`);
 
     res.status(200).json({
       success: true,

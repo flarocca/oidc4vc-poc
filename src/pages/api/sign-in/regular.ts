@@ -42,7 +42,7 @@ export default async function handler(
 
   await dbConnect();
 
-  console.log(`POST /api/sign-in/regular - Initiated`);
+  console.info(`POST /api/sign-in/regular - Initiated`);
 
   try {
     const body: {
@@ -60,7 +60,7 @@ export default async function handler(
       type: "oidc",
     }).exec();
 
-    console.log(`POST /api/sign-in/regular - Found. ${body.code}`);
+    console.info(`POST /api/sign-in/regular - Found. ${body.code}`);
 
     const auth_flow = await AuthenticationFlowDocument.create({
       type: "oidc",
@@ -83,7 +83,7 @@ export default async function handler(
     let vcValKycUri = undefined;
 
     if (body.isEmailVerified) {
-      console.log(
+      console.info(
         `POST /api/sign-in/regular - Creating credential offer for Email Verification`
       );
 
@@ -95,7 +95,7 @@ export default async function handler(
         status: "initiated",
       });
 
-      console.log(
+      console.info(
         `POST /api/sign-in/regular - Pre-authorization_code for Email Verification created. ${code.code}`
       );
 
@@ -108,7 +108,7 @@ export default async function handler(
         },
       });
 
-      console.log(
+      console.info(
         `POST /api/sign-in/regular - Credential offer for Email Verification created. ${code.code}`
       );
 
@@ -122,7 +122,7 @@ export default async function handler(
     }
 
     if (body.kycComplete) {
-      console.log(
+      console.info(
         `POST /api/sign-in/regular - Creating credential offer for KYC`
       );
 
@@ -134,7 +134,7 @@ export default async function handler(
         status: "initiated",
       });
 
-      console.log(
+      console.info(
         `POST /api/sign-in/regular - Pre-authorization_code for KYC created. ${code.code}`
       );
 
@@ -149,7 +149,7 @@ export default async function handler(
         },
       });
 
-      console.log(
+      console.info(
         `POST /api/sign-in/regular - Credential offer for KYC created. ${code.code}`
       );
 
@@ -159,7 +159,7 @@ export default async function handler(
       vcValKycUri = val;
     }
 
-    console.log(`POST /api/sign-in/regular - Completed`);
+    console.info(`POST /api/sign-in/regular - Completed`);
 
     res.status(200).json({
       code: body.code,

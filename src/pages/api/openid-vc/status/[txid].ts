@@ -16,7 +16,7 @@ export default async function handler(
 
   const { txid } = req.query;
 
-  console.log(`GET /api/openid-vc/status/${txid} - Initiated`);
+  console.info(`GET /api/openid-vc/status/${txid} - Initiated`);
 
   try {
     const authFlow = await AuthenticationFlowDocument.findOne({
@@ -25,7 +25,7 @@ export default async function handler(
     }).exec();
 
     if (authFlow) {
-      console.log(
+      console.info(
         `GET /api/openid-vc/status/${txid} - Found. Status is ${authFlow.status}`
       );
 

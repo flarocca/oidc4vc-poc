@@ -15,7 +15,7 @@ export default async function handler(
 
   await dbConnect();
 
-  console.log(`POST /api/oauth2/authorize/siop - Initiated`);
+  console.info(`POST /api/oauth2/authorize/siop - Initiated`);
 
   try {
     const body: { state: string; nonce: string; redirectUri: string } =
@@ -30,13 +30,15 @@ export default async function handler(
       redirectUri: body.redirectUri,
     });
 
-    console.log(`POST /api/oauth2/authorize/siop - Created: ${auth_flow.code}`);
+    console.info(
+      `POST /api/oauth2/authorize/siop - Created: ${auth_flow.code}`
+    );
 
     res.status(200).json({
       code: auth_flow.code,
     });
   } catch (error) {
-    console.log(
+    console.info(
       `POST /api/oauth2/authorize/siop - Error: ${JSON.stringify(error)}`
     );
 

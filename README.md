@@ -394,6 +394,7 @@ curl --location 'http://localhost:3000/api/oauth2/token' \
 --data-urlencode 'client_id={client_id}' \
 --data-urlencode 'client_secret={client_secret}' \
 --data-urlencode 'grant_type=authorization_code' \
+--data-urlencode 'redirect_uri={whitelisted_redirect_uri}' \
 --data-urlencode 'code={auth_code}'
 
 ```
@@ -413,6 +414,7 @@ curl --location 'http://localhost:3000/api/oauth2/token' \
 ```curl
 curl --location 'http://localhost:3000/api/oauth2/token' \
 --header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'client_id={subject_did}' \
 --data-urlencode 'grant_type=urn:ietf:params:oauth:grant-type:pre-authorized_code' \
 --data-urlencode 'pre-authorized_code={auth_code}'
 
@@ -423,6 +425,72 @@ curl --location 'http://localhost:3000/api/oauth2/token' \
     "id_token": "{header}.{claims}.{signature}",
     "token_type": "bearer",
     "expires_in": 300
+}
+```
+</details>
+
+### `/oauth2/authorize`
+
+This is the entrypoint to the IDP and it is meant to be used from the browser, it returns HTML.
+
+### `/oauth2/userinfo`
+
+The User Info endpoint returns user's claims. It uses Bearer tokens to authenticate and authorize the request
+
+<details>
+<summary>Example request & response</summary>
+
+```curl
+curl --location 'http://localhost:3000/api/oauth2/userinfo' \
+--header 'Authorization: Bearer {access_token}'
+```
+```json
+{
+    "sub": "3b9e2ba6-12a2-42de-85d7-b66c14ca37f2",
+    "iss": "http://localhost:3000/api",
+    "iat": 1715101373,
+    "exp": 1715102573,
+    "nonce": "nonce-bae545ac-894d-440e-842f-bb5b9e330f5b",
+    "email": "email@example.io",
+    "given_name": "User",
+    "family_name": "Cool",
+    "email_verified": false,
+    "kyc_complete": false
+}
+```
+</details>
+
+### `/oauth2/credentials`
+
+This endpoint is used by User Agents to claim issued credentials. It requires a Bearer token obtained via a `pre-authorized_code` (See credential offer request endpoint). In the request body there must be sent the credential type being requested as well as a proof. This proof is a JWT that contains the issuer in the form of the DID that signed the JWT.
+
+This endpoint returns the credentials in the form of a JWT
+
+<details>
+<summary>Example request & response</summary>
+
+```curl
+curl --location 'http://localhost:3000/api/oauth2/credentials' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer {access_token}' \
+--data '{
+      "types": [
+          "VerifiableCredential",
+          "EmailVerifiedCredential"
+      ],
+      "format": "jwt_vc_json",
+      "proof": {
+          "proof_type": "jwt",
+          "jwt": "eyJ0eXAiOiJvcGVuaWQ0dmNpLXByb29mK2p3dCIsImFsZyI6IkVTMjU2Iiwia2lkIjoiZGlkOmp3azpleUpoYkdjaU9pSkZVekkxTmlJc0luVnpaU0k2SW5OcFp5SXNJbXQwZVNJNklrVkRJaXdpWTNKMklqb2lVQzB5TlRZaUxDSjRJam9pTjFaZlpuZFBNR2RoU1ZSWWEwWjZaR2hOYm1OMmJGcFNSekUzV0VKTGMwWXdjakJHY2tnNE1EUldheUlzSW5raU9pSTBUMGwxTFZoeGRFTm5NREp6V1VoRVptNXFlRWhKTVhKMmFVMW1lVTFpVUd0UFZ6RTRhVTVGUjNWTkluMCMwIn0.eyJpYXQiOjE3MTUwMDczODYsImV4cCI6MTcxNTAwODA0NiwiYXVkIjoiaHR0cHM6Ly9vaWRjLXBvYy5zYW5kYm94LmFjY291bnRzLmZvcnRlLmlvLy9hcGkiLCJub25jZSI6IjQ0N2ZmNmRhLTkxN2MtNDBjMi1hNjhhLWU0YzE3YWZmZDJhNiIsImlzcyI6ImRpZDpqd2s6ZXlKaGJHY2lPaUpGVXpJMU5pSXNJblZ6WlNJNkluTnBaeUlzSW10MGVTSTZJa1ZESWl3aVkzSjJJam9pVUMweU5UWWlMQ0o0SWpvaU4xWmZabmRQTUdkaFNWUllhMFo2WkdoTmJtTjJiRnBTUnpFM1dFSkxjMFl3Y2pCR2NrZzRNRFJXYXlJc0lua2lPaUkwVDBsMUxWaHhkRU5uTURKeldVaEVabTVxZUVoSk1YSjJhVTFtZVUxaVVHdFBWekU0YVU1RlIzVk5JbjAiLCJqdGkiOiI4ZjFlYzMyMy1kOGM0LTRkMzUtOTdiNy0wZjE3ZWEwYmQ3M2EifQ.MkRicxbFtbabJCS08NXdlE9tuwyQnqKXqXbujEcjjkjSB5zxjq5lKHwgpN5QZlDGETRBTSdUrhKj1hKI8t1QgA"
+      }
+  }'
+```
+```json
+{
+    "format": "jwt_vc",
+    "credential": "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImRpZDpqd2s6ZXlKcmRIa2lPaUpGUXlJc0ltTnlkaUk2SWxBdE1qVTJJaXdpZUNJNklucDFPR3RMYWpSbFFVWTRTbGQ0TWxSMGN6TllVM1JaZGtWdVVXcHhTMlZrTVMwellrZElZV3QwTTBFaUxDSjVJam9pVkZnMmRGTkdlREIwWVdGNGVHcHZialV4WkRCUllXZ3RkbEF0V25SSU9GZHJWSFp3U0Y5dmVFNW5aeUlzSW10cFpDSTZJazVMZGpSWVFVUmtUVXhpZHpOdlFrcGpSRGRLWDJoTWRIYzJkV05yUVU0dE9YTTVhMUEyWkZsaFYxRWlMQ0poYkdjaU9pSkZVekkxTmlKOSMwIn0.eyJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSJdLCJ0eXBlIjpbIlZlcmlmaWFibGVDcmVkZW50aWFsIiwiRW1haWxWZXJpZmllZENyZWRlbnRpYWwiXSwiaWQiOiJ1cm46dXVpZDpmZDVhZjQ5Ny0zZjQ1LTQ0MGYtYTI0Yy02YmNkY2RiMWQyN2YiLCJpc3N1ZXIiOiJkaWQ6andrOmV5SnJkSGtpT2lKRlF5SXNJbU55ZGlJNklsQXRNalUySWl3aWVDSTZJbnAxT0d0TGFqUmxRVVk0U2xkNE1sUjBjek5ZVTNSWmRrVnVVV3B4UzJWa01TMHpZa2RJWVd0ME0wRWlMQ0o1SWpvaVZGZzJkRk5HZURCMFlXRjRlR3B2YmpVeFpEQlJZV2d0ZGxBdFduUklPRmRyVkhad1NGOXZlRTVuWnlJc0ltdHBaQ0k2SWs1TGRqUllRVVJrVFV4aWR6TnZRa3BqUkRkS1gyaE1kSGMyZFdOclFVNHRPWE01YTFBMlpGbGhWMUVpTENKaGJHY2lPaUpGVXpJMU5pSjkiLCJpc3N1YW5jZURhdGUiOiIyMDI0LTA1LTA3VDE3OjI2OjA0Ljc5NloiLCJjcmVkZW50aWFsU3ViamVjdCI6eyJpZCI6ImRpZDpqd2s6ZXlKaGJHY2lPaUpGVXpJMU5pSXNJblZ6WlNJNkluTnBaeUlzSW10MGVTSTZJa1ZESWl3aVkzSjJJam9pVUMweU5UWWlMQ0o0SWpvaU4xWmZabmRQTUdkaFNWUllhMFo2WkdoTmJtTjJiRnBTUnpFM1dFSkxjMFl3Y2pCR2NrZzRNRFJXYXlJc0lua2lPaUkwVDBsMUxWaHhkRU5uTURKeldVaEVabTVxZUVoSk1YSjJhVTFtZVUxaVVHdFBWekU0YVU1RlIzVk5JbjAiLCJlbWFpbCI6ImZhY3UubGFyb2NjYUBnbWFpbC5jb20ifSwiZXhwaXJhdGlvbkRhdGUiOiIyMDI1LTA1LTA3VDE3OjI2OjA0Ljc5NloifSwibmJmIjoxNzE1MTAyNzY0LCJqdGkiOiJ1cm46dXVpZDpmZDVhZjQ5Ny0zZjQ1LTQ0MGYtYTI0Yy02YmNkY2RiMWQyN2YiLCJpc3MiOiJkaWQ6andrOmV5SnJkSGtpT2lKRlF5SXNJbU55ZGlJNklsQXRNalUySWl3aWVDSTZJbnAxT0d0TGFqUmxRVVk0U2xkNE1sUjBjek5ZVTNSWmRrVnVVV3B4UzJWa01TMHpZa2RJWVd0ME0wRWlMQ0o1SWpvaVZGZzJkRk5HZURCMFlXRjRlR3B2YmpVeFpEQlJZV2d0ZGxBdFduUklPRmRyVkhad1NGOXZlRTVuWnlJc0ltdHBaQ0k2SWs1TGRqUllRVVJrVFV4aWR6TnZRa3BqUkRkS1gyaE1kSGMyZFdOclFVNHRPWE01YTFBMlpGbGhWMUVpTENKaGJHY2lPaUpGVXpJMU5pSjkiLCJzdWIiOiJkaWQ6andrOmV5SmhiR2NpT2lKRlV6STFOaUlzSW5WelpTSTZJbk5wWnlJc0ltdDBlU0k2SWtWRElpd2lZM0oySWpvaVVDMHlOVFlpTENKNElqb2lOMVpmWm5kUE1HZGhTVlJZYTBaNlpHaE5ibU4yYkZwU1J6RTNXRUpMYzBZd2NqQkdja2c0TURSV2F5SXNJbmtpT2lJMFQwbDFMVmh4ZEVObk1ESnpXVWhFWm01cWVFaEpNWEoyYVUxbWVVMWlVR3RQVnpFNGFVNUZSM1ZOSW4wIiwiaWF0IjoxNzE1MTAyNzY0LCJleHAiOjE3NDY2Mzg3NjR9.cy-PkcZTuamKVqOgZUyh8Qf1dqRL5rlV9l7XVeNM8ASL6R_ZVE1sSrebJ65r2AIiYriZVpw0bsuvhmWtnXOPyg",
+    "c_nonce": "447ff6da-917c-40c2-a68a-e4c17affd2a6",
+    "c_nonce_expires_in": 86400
 }
 ```
 </details>

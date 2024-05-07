@@ -21,7 +21,7 @@ export default async function handler(
   try {
     const data: { vp_token: string } = req.body;
 
-    console.log(
+    console.info(
       `[OIDC Operational] POST /api/siopresponses/${txid} - Data: ${JSON.stringify(
         data,
         null,
@@ -48,7 +48,7 @@ export default async function handler(
       }
     ).exec();
 
-    console.log(
+    console.info(
       `[OIDC Operational] POST /api/siop/responses/${txid} - TRX Found`
     );
 

@@ -79,6 +79,13 @@ export default function Home() {
             </div>
           ) : null}
         </div>
+        <a
+          href={`${process.env.EXTERNAL_SERVER_URI as string}`}
+          className="text-2xl border-b border-gray-300 text-center group rounded-lg border bg-gradient-to-b px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+          rel="noopener noreferrer"
+        >
+          Home
+        </a>
       </main>
     );
 }

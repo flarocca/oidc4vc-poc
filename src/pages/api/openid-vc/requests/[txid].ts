@@ -17,7 +17,7 @@ export default async function handler(
 
   const { txid } = req.query;
 
-  console.log(
+  console.info(
     `[OIDC Operational] GET /api/openid-vc/requests/${txid} - Initiated`
   );
 
@@ -44,7 +44,7 @@ export default async function handler(
         requireKyc: authFlow.data.requireKyc,
       });
 
-    console.log(
+    console.info(
       `[OIDC Operational] GET /api/openid-vc/requests/${txid} - Complete ${signedPresentationDefinition}.`
     );
 

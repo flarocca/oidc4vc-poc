@@ -80,7 +80,7 @@ export default function Home() {
           toast.error("Error processing Authorize request");
         }
       } catch (error) {
-        console.log(JSON.stringify(error));
+        console.info(JSON.stringify(error));
         toast.error("Error processing Authorize request");
       }
     };
@@ -204,6 +204,12 @@ export default function Home() {
                   >
                     {vcValEmailQR}
                   </span>
+                  <br />
+                  <br />
+                  <a
+                    href={vcValEmailQR}
+                    className="border-b border-gray-300 text-center group rounded-lg border bg-gradient-to-b px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+                  >Deep link</a>
                 </div>
                 <div
                   className="justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30"
@@ -247,9 +253,15 @@ export default function Home() {
                   >
                     {vcValKycQR}
                   </span>
+                  <br />
+                  <br />
+                  <a
+                    href={vcValKycQR}
+                    className="border-b border-gray-300 text-center group rounded-lg border bg-gradient-to-b px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+                  >Deep link</a>
                 </div>
                 <div
-                  className="justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30"
+                  className="justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30"
                   style={{ margin: "20px" }}
                 >
                   <span>KYC VC - REF</span>

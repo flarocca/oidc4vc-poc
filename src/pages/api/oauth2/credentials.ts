@@ -42,7 +42,7 @@ const validateAuthentication = (
 ): { isAuthenticated: boolean; token: string | undefined } => {
   const token = req.headers["authorization"]?.split(" ")[1];
 
-  console.log(
+  console.info(
     `[OIDC Operational] POST /api/oauth2/credentials - Validating authorization header`
   );
 
@@ -72,7 +72,7 @@ export default async function handler(
   }
 
   try {
-    console.log(
+    console.info(
       `[OIDC Operational] POST /api/oauth2/credentials - Initiated: ${JSON.stringify(
         req.body,
         null,
@@ -89,7 +89,7 @@ export default async function handler(
       preAuthorizedCode: string;
     } = jwtDecode(token);
 
-    console.log(
+    console.info(
       `[OIDC Operational] POST /api/oauth2/credentials - Pre-authorization_code Initiated. ${payload.preAuthorizedCode}`
     );
 
@@ -102,12 +102,12 @@ export default async function handler(
       }
     ).exec();
 
-    console.log(`[OIDC Operational] POST /api/oauth2/credentials - Scanned`);
+    console.info(`[OIDC Operational] POST /api/oauth2/credentials - Scanned`);
 
     const { subject, nonce } = extractSubjectAndNonce(req.body.proof.jwt);
     const signedJwt = await issueCredential(credentialOffer, subject);
 
-    console.log(
+    console.info(
       `[OIDC Operational] POST /api/oauth2/credentials - VC signed ${JSON.stringify(
         {
           format: "jwt_vc",

@@ -16,7 +16,7 @@ export default async function handler(
 
   const { txid } = req.query;
 
-  console.log(`GET /api/credential-offer/requests/${txid} - Initiated`);
+  console.info(`GET /api/credential-offer/requests/${txid} - Initiated`);
 
   try {
     const auth_flow = await CredentialOfferDocument.findOne({
@@ -24,7 +24,7 @@ export default async function handler(
     }).exec();
 
     if (auth_flow) {
-      console.log(
+      console.info(
         `GET /api/credential-offer/status/${txid} - Found. Status is ${auth_flow.status}`
       );
 
@@ -42,7 +42,7 @@ export default async function handler(
       message: "not_found",
     });
   } catch (error) {
-    console.log(
+    console.info(
       `GET /api/credential-offer/status/${txid} - Error: ${JSON.stringify(
         error
       )}`

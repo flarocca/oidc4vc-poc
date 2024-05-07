@@ -16,7 +16,7 @@ export default async function handler(
 
   const { txid } = req.query;
 
-  console.log(
+  console.info(
     `[OIDC Operational] GET /api/credential-offer/requests/${txid} - Initiated`
   );
 
@@ -41,7 +41,7 @@ export default async function handler(
       credential_issuer: process.env.ISSUER as string,
     };
 
-    console.log(
+    console.info(
       `[OIDC Operational] GET /api/credential-offer/requests/${txid} - Complete ${JSON.stringify(
         payload,
         null,
@@ -51,7 +51,7 @@ export default async function handler(
 
     res.status(200).json(payload);
   } catch (error) {
-    console.log(
+    console.info(
       `[OIDC Operational] GET /api/credential-offer/requests/${txid} - Error: ${JSON.stringify(
         error
       )}`
