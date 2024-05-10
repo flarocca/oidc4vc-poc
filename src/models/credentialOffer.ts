@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
 export interface CredentialOffer extends mongoose.Document {
   code: string;

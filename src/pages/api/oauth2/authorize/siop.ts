@@ -21,7 +21,7 @@ export default async function handler(
     const body: { state: string; nonce: string; redirectUri: string } =
       await req.body;
 
-    const auth_flow = await AuthenticationFlowDocument.create({
+    const authFlow = await AuthenticationFlowDocument.create({
       type: "siop",
       code: uuidv4(),
       state: body.state,
@@ -30,12 +30,10 @@ export default async function handler(
       redirectUri: body.redirectUri,
     });
 
-    console.info(
-      `POST /api/oauth2/authorize/siop - Created: ${auth_flow.code}`
-    );
+    console.info(`POST /api/oauth2/authorize/siop - Created: ${authFlow.code}`);
 
     res.status(200).json({
-      code: auth_flow.code,
+      code: authFlow.code,
     });
   } catch (error) {
     console.info(

@@ -75,6 +75,6 @@ Response
     "credentials": [
         "EmailVerifiedCredential"
     ],
-    "credential_issuer": "https://oidc-poc.sandbox.accounts.forte.io/api"
+    "credential_issuer": "http://localhost:3000/api"
 }
 */
