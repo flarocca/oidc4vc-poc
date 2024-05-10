@@ -143,7 +143,7 @@ export async function createSignedPresentationDefinition(options: {
     registration: {
       id_token_signing_alg_values_supported: ["RS256"],
       request_object_signing_alg_values_supported: ["ES256"],
-      response_types_supported: ["code", "id_token", "vp_token"],
+      response_types_supported: ["id_token", "vp_token"],
       scopes_supported: ["openid", "email", "profile" /*, "did_authn"*/],
       subject_types_supported: ["pairwise"],
       subject_syntax_types_supported: ["did:jwk"],
