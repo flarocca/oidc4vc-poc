@@ -6,7 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import QRCode from "@/components/qrcode";
 
-export default function Home() {
+export default function VC() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [qrcode, setQrcode] = useState("");

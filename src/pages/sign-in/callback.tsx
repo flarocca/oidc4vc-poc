@@ -1,8 +1,9 @@
 import { jwtDecode } from "jwt-decode";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-export default function Home() {
+export default function Callback() {
     const [token, setToken] = useState("");
     const [claims, setClaims] = useState(null);
   
@@ -79,13 +80,12 @@ export default function Home() {
             </div>
           ) : null}
         </div>
-        <a
-          href={`${process.env.EXTERNAL_SERVER_URI as string}`}
+        <Link 
           className="text-2xl border-b border-gray-300 text-center group rounded-lg border bg-gradient-to-b px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          rel="noopener noreferrer"
+          href="/"
         >
           Home
-        </a>
+        </Link>
       </main>
     );
 }
